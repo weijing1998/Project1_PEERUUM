@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 
 class CoursesPage extends StatefulWidget {
+  final Function toggleViewCourse;
+  final Function passCourse;
+
+  const CoursesPage({Key key, @required this.toggleViewCourse, @required this.passCourse}) : super(key: key);
+
   @override
   CoursesPageState createState() => CoursesPageState();
 }
@@ -52,22 +57,30 @@ class CoursesPageState extends State<CoursesPage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 85),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "COURSES PAGE",
-                style: TextStyle(fontSize: 28,fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(85, 0, 10, 0),
+                child: Image.network(
+                  "images/courses.png",
+                  scale: 9,
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "COURSES PAGE",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
           ),
           SizedBox(
-            height: size.height / 15,
+            height: size.height / 20,
           ),
           SingleChildScrollView(
             child: Container(
-                height: size.height / 1.4,
+                height: size.height / 1.42,
                 width: size.width / 1.3,
                 color: Colors.grey[300],
                 child: ListView.builder(
@@ -194,7 +207,11 @@ class CoursesPageState extends State<CoursesPage> {
                                       width: size.width / 10,
                                       child: FlatButton(
                                         color: Colors.blue[900],
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          widget.toggleViewCourse(true);
+                                          widget
+                                              .passCourse(data.courses[index]);
+                                        },
                                         child: Text(
                                           "View Couses",
                                           style: TextStyle(

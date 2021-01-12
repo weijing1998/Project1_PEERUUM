@@ -16,12 +16,12 @@ class _FormPageState extends State<FormPage> {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      decoration: BoxDecoration(color: Colors.grey[200]),
+      decoration: BoxDecoration(color: Colors.blue[200]),
       padding: EdgeInsets.all(32),
       height: size.height,
       width: size.width - size.width / 6,
       child: Row(
-        children: [],
+        children: [Text('FORM PAGE')],
       ),
     );
   }

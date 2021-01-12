@@ -1,8 +1,14 @@
+import 'package:pepelist/objects/group.dart';
+import 'package:pepelist/objects/student.dart';
+
 class Courses {
   String courseName;
   String courseID;
   String courseGroup;
   String courseBatch;
+  List<Student> joinedStudent;
+  List<Group> listOfGroup;
+  
 
   Courses(String cn, String ci, String cg, String cb) {
     this.courseName = cn;
