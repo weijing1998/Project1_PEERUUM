@@ -8,18 +8,25 @@ class Courses {
   String courseBatch;
   List<Student> joinedStudent;
   List<Group> listOfGroup;
-  
 
   Courses(String cn, String ci, String cg, String cb) {
     this.courseName = cn;
     this.courseID = ci;
     this.courseGroup = cg;
     this.courseBatch = cb;
+
+    listOfGroup = [
+      Group("Group 1", "1"),
+      Group("Group 2", "2"),
+      Group("Group 3", "3"),
+      Group("Group 4", "4"),
+    ];
   }
 }
 
 class Data {
   List<Courses> courses;
+  List<Group> groups;
 
   Data() {
     courses = [
@@ -29,5 +36,6 @@ class Data {
       Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
       Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
     ];
+
   }
 }

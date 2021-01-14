@@ -7,7 +7,8 @@ import '../coursespage.dart';
 import '../form.dart';
 
 class Sidebar extends StatefulWidget {
-  Sidebar({Key key}) : super(key: key);
+  Data data;
+  Sidebar({Key key, @required this.data}) : super(key: key);
 
   @override
   _SidebarState createState() => _SidebarState();
@@ -17,6 +18,8 @@ class _SidebarState extends State<Sidebar> {
   bool atCoursePage = true;
   bool atViewCourse = false;
   Courses course;
+  int index;
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,10 +171,16 @@ class _SidebarState extends State<Sidebar> {
             height: size.height,
             child: atCoursePage
                 ? atViewCourse
-                    ? ViewCourse(course: course)
+                    ? ViewCourse(
+                        course: course,
+                        viewCourseIndex: index,
+                        data: widget.data,
+                      )
                     : CoursesPage(
                         toggleViewCourse: toggleViewCourse,
                         passCourse: setCourse,
+                        setCurrentIndex: currentIndex,
+                        data: widget.data,
                       )
                 : FormPage(),
           ),
@@ -189,6 +198,12 @@ class _SidebarState extends State<Sidebar> {
   void setCourse(Courses c) {
     setState(() {
       course = c;
+    });
+  }
+
+  void currentIndex(int i) {
+    setState(() {
+      index = i;
     });
   }
 }

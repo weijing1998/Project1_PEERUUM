@@ -14,7 +14,7 @@ void main() => runApp(MaterialApp(
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.arvoTextTheme(),
       ),
-      home: Dashboard(email: 'weijing', name: 'weijing'),
+      home: Dashboard(),
     ));
 
 class HomePage extends StatefulWidget {

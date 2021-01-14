@@ -5,15 +5,18 @@ import 'package:pepelist/objects/course.dart';
 class CoursesPage extends StatefulWidget {
   final Function toggleViewCourse;
   final Function passCourse;
+  final Function setCurrentIndex;
+  final Data data;
 
-  const CoursesPage({Key key, @required this.toggleViewCourse, @required this.passCourse}) : super(key: key);
+  const CoursesPage(
+      {Key key, @required this.toggleViewCourse, @required this.passCourse, @required this.setCurrentIndex, @required this.data,})
+      : super(key: key);
 
   @override
   CoursesPageState createState() => CoursesPageState();
 }
 
 class CoursesPageState extends State<CoursesPage> {
-  static Data data = new Data();
   @override
   void initState() {}
   @override
@@ -84,7 +87,7 @@ class CoursesPageState extends State<CoursesPage> {
                 width: size.width / 1.3,
                 color: Colors.grey[300],
                 child: ListView.builder(
-                  itemCount: data.courses.length,
+                  itemCount: widget.data.courses.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: Padding(
@@ -106,7 +109,7 @@ class CoursesPageState extends State<CoursesPage> {
                                         horizontal: 20),
                                     child: Text(
                                       " COURSE NAME : " +
-                                          data.courses[index].courseName
+                                          widget.data.courses[index].courseName
                                               .toUpperCase(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
@@ -139,7 +142,7 @@ class CoursesPageState extends State<CoursesPage> {
                                               ),
                                               Text(
                                                 "COURSE ID : " +
-                                                    data.courses[index]
+                                                    widget.data.courses[index]
                                                         .courseID,
                                                 style: TextStyle(
                                                     fontSize: 15,
@@ -163,7 +166,7 @@ class CoursesPageState extends State<CoursesPage> {
                                               ),
                                               Text(
                                                 "COURSE GROUP : " +
-                                                    data.courses[index]
+                                                    widget.data.courses[index]
                                                         .courseGroup,
                                                 style: TextStyle(
                                                     fontSize: 15,
@@ -187,7 +190,7 @@ class CoursesPageState extends State<CoursesPage> {
                                               ),
                                               Text(
                                                 "COURSE BATCH : " +
-                                                    data.courses[index]
+                                                    widget.data.courses[index]
                                                         .courseBatch,
                                                 style: TextStyle(
                                                     fontSize: 15,
@@ -209,8 +212,8 @@ class CoursesPageState extends State<CoursesPage> {
                                         color: Colors.blue[900],
                                         onPressed: () {
                                           widget.toggleViewCourse(true);
-                                          widget
-                                              .passCourse(data.courses[index]);
+                                          widget.passCourse(widget.data.courses[index]);
+                                          widget.setCurrentIndex(index);
                                         },
                                         child: Text(
                                           "View Couses",
@@ -519,14 +522,14 @@ class CoursesPageState extends State<CoursesPage> {
                                   onPressed: () {
                                     if (_formskey.currentState.validate()) {
                                       setState(() {
-                                        data.courses.add(
+                                       widget.data.courses.add(
                                           Courses(
                                               courseName.text,
                                               courseID.text,
                                               courseGroup.text,
                                               courseBatch.text),
                                         );
-                                        print(data.courses.length);
+                                        print(widget.data.courses.length);
                                         Navigator.pop(context);
                                       });
                                     }
