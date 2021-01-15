@@ -1,8 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:pepelist/dashboard.dart';
 import 'package:pepelist/main.dart';
 import 'package:pepelist/register.dart';
 import 'package:pepelist/utils/constants.dart';

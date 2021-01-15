@@ -17,8 +17,7 @@ class CoursesPage extends StatefulWidget {
 }
 
 class CoursesPageState extends State<CoursesPage> {
-  @override
-  void initState() {}
+ 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

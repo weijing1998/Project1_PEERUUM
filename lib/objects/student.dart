@@ -5,11 +5,13 @@ class Student {
   String telephone;
   String course;
 
-  Student(String n, String em, String pass, String tele) {
+  Student(String n, String em, String pass, String tele , String course) {
     this.name = n;
     this.email = em;
     this.password = pass;
     this.email = email;
+    this.course=course;
+    this.telephone=tele;
 
   }
 

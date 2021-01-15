@@ -26,7 +26,7 @@ class Courses {
 
 class Data {
   List<Courses> courses;
-  List<Group> groups;
+  
 
   Data() {
     courses = [

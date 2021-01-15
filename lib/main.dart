@@ -2,20 +2,24 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pepelist/dashboard.dart';
+import 'package:pepelist/sidebar.dart';
+
 import 'package:pepelist/utils/my_flutter_app_icons.dart';
 import 'widgets/navbar.dart';
 import 'utils/responsiveLayout.dart';
 
-void main() => runApp(MaterialApp(
-      title: 'PEERUUM',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.arvoTextTheme(),
-      ),
-      home: Dashboard(),
-    ));
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MaterialApp(
+    title: 'PEERUUM',
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+      textTheme: GoogleFonts.ubuntuTextTheme(),
+    ),
+    home: Sidebar(),
+  ));
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -40,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       child: Scaffold(
         backgroundColor: Colors.grey[100],
-        body: Stack(
+        body: Column(
           children: [
             Container(
               child: SingleChildScrollView(
@@ -112,7 +116,6 @@ class LargeChild extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                          
                             RichText(
                               text: TextSpan(
                                   text: "Welcome To ",
