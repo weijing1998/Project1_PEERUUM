@@ -1,23 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/utils/crudWidget.dart';
 
 class CoursesPage extends StatefulWidget {
   final Function toggleViewCourse;
   final Function passCourse;
   final Function setCurrentIndex;
   final Data data;
+  final Function refresh;
 
-  const CoursesPage(
-      {Key key, @required this.toggleViewCourse, @required this.passCourse, @required this.setCurrentIndex, @required this.data,})
-      : super(key: key);
+  const CoursesPage({
+    Key key,
+    @required this.toggleViewCourse,
+    @required this.passCourse,
+    @required this.setCurrentIndex,
+    @required this.data,@required this.refresh,
+  }) : super(key: key);
 
   @override
   CoursesPageState createState() => CoursesPageState();
 }
 
 class CoursesPageState extends State<CoursesPage> {
- 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,7 +53,13 @@ class CoursesPageState extends State<CoursesPage> {
                     focusColor: Colors.lightBlue,
                     textColor: Colors.white,
                     onPressed: () {
-                      _popOutCreateCourses(context);
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddCourseDialog(
+                          data: widget.data,
+                          reset: refreshpage,
+                        ),
+                      );
                     },
                     child: Text(
                       "Add Courses",
@@ -211,8 +222,10 @@ class CoursesPageState extends State<CoursesPage> {
                                         color: Colors.blue[900],
                                         onPressed: () {
                                           widget.toggleViewCourse(true);
-                                          widget.passCourse(widget.data.courses[index]);
+                                          widget.passCourse(
+                                              widget.data.courses[index]);
                                           widget.setCurrentIndex(index);
+                                          widget.refresh();
                                         },
                                         child: Text(
                                           "View Couses",
@@ -239,312 +252,7 @@ class CoursesPageState extends State<CoursesPage> {
     );
   }
 
-  _popOutCreateCourses(context) {
-    TextEditingController courseName = TextEditingController();
-    TextEditingController courseID = TextEditingController();
-    TextEditingController courseGroup = TextEditingController();
-    TextEditingController courseBatch = TextEditingController();
-    Size size = MediaQuery.of(context).size;
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          var _formskey = GlobalKey<FormState>();
-          return AlertDialog(
-            content: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Positioned(
-                  right: -10.0,
-                  top: -10.0,
-                  child: InkResponse(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CircleAvatar(
-                      radius: 15,
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: size.height / 1.5,
-                  width: size.width / 2,
-                  child: Form(
-                    key: _formskey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          "ADD COURSE",
-                          style: TextStyle(
-                            color: Colors.blue[800],
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: size.height / 12,
-                        ),
-                        //Add course name
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "COURSE NAME : ",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: size.width / 4,
-                                  child: TextFormField(
-                                    controller: courseName,
-                                    decoration: new InputDecoration(
-                                      labelText: "Course Name",
-                                      suffixIcon: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Icon(Icons.book),
-                                      ),
-                                      fillColor: Colors.white,
-                                      border: new OutlineInputBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(5.0),
-                                        borderSide: new BorderSide(),
-                                      ),
-                                      //fillColor: Colors.green
-                                    ),
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Course Name cannot be empty";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //Add Course ID
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
-                                child: Text(
-                                  "COURSE ID : ",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: size.width / 4,
-                                  child: TextFormField(
-                                    controller: courseID,
-                                    decoration: new InputDecoration(
-                                      labelText: "Course ID",
-                                      suffixIcon: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Icon(Icons.article),
-                                      ),
-                                      fillColor: Colors.white,
-                                      border: new OutlineInputBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(5.0),
-                                        borderSide: new BorderSide(),
-                                      ),
-                                      //fillColor: Colors.green
-                                    ),
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Course ID cannot be empty";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //Add course group
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "COURSE GROUP : ",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: size.width / 4,
-                                  child: TextFormField(
-                                    controller: courseGroup,
-                                    decoration: new InputDecoration(
-                                      labelText: "Course GROUP",
-                                      suffixIcon: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Icon(Icons.group),
-                                      ),
-                                      fillColor: Colors.white,
-                                      border: new OutlineInputBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(5.0),
-                                        borderSide: new BorderSide(),
-                                      ),
-                                      //fillColor: Colors.green
-                                    ),
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Course group cannot be empty";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //Add courseBatch
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "COURSE BATCH : ",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: size.width / 4,
-                                  child: TextFormField(
-                                    controller: courseBatch,
-                                    decoration: new InputDecoration(
-                                      labelText: "Course Batch",
-                                      suffixIcon: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Icon(Icons.calendar_today),
-                                      ),
-                                      fillColor: Colors.white,
-                                      border: new OutlineInputBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(5.0),
-                                        borderSide: new BorderSide(),
-                                      ),
-                                      //fillColor: Colors.green
-                                    ),
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Course Batch cannot be empty";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        //Submit button
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Container(
-                                height: 40,
-                                width: 150,
-                                child: RaisedButton(
-                                  color: Colors.red[800],
-                                  child: Text(
-                                    "Cancel",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Container(
-                                height: 40,
-                                width: 150,
-                                child: RaisedButton(
-                                  color: Colors.blue[800],
-                                  child: Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  onPressed: () {
-                                    if (_formskey.currentState.validate()) {
-                                      setState(() {
-                                       widget.data.courses.add(
-                                          Courses(
-                                              courseName.text,
-                                              courseID.text,
-                                              courseGroup.text,
-                                              courseBatch.text),
-                                        );
-                                        print(widget.data.courses.length);
-                                        Navigator.pop(context);
-                                      });
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+  void refreshpage() {
+    setState(() {});
   }
 }

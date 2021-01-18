@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       child: Scaffold(
         backgroundColor: Colors.grey[100],
-        body: Column(
+        body: Stack(
           children: [
             Container(
               child: SingleChildScrollView(

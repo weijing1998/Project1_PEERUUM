@@ -8,8 +8,9 @@ import 'formpages.dart';
 
 // ignore: must_be_immutable
 class Sidebar extends StatefulWidget {
-  
-  Sidebar({Key key,}) : super(key: key);
+  Sidebar({
+    Key key,
+  }) : super(key: key);
 
   @override
   _SidebarState createState() => _SidebarState();
@@ -22,12 +23,11 @@ class _SidebarState extends State<Sidebar> {
   int index;
   Data data = new Data();
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-          body: Container(
+      body: Container(
         child: Row(
           children: [
             Container(
@@ -175,11 +175,13 @@ class _SidebarState extends State<Sidebar> {
               child: atCoursePage
                   ? atViewCourse
                       ? ViewCourse(
+                        refresh: refreshSidebar,
                           course: course,
                           viewCourseIndex: index,
                           data: data,
                         )
                       : CoursesPage(
+                        refresh: refreshSidebar,
                           toggleViewCourse: toggleViewCourse,
                           passCourse: setCourse,
                           setCurrentIndex: currentIndex,
@@ -208,6 +210,12 @@ class _SidebarState extends State<Sidebar> {
   void currentIndex(int i) {
     setState(() {
       index = i;
+    });
+  }
+
+  void refreshSidebar(){
+    setState(() {
+      
     });
   }
 }
