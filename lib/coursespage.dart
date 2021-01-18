@@ -8,14 +8,13 @@ class CoursesPage extends StatefulWidget {
   final Function passCourse;
   final Function setCurrentIndex;
   final Data data;
-  final Function refresh;
 
   const CoursesPage({
     Key key,
     @required this.toggleViewCourse,
     @required this.passCourse,
     @required this.setCurrentIndex,
-    @required this.data,@required this.refresh,
+    @required this.data,
   }) : super(key: key);
 
   @override
@@ -42,48 +41,88 @@ class CoursesPageState extends State<CoursesPage> {
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
                 // TODO : REPLACE WITH SEARC BAR
-                SizedBox(
-                  width: size.width / 2.5,
-                ),
-                Container(
-                  height: 50,
-                  width: 150,
-                  child: FlatButton(
-                    color: Colors.blue[900],
-                    focusColor: Colors.lightBlue,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AddCourseDialog(
-                          data: widget.data,
-                          reset: refreshpage,
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Add Courses",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(85, 0, 10, 0),
-                child: Image.network(
-                  "images/courses.png",
-                  scale: 9,
+                padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                child: Row(
+                  children: [
+                    Image.network(
+                      "images/courses.png",
+                      scale: 9,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "COURSES PAGE",
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "COURSES PAGE",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        height: 45,
+                        width: 150,
+                        child: FlatButton(
+                          color: Colors.blue[900],
+                          focusColor: Colors.lightBlue,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AddCourseDialog(
+                                data: widget.data,
+                                reset: refreshCoursepage,
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Add Courses",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        height: 45,
+                        width: 150,
+                        child: FlatButton(
+                          color: Colors.blue[900],
+                          focusColor: Colors.lightBlue,
+                          textColor: Colors.white,
+                          onPressed: widget.data.courses.length != 0
+                              ? () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => DeleteCourseDialog(
+                                      data: widget.data,
+                                      resetViewPage: refreshCoursepage,
+                                    ),
+                                  );
+                                }
+                              : () {},
+                          child: Text(
+                            "Delete Courses",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -96,163 +135,181 @@ class CoursesPageState extends State<CoursesPage> {
                 height: size.height / 1.42,
                 width: size.width / 1.3,
                 color: Colors.grey[300],
-                child: ListView.builder(
-                  itemCount: widget.data.courses.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                color: Colors.blue[300],
-                                height: 50,
-                                width: double.infinity,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Text(
-                                      " COURSE NAME : " +
-                                          widget.data.courses[index].courseName
-                                              .toUpperCase(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 150,
-                                width: double.infinity,
-                                color: Colors.blueGrey[50],
-                                child: Row(
+                child: widget.data.courses.length < 1
+                    ? Center(
+                        child: Text(
+                          "No Course Created",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: widget.data.courses.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                height: 200,
+                                width: 200,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        //Course ID
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.article,
-                                                size: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Text(
-                                                "COURSE ID : " +
-                                                    widget.data.courses[index]
-                                                        .courseID,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        //Course Group
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.group,
-                                                size: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Text(
-                                                "COURSE GROUP : " +
-                                                    widget.data.courses[index]
-                                                        .courseGroup,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        // Course Batch
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.calendar_today,
-                                                size: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Text(
-                                                "COURSE BATCH : " +
-                                                    widget.data.courses[index]
-                                                        .courseBatch,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: size.width / 2.2,
-                                    ),
                                     Container(
-                                      height: 40,
-                                      width: size.width / 10,
-                                      child: FlatButton(
-                                        color: Colors.blue[900],
-                                        onPressed: () {
-                                          widget.toggleViewCourse(true);
-                                          widget.passCourse(
-                                              widget.data.courses[index]);
-                                          widget.setCurrentIndex(index);
-                                          widget.refresh();
-                                        },
-                                        child: Text(
-                                          "View Couses",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
+                                      color: Colors.blue[300],
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Text(
+                                            " COURSE NAME : " +
+                                                widget.data.courses[index]
+                                                    .courseName
+                                                    .toUpperCase(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 20),
+                                          ),
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    Container(
+                                      height: 150,
+                                      width: double.infinity,
+                                      color: Colors.blueGrey[50],
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              //Course ID
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.article,
+                                                      size: 25,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(
+                                                      "COURSE ID : " +
+                                                          widget
+                                                              .data
+                                                              .courses[index]
+                                                              .courseID,
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              //Course Group
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.group,
+                                                      size: 25,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(
+                                                      "COURSE GROUP : " +
+                                                          widget
+                                                              .data
+                                                              .courses[index]
+                                                              .courseGroup,
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              // Course Batch
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.calendar_today,
+                                                      size: 25,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(
+                                                      "COURSE BATCH : " +
+                                                          widget
+                                                              .data
+                                                              .courses[index]
+                                                              .courseBatch,
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: size.width / 2.2,
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: size.width / 10,
+                                            child: FlatButton(
+                                              color: Colors.blue[900],
+                                              onPressed: () {
+                                                widget.toggleViewCourse(true);
+                                                widget.passCourse(
+                                                    widget.data.courses[index]);
+                                                widget.setCurrentIndex(index);
+                                              },
+                                              child: Text(
+                                                "View Couses",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                )),
+                            ),
+                          );
+                        },
+                      )),
           )
         ],
       ),
     );
   }
 
-  void refreshpage() {
+  void refreshCoursepage() {
     setState(() {});
   }
 }

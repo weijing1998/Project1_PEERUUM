@@ -1,3 +1,4 @@
+import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/student.dart';
 
@@ -16,16 +17,17 @@ class Courses {
     this.courseBatch = cb;
 
     listOfGroup = [
-      Group("Group 1", "1"),
-      Group("Group 2", "2"),
-      Group("Group 3", "3"),
-      Group("Group 4", "4"),
+      // Group("Group 1", "1"),
+      // Group("Group 2", "2"),
+      // Group("Group 3", "3"),
+      // Group("Group 4", "4"),
     ];
   }
 }
 
 class Data {
   List<Courses> courses;
+  List<Forms> forms;
   
 
   Data() {
@@ -35,6 +37,13 @@ class Data {
       Courses("PUBLIC SPEAKING", "STIW3045", "A", "A201"),
       Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
       Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
+    ];
+
+    forms=[
+      Forms("Form1", "1"),
+      Forms("Form2", "2"),
+      Forms("Form3", "3"),
+      Forms("Form4", "4"),
     ];
 
   }

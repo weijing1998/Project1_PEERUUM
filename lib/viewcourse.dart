@@ -7,13 +7,12 @@ class ViewCourse extends StatefulWidget {
   final Courses course;
   final int viewCourseIndex;
   final Data data;
-  final Function refresh;
 
   ViewCourse({
     Key key,
     @required this.course,
     @required this.viewCourseIndex,
-    @required this.data,@required this.refresh,
+    @required this.data,
   }) : super(key: key);
 
   @override
@@ -35,92 +34,46 @@ class _ViewCourseState extends State<ViewCourse> {
               height: 20,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: size.width / 14,
+                Padding(
+                  padding:
+                      const EdgeInsets.fromLTRB(150, 20, 0, 20),
+                  child: Text(
+                    "COURSE DETAIL",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 25),
-                    child: Text(
-                      "COURSE DETAIL",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+
+                //Edit Button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 180, 20),
+                  child: Container(
+                    height: 40,
+                    width: 120,
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          showDialog(
+                            context: context,
+                            builder: (context) => EditCourseDialog(
+                              course: widget.course,
+                              resetViewPage: reset,
+                            ),
+                          );
+                        });
+                      },
+                      child: Text(
+                        "Edit Course",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      color: Colors.blue[900],
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: size.width / 2.7,
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      //Edit Button
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => EditCourseDialog(
-                                    course: widget.course,
-                                    resetViewPage: reset,
-                                  ),
-                                );
-                              });
-                            },
-                            child: Text(
-                              "Edit Course",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            color: Colors.blue[900],
-                          ),
-                        ),
-                      ),
-
-                      // Delete Button
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                widget.data.courses
-                                    .removeAt(widget.viewCourseIndex);
-                                    widget.refresh();
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Sidebar()),
-                                );
-                              });
-                            },
-                            child: Text(
-                              "Delete Course",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            color: Colors.blue[900],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
             //Course detail

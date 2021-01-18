@@ -175,19 +175,20 @@ class _SidebarState extends State<Sidebar> {
               child: atCoursePage
                   ? atViewCourse
                       ? ViewCourse(
-                        refresh: refreshSidebar,
+                        
                           course: course,
                           viewCourseIndex: index,
                           data: data,
                         )
                       : CoursesPage(
-                        refresh: refreshSidebar,
                           toggleViewCourse: toggleViewCourse,
                           passCourse: setCourse,
                           setCurrentIndex: currentIndex,
                           data: data,
                         )
-                  : FormPage(),
+                  : FormPage(
+                      data: data,
+                    ),
             ),
           ],
         ),
@@ -213,9 +214,5 @@ class _SidebarState extends State<Sidebar> {
     });
   }
 
-  void refreshSidebar(){
-    setState(() {
-      
-    });
-  }
+
 }
