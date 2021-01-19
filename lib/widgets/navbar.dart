@@ -114,7 +114,7 @@ class NavBar extends StatelessWidget {
                   FlatButton(
                     height: 50,
                     minWidth: 130,
-                    color: Colors.grey,
+                    color: Colors.blue[900],
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     hoverColor: Colors.transparent,

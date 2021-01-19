@@ -38,8 +38,7 @@ class _ViewCourseState extends State<ViewCourse> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.fromLTRB(150, 20, 0, 20),
+                  padding: const EdgeInsets.fromLTRB(150, 20, 0, 20),
                   child: Text(
                     "COURSE DETAIL",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -129,44 +128,43 @@ class _ViewCourseState extends State<ViewCourse> {
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w500),
                         ),
-                         widget.course.forms.formName == null ?
-                        Container(
-                          height: size.height / 20,
-                          width: size.width / 15,
-                          decoration: BoxDecoration(
-                              color: Colors.red[700],
-                              border: Border.all(
-                                  width: 3, color: Colors.grey[600])),
-                          child:
-                          Align(
-                            child: Text(
-                              "No Form Apply",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                        ) : Container(
-                          height: size.height / 20,
-                          width: size.width / 15,
-                          decoration: BoxDecoration(
-                              color: Colors.red[700],
-                              border: Border.all(
-                                  width: 3, color: Colors.grey[600])),
-                          child:
-                          Align(
-                            child: Text(
-                              widget.course.forms.formName,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                        )
+                        widget.course.forms.formName == null
+                            ? Container(
+                                height: size.height / 20,
+                                width: size.width / 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.red[700],
+                                    border: Border.all(
+                                        width: 3, color: Colors.grey[600])),
+                                child: Align(
+                                  child: Text(
+                                    "No Form Apply",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w200),
+                                  ),
+                                ),
+                                alignment: Alignment.center,
+                              )
+                            : Container(
+                                height: size.height / 20,
+                                width: size.width / 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.red[700],
+                                    border: Border.all(
+                                        width: 3, color: Colors.grey[600])),
+                                child: Align(
+                                  child: Text(
+                                    widget.course.forms.formName,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w200),
+                                  ),
+                                ),
+                                alignment: Alignment.center,
+                              )
                       ],
                     ),
                   )
@@ -238,15 +236,17 @@ class _ViewCourseState extends State<ViewCourse> {
                           height: 40,
                           width: 120,
                           child: FlatButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => EditGroupDialog(
-                                  course: widget.course,
-                                  resetViewPage: reset,
-                                ),
-                              );
-                            },
+                            onPressed: widget.course.listOfGroup.length != 0
+                                ? () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => EditGroupDialog(
+                                        course: widget.course,
+                                        resetViewPage: reset,
+                                      ),
+                                    );
+                                  }
+                                : () {},
                             child: Text(
                               "Edit Group",
                               style: TextStyle(
@@ -265,15 +265,17 @@ class _ViewCourseState extends State<ViewCourse> {
                           height: 40,
                           width: 120,
                           child: FlatButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => DeleteGroupDialog(
-                                  course: widget.course,
-                                  resetViewPage: reset,
-                                ),
-                              );
-                            },
+                            onPressed: widget.course.listOfGroup.length != 0
+                                ? () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => DeleteGroupDialog(
+                                        course: widget.course,
+                                        resetViewPage: reset,
+                                      ),
+                                    );
+                                  }
+                                : () {},
                             child: Text(
                               "Delete Group",
                               style: TextStyle(
@@ -296,154 +298,158 @@ class _ViewCourseState extends State<ViewCourse> {
                 height: size.height / 1.45,
                 width: size.width / 1.5,
                 color: Colors.grey[300],
-                child: widget.course.listOfGroup.length != 0 ?
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.course.listOfGroup.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Container(
-                            height: 600,
-                            width: double.infinity,
-                            color: Colors.blueGrey[500],
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 60,
-                                  width: double.infinity,
-                                  color: Colors.blueGrey[800],
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      widget.course.listOfGroup[index].groupName
-                                          .toUpperCase(),
-                                      style: TextStyle(
+                child: widget.course.listOfGroup.length != 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.course.listOfGroup.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Container(
+                                height: 600,
+                                width: double.infinity,
+                                color: Colors.blueGrey[500],
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 60,
+                                      width: double.infinity,
+                                      color: Colors.blueGrey[800],
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          widget.course.listOfGroup[index]
+                                              .groupName
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: Text(
+                                        "GROUP ID : " +
+                                            widget.course.listOfGroup[index]
+                                                .groupID,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: Text(
+                                        "STUDENT INFO IN " +
+                                            widget.course.listOfGroup[index]
+                                                .groupName
+                                                .toUpperCase(),
+                                        style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w700),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: Text(
-                                    "GROUP ID : " +
-                                        widget
-                                            .course.listOfGroup[index].groupID,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: Text(
-                                    "STUDENT INFO IN " +
-                                        widget
-                                            .course.listOfGroup[index].groupName
-                                            .toUpperCase(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: SingleChildScrollView(
+                                        child: Container(
+                                          height: size.height / 2.6,
+                                          width: size.width / 1.9,
+                                          color: Colors.transparent,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: widget
+                                                  .course
+                                                  .listOfGroup[index]
+                                                  .groupStudent
+                                                  .length,
+                                              itemBuilder:
+                                                  (context, indexOfStudent) {
+                                                return Card(
+                                                  child: Container(
+                                                    color: Colors.teal[200],
+                                                    height: double.infinity,
+                                                    width: 330,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: CircleAvatar(
+                                                            backgroundImage:
+                                                                NetworkImage(
+                                                                    'images/header.jpg'),
+                                                            radius: 52,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "NAME : " +
+                                                              widget
+                                                                  .course
+                                                                  .listOfGroup[
+                                                                      index]
+                                                                  .groupStudent[
+                                                                      indexOfStudent]
+                                                                  .name,
+                                                        ),
+                                                        Text(
+                                                          "Email : " +
+                                                              widget
+                                                                  .course
+                                                                  .listOfGroup[
+                                                                      index]
+                                                                  .groupStudent[
+                                                                      indexOfStudent]
+                                                                  .email,
+                                                        ),
+                                                        Text(
+                                                          "Course : " +
+                                                              widget
+                                                                  .course
+                                                                  .listOfGroup[
+                                                                      index]
+                                                                  .groupStudent[
+                                                                      indexOfStudent]
+                                                                  .course,
+                                                        ),
+                                                        Text(
+                                                          "Telephone No : " +
+                                                              widget
+                                                                  .course
+                                                                  .listOfGroup[
+                                                                      index]
+                                                                  .groupStudent[
+                                                                      indexOfStudent]
+                                                                  .telephone,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: SingleChildScrollView(
-                                    child: Container(
-                                      height: size.height / 2.6,
-                                      width: size.width / 1.9,
-                                      color: Colors.transparent,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: widget
-                                              .course
-                                              .listOfGroup[index]
-                                              .groupStudent
-                                              .length,
-                                          itemBuilder:
-                                              (context, indexOfStudent) {
-                                            return Card(
-                                              child: Container(
-                                                color: Colors.teal[200],
-                                                height: double.infinity,
-                                                width: 330,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: CircleAvatar(
-                                                        backgroundImage:
-                                                            NetworkImage(
-                                                                'images/header.jpg'),
-                                                        radius: 52,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "NAME : " +
-                                                          widget
-                                                              .course
-                                                              .listOfGroup[
-                                                                  index]
-                                                              .groupStudent[
-                                                                  indexOfStudent]
-                                                              .name,
-                                                    ),
-                                                    Text(
-                                                      "Email : " +
-                                                          widget
-                                                              .course
-                                                              .listOfGroup[
-                                                                  index]
-                                                              .groupStudent[
-                                                                  indexOfStudent]
-                                                              .email,
-                                                    ),
-                                                    Text(
-                                                      "Course : " +
-                                                          widget
-                                                              .course
-                                                              .listOfGroup[
-                                                                  index]
-                                                              .groupStudent[
-                                                                  indexOfStudent]
-                                                              .course,
-                                                    ),
-                                                    Text(
-                                                      "Telephone No : " +
-                                                          widget
-                                                              .course
-                                                              .listOfGroup[
-                                                                  index]
-                                                              .groupStudent[
-                                                                  indexOfStudent]
-                                                              .telephone,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }) : Center(child: Text("No Group Created"),),
+                          );
+                        })
+                    : Center(
+                        child: Text("No Group Created"),
+                      ),
               ),
             ),
             SizedBox(

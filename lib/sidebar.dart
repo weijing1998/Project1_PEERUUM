@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/data.dart';
+import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/viewcourse.dart';
+import 'package:pepelist/viewform.dart';
 
 import 'coursespage.dart';
 import 'formpages.dart';
@@ -19,9 +21,13 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   bool atCoursePage = true;
+  bool atFormPage=false;
   bool atViewCourse = false;
+  bool atViewForm = false;
   Courses course;
-  int index;
+  Forms forms;
+  int courseIndex;
+  int formIndex;
   Data data = new Data();
 
   @override
@@ -118,13 +124,16 @@ class _SidebarState extends State<Sidebar> {
                       ),
                     ),
                     SizedBox(height: 24),
-                    //Performance
+                    //Form Page
                     FlatButton(
                       padding: EdgeInsets.all(16),
                       color: Colors.transparent,
                       onPressed: () {
                         setState(() {
                           atCoursePage = false;
+                          atViewCourse=false;
+                          atFormPage=true;
+                          atViewForm=false;
                         });
                       },
                       child: Row(
@@ -176,20 +185,25 @@ class _SidebarState extends State<Sidebar> {
               child: atCoursePage
                   ? atViewCourse
                       ? ViewCourse(
-                        
                           course: course,
-                          viewCourseIndex: index,
+                          viewCourseIndex: courseIndex,
                           data: data,
                         )
                       : CoursesPage(
                           toggleViewCourse: toggleViewCourse,
                           passCourse: setCourse,
-                          setCurrentIndex: currentIndex,
+                          setCurrentIndex: currentCourseIndex,
                           data: data,
                         )
-                  : FormPage(
-                      data: data,
-                    ),
+                  : atViewForm
+                      ? ViewFormPage(
+                          form: forms, data: data, formIndex: formIndex)
+                      : FormPage(
+                          data: data,
+                          toggleFormpage: toggleFormpage,
+                          currentindex: currentFormIndex,
+                          passForm: setFrom,
+                        ),
             ),
           ],
         ),
@@ -209,11 +223,27 @@ class _SidebarState extends State<Sidebar> {
     });
   }
 
-  void currentIndex(int i) {
+  void currentCourseIndex(int i) {
     setState(() {
-      index = i;
+      courseIndex = i;
     });
   }
 
+  void toggleFormpage(bool b) {
+    setState(() {
+      atViewForm = b;
+    });
+  }
 
+  void setFrom(Forms f) {
+    setState(() {
+      forms = f;
+    });
+  }
+
+  void currentFormIndex(int i) {
+    setState(() {
+      formIndex = i;
+    });
+  }
 }

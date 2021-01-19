@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pepelist/register.dart';
 import 'package:pepelist/sidebar.dart';
 
 import 'package:pepelist/utils/my_flutter_app_icons.dart';
@@ -17,7 +18,7 @@ void main() {
       primarySwatch: Colors.blue,
       textTheme: GoogleFonts.ubuntuTextTheme(),
     ),
-    home: Sidebar(),
+    home: HomePage(),
   ));
 }
 
@@ -105,7 +106,8 @@ class LargeChild extends StatelessWidget {
                     FractionallySizedBox(
                       alignment: Alignment.centerRight,
                       widthFactor: 0.5,
-                      child: Image.network("assets/images/logo.png", scale: .6),
+                      child: Image.network("assets/images/logowhite.png",
+                          scale: .6),
                     ),
                     FractionallySizedBox(
                       alignment: Alignment.centerLeft,
@@ -120,7 +122,7 @@ class LargeChild extends StatelessWidget {
                               text: TextSpan(
                                   text: "Welcome To ",
                                   style: TextStyle(
-                                      fontSize: 60, color: Colors.white70),
+                                      fontSize: 60, color: Colors.blue[700]),
                                   children: [
                                     TextSpan(
                                         text: "PEER UUM",
@@ -133,9 +135,30 @@ class LargeChild extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 12.0, top: 20),
-                              child: Text(
-                                "LET’S EXPLORE THIS SITE",
-                                style: TextStyle(color: Colors.white),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                ),
+                                height: size.height / 18,
+                                width: size.width / 12,
+                                child: FlatButton(
+                                  hoverColor: Colors.blue[900],
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => RegisterPage()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Lets Get Started",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -155,7 +178,7 @@ class LargeChild extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Center(
             child: Container(
-              height: size.height,
+              height: size.height/1.2,
               width: size.width / 1.5,
               alignment: Alignment.topCenter,
               child: Column(
@@ -163,7 +186,7 @@ class LargeChild extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: Text(
-                      "WHAT IS PEPELIST?",
+                      "WHAT IS PEERUUM?",
                       style: TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.w100,
@@ -178,7 +201,7 @@ class LargeChild extends StatelessWidget {
                     padding: const EdgeInsets.all(50.0),
                     child: Container(
                       child: Text(
-                        "PEPELIST are a series of extremely useful resources to improve your productivity and organise your life. PEPELIST gives you more than just a to-do list,lanner & calendar app for managing and organizing your daily tasks, reminders, checklists, calendar events, grocery lists, a place to write long notes, create organised outlines and track your daily routines. You can organize tasks by time period, including daily, weekly, monthly, long-term activities. This web app displays every activity through the dashboard so that every activity can be viewed and managed easily.",
+                        "PEERUUM web-based system is a platform for lecturers and teachers to customize the rubric and scales in the peer evaluation form on PEERUUM. Students can directly access to the website to evaluate their peer and submit the score to lecturers through the website. Lecturers no longer need to manually add the score because this system will save the score according to the class and group in database.",
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           fontSize: 20,
@@ -214,7 +237,7 @@ class LargeChild extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  //todo Service
+                  //Course Service
                   Container(
                     height: size.height / 1.8,
                     width: size.width / 4,
@@ -230,17 +253,17 @@ class LargeChild extends StatelessWidget {
                             height: size.height / 6.5,
                             width: size.width / 6.5,
                             child: Image(
-                              image: NetworkImage("assets/images/todolist.png"),
+                              image: NetworkImage("assets/images/courses.png"),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text("TODOLIST",
+                          child: Text("MANAGE COURSES",
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 color: Colors.grey[800],
-                                fontSize: 30,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               )),
                         ),
@@ -248,7 +271,7 @@ class LargeChild extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Container(
                             child: Text(
-                                "PEPELIST allows you to prioritize the tasks that are more important. This means you don’t waste time on tasks that don’t require your immediate attention. Your list will help you stay focused on the tasks that are the most important and provide a planner for managing and organizing your daily tasks such as checklists, grocery lists and more.",
+                                "PEERUUM allow you to create a course according to your subject and classes that you are currently teaching. This features let you easy to manage the peer evaluation form for your students.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -259,7 +282,7 @@ class LargeChild extends StatelessWidget {
                       ],
                     ),
                   ),
-                  //Calander
+                  //CUSTOMIZE peer evaluation form
                   Container(
                     height: size.height / 1.8,
                     width: size.width / 4,
@@ -275,17 +298,17 @@ class LargeChild extends StatelessWidget {
                             height: size.height / 6.5,
                             width: size.width / 6.5,
                             child: Image(
-                              image: NetworkImage("assets/images/calendar.png"),
+                              image: NetworkImage("assets/images/form.png",scale: 4),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text("CALENDER WIDGET",
+                          child: Text("CUSTOMIZE PEER EVALUATION FROM",
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 color: Colors.grey[800],
-                                fontSize: 30,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               )),
                         ),
@@ -293,7 +316,7 @@ class LargeChild extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Container(
                             child: Text(
-                                "Calender widget keep your to-do list always at hand with our calendar widget. PEPELIST provide you a widget that contain to-do list and a planner that support yearly calendar view, agenda view, with built-in reminders. So that you can review and organize your calendar events and to do list side by side.",
+                                "PEERUUM provide you a customized peer evaluation features to customized the evaluation form and receive peer evaluation score from the student. This allow you to change the rubric from the form easily and more flexible compare to static form. ",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -304,7 +327,7 @@ class LargeChild extends StatelessWidget {
                       ],
                     ),
                   ),
-                  //Performace panel
+                  //Score panel
                   Container(
                     height: size.height / 1.8,
                     width: size.width / 4,
@@ -320,17 +343,16 @@ class LargeChild extends StatelessWidget {
                             height: size.height / 6.5,
                             width: size.width / 6.5,
                             child: Image(
-                                image: NetworkImage(
-                                    "assets/images/performance.png")),
+                                image: NetworkImage("assets/images/score.png",scale: 4)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text("Performance Panel",
+                          child: Text("SCORE PANEL",
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 color: Colors.grey[800],
-                                fontSize: 30,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               )),
                         ),
@@ -338,7 +360,7 @@ class LargeChild extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Container(
                             child: Text(
-                                "PEPELIST provided performance panel for you to view the total tasks, completed tasks , overdue tasks, and upcoming tasks after you have created your todo list. This give a overall view for you to observe youself all the time in just one panel with all type of graph.",
+                                "PEERUUM provide you a formular to calculate all the student score after the student finish their peer evaluation by using the peer evaluation form that you have created.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -347,163 +369,6 @@ class LargeChild extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: size.height / 1.1,
-          width: size.width,
-          child: Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Text(
-                    "USER FEEDBACK",
-                    style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      height: size.height / 3.5,
-                      width: size.width / 5,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: size.height / 5,
-                            width: size.width / 5,
-                            child: Image(
-                              image: NetworkImage("assets/images/wesley.png"),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Wesley Ho",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Student of University Utara Malaysia",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      height: size.height / 3.5,
-                      width: size.width / 3,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                            child: Container(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  " ' PEPELIST let me to mark off the tasks that I have completed. At the end of the day, when I look at the list, it will give myself a sense of accomplishment and satisfaction. It might also have the effect of waking me up if nothing has been marked completed. Most important PEPELIST is FREE. ' ",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(fontSize: 18, height: 1.5),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      height: size.height / 3.5,
-                      width: size.width / 3,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                            child: Container(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  " ' Feeling forgetful? Nobody is capable of remembering everything at all times. PEPELIST are a useful external memory aid that give me the permission to forget my tasks. As long as I can remember to look at my to-do list, I will never lose anything that I have recorded on it. ' ",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(fontSize: 18, height: 1.5),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      height: size.height / 3.5,
-                      width: size.width / 5,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: size.height / 5,
-                            width: size.width / 5,
-                            child: Image(
-                              image: NetworkImage("assets/images/likey.png"),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Likey Goh",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Dental Technician in KLIDC",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
@@ -528,90 +393,13 @@ class LargeChild extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "MEET THE TEAM",
+                  "FOUNDER OF PEER UUM",
                   style: TextStyle(color: Colors.grey, fontSize: 50),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // waynn
-                  Container(
-                    height: size.height / 2,
-                    width: size.width / 5,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage('images/waynn.jpg'),
-                            radius: 125,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Toh Wu Waynn",
-                            style: TextStyle(
-                                color: Colors.grey[900],
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "waynnt98@gmail.com",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Founder of PEPELIST",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Undergraduate Student In UUM",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.github,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.facebook,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.instagram,
-                                size: 35,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                   //weijing
                   Container(
                     height: size.height / 2,
@@ -689,162 +477,6 @@ class LargeChild extends StatelessWidget {
                       ],
                     ),
                   ),
-                  //emily
-                  Container(
-                    height: size.height / 2,
-                    width: size.width / 5,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage('images/emily.jpg'),
-                            radius: 125,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Emily Siew Ke Hui",
-                            style: TextStyle(
-                                color: Colors.grey[900],
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "emilysiew98@gmail.com",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Founder of PEPELIST",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Undergraduate Student In UUM",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.github,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.facebook,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.instagram,
-                                size: 35,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  //eva
-
-                  Container(
-                    height: size.height / 2,
-                    width: size.width / 5,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage('images/eva.jpg'),
-                            radius: 125,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Eva Ong Sin Nee",
-                            style: TextStyle(
-                                color: Colors.grey[900],
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "evaong14@gmail.com ",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Founder of PEPELIST",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                            "Undergraduate Student In UUM",
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.github,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.facebook,
-                                size: 35,
-                              ),
-                              FaIcon(
-                                FontAwesomeIcons.instagram,
-                                size: 35,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ],
@@ -855,7 +487,7 @@ class LargeChild extends StatelessWidget {
         Container(
           height: size.height / 10,
           width: size.width,
-          color: Colors.grey[800],
+          color: Color(0xff152238),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -867,7 +499,7 @@ class LargeChild extends StatelessWidget {
                     child: Text(
                       "PEPELIST",
                       style: TextStyle(
-                          color: Colors.grey[400],
+                          color: Colors.white,
                           fontSize: 25,
                           fontWeight: FontWeight.bold),
                     ),
@@ -885,52 +517,13 @@ class LargeChild extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(right: 100),
+                padding: const EdgeInsets.fromLTRB(0, 4, 130, 4),
                 child: Container(
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 30, 4),
-                      child: Container(
-                        height: size.height / 13,
-                        child: Image(
-                            image: NetworkImage(
-                          "assets/images/logo.png",
-                        )),
-                      ),
-                    ),
-                    Container(
-                      child: IconButton(
-                        icon: Icon(
-                          MyFlutterApp.github_circled_alt2,
-                          color: Colors.white60,
-                          size: 35,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: IconButton(
-                        icon: Icon(
-                          MyFlutterApp.facebook_circled,
-                          color: Colors.white60,
-                          size: 35,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: IconButton(
-                        icon: Icon(
-                          MyFlutterApp.instagram_circled,
-                          color: Colors.white60,
-                          size: 35,
-                        ),
-                        onPressed: () {},
-                      ),
-                    )
-                  ]),
+                  height: size.height / 13,
+                  child: Image(
+                      image: NetworkImage(
+                    "assets/images/logowhite.png",
+                  )),
                 ),
               ),
             ],

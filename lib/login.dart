@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/main.dart';
 import 'package:pepelist/register.dart';
+import 'package:pepelist/sidebar.dart';
 import 'package:pepelist/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-   
     super.initState();
   }
 
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       flex: 7,
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 72, vertical: 56),
+                            EdgeInsets.symmetric(horizontal: 72, vertical: 16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(30.0),
+                                  padding: const EdgeInsets.all(10.0),
                                   child: Image.network(
                                     'assets/images/logo.png',
                                     scale: 2,
@@ -119,6 +119,50 @@ class _LoginPageState extends State<LoginPage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      InkWell(
+                                        focusColor: Colors.amber,
+                                        onTap: () {
+                                          print("Tap lecturer");
+                                        },
+                                        child: Container(
+                                          height: 150,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.red,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  "assets/images/lecturer.png"),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          print("Tap student");
+                                        },
+                                        child: Container(
+                                          height: 150,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.red,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  "assets/images/student.png"),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Form(
                                   key: _formKey,
                                   child: Column(
@@ -154,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: height / 5),
+                                SizedBox(height: height / 9),
                                 Container(
                                   height: 48,
                                   width: width / 5,
@@ -192,7 +236,10 @@ class _LoginPageState extends State<LoginPage> {
                                       ],
                                     ),
                                     onTap: () {
-                                    
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Sidebar()));
                                     },
                                   ),
                                 ),
@@ -276,6 +323,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
- 
 }

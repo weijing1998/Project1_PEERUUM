@@ -330,7 +330,9 @@ class DeleteCourseDialog extends StatefulWidget {
 class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
   @override
   void initState() {
-    coursenameController.text = widget.data.courses[0].courseName;
+    widget.data.courses.length != 0
+        ? coursenameController.text = widget.data.courses[0].courseName
+        : coursenameController.text = "";
   }
 
   TextEditingController coursenameController = TextEditingController();
@@ -1058,7 +1060,9 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
 
   @override
   void initState() {
-    groupnameController.text = widget.course.listOfGroup[0].groupName;
+    widget.course.listOfGroup.length != 0
+        ? groupnameController.text = widget.course.listOfGroup[0].groupName
+        : groupnameController.text = "No group";
   }
 
   @override
@@ -1254,7 +1258,9 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
 
   @override
   void initState() {
-    groupnameController.text = widget.course.listOfGroup[0].groupName;
+    widget.course.listOfGroup.length != 0
+        ? groupnameController.text = widget.course.listOfGroup[0].groupName
+        : groupnameController.text = "";
   }
 
   @override
@@ -1524,6 +1530,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
   }
 }
 
+//Add form dialog
 class AddFormDialog extends StatefulWidget {
   final Data data;
   final Function resetFromPage;
@@ -1725,6 +1732,196 @@ class _AddFormDialogState extends State<AddFormDialog> {
                                   Navigator.pop(context);
                                 });
                               }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DeleteFormDialog extends StatefulWidget {
+  final Data data;
+  final Function refreshformpage;
+  DeleteFormDialog(
+      {Key key, @required this.data, @required this.refreshformpage})
+      : super(key: key);
+
+  @override
+  _DeleteFormDialogState createState() => _DeleteFormDialogState();
+}
+
+class _DeleteFormDialogState extends State<DeleteFormDialog> {
+  @override
+  void initState() {
+    widget.data.forms.length != 0
+        ? formnameController.text = widget.data.forms[0].formName
+        : formnameController.text = "";
+  }
+
+  TextEditingController formnameController = TextEditingController();
+  var _formskey = GlobalKey<FormState>();
+  bool disableDropdown = false;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 1.8,
+            width: size.width / 2.4,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "DELETE FORM",
+                    style: TextStyle(
+                      color: Colors.purple[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  disableDropdown
+                      ? DropdownButton(
+                          value: formnameController.text,
+                          icon: Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                          onChanged: (newValue) {},
+                          items: [],
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "SELECTED FORM : ",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Container(
+                                  height: 50,
+                                  width: size.width / 5,
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6.0),
+                                      color: Colors.transparent,
+                                      border:
+                                          Border.all(color: Colors.grey[600])),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      value: formnameController.text,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 32,
+                                      elevation: 16,
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 15),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          formnameController.text = newValue;
+                                        });
+                                      },
+                                      items: widget.data.forms.map((form) {
+                                        return DropdownMenuItem(
+                                          child: new Text(
+                                            form.formName,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: form.formName,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget.data.forms.removeWhere((form) =>
+                                    form.formName == formnameController.text);
+                                widget.refreshformpage();
+                                disableDropdown = true;
+                              });
+                              Navigator.pop(context);
                             },
                           ),
                         ),

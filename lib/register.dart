@@ -40,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Stack(
         children: [
           Container(
@@ -106,18 +107,46 @@ class _RegisterPageState extends State<RegisterPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(height: 32),
-                                InkWell(
-                                  child: CircleAvatar(
-                                    backgroundColor: kGrey1,
-                                    backgroundImage: _image != null
-                                        ? NetworkImage(_image.path)
-                                        : NetworkImage(
-                                            'assets/images/programmer.png'),
-                                    radius: 80,
-                                  ),
-                                  onTap: () {
-                                    getImage();
-                                  },
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      focusColor: Colors.amber,
+                                      onTap: () {
+                                        print("Tap lecturer");
+                                      },
+                                      child: Container(
+                                        height: 150,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                "assets/images/lecturer.png"),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        print("Tap student");
+                                      },
+                                      child: Container(
+                                        height: 150,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                "assets/images/student.png"),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(height: 32),
                                 Form(
@@ -185,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 72),
+                                SizedBox(height: 92),
                                 Container(
                                   height: 48,
                                   width: width / 5,
@@ -225,10 +254,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     onTap: () {
                                       if (_formKey.currentState.validate() &&
                                           !submitting) {
-                                        register(
-                                          nameController.text,
-                                          emailController.text,
-                                          confirmPasswordController.text,
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
                                         );
                                       }
                                     },
@@ -312,84 +342,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
-  }
-
-  Future getImage() async {
-    var pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  void register(String name, String email, String password) {
-    setState(() {
-      submitting = true;
-    });
-
-    http.post('https://techvestigate.com/pepelist/php/register.php', body: {
-      // "encoded_string": base64Image,
-      "name": nameController.text,
-      "email": emailController.text,
-      "password": confirmPasswordController.text,
-    }).then((res) {
-      if (res.body == "success") {
-        print('[+] Registration successful');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(
-              email: emailController.text,
-              password: passwordController.text,
-            ),
-          ),
-        );
-      } else {
-        print('[-] Registration failed');
-      }
-      setState(
-        () {
-          submitting = false;
-        },
-      );
-    }).catchError((err) {
-      print(err);
-    });
-  }
-
-  void uploadImage(String email, File imageFile) async {
-    if (imageFile == null) {
-      imageFile = File('images/dummy_image.png');
-    }
-
-    //   String base64Image = base64Encode(imageFile.readAsBytesSync());
-    //   http.post('https://techvestigate.com/pepelist/php/upload_profile.php',
-    //       body: {
-    //         "encoded_string": base64Image,
-    //         "email": emailController.text,
-    //       }).then((res) {
-    //     if (res.body == "Upload Successful") {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //           builder: (context) => LoginPage(
-    //             email: emailController.text,
-    //             password: passwordController.text,
-    //           ),
-    //         ),
-    //       );
-    //     } else {
-    //       print('[-] Upload Failed');
-    //     }
-    //     setState(() {
-    //       submitting = false;
-    //     });
-    //   }).catchError((err) {
-    //     print(err);
-    //   });
   }
 }

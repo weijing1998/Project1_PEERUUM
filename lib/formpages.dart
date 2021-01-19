@@ -4,8 +4,11 @@ import 'package:pepelist/utils/crudWidget.dart';
 
 class FormPage extends StatefulWidget {
   final Data data;
+  final Function toggleFormpage;
+  final Function passForm;
+  final Function currentindex;
 
-  const FormPage({Key key, @required this.data}) : super(key: key);
+  const FormPage({Key key, @required this.data, @required this.toggleFormpage,@required this.passForm,@required this.currentindex}) : super(key: key);
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -35,7 +38,7 @@ class _FormPageState extends State<FormPage> {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(85, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(55, 0, 10, 0),
                     child: Image.network(
                       "images/formspic.png",
                       scale: 9,
@@ -50,7 +53,7 @@ class _FormPageState extends State<FormPage> {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                     child: Container(
                       height: 45,
                       width: 150,
@@ -85,7 +88,17 @@ class _FormPageState extends State<FormPage> {
                         color: Colors.purple[800],
                         focusColor: Colors.purple[700],
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DeleteFormDialog(
+                                data: widget.data,
+                                refreshformpage: resetformpage,
+                              ),
+                            );
+                          });
+                        },
                         child: Text(
                           "Delete Forms",
                           style: TextStyle(fontWeight: FontWeight.w600),
@@ -151,87 +164,108 @@ class _FormPageState extends State<FormPage> {
                                       width: double.infinity,
                                       color: Colors.blueGrey[50],
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              //Form ID
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.article,
-                                                      size: 25,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Text(
-                                                      "FORM ID : " +
-                                                          widget
-                                                              .data
-                                                              .forms[index]
-                                                              .formID,
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.article,
-                                                      size: 25,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Text(
-                                                      "NUMBER OF QUESTION: " +
-                                                          widget
-                                                              .data
-                                                              .forms[index]
-                                                              .listOfRubric
-                                                              .length
-                                                              .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: size.width / 2.2,
-                                          ),
                                           Container(
-                                            height: 40,
-                                            width: size.width / 10,
-                                            child: FlatButton(
-                                              color: Colors.purple[800],
-                                              onPressed: () {},
-                                              child: Text(
-                                                "View Form",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                            width: size.width / 1.9,
+                                            child: Row(
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    //Form ID
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.article,
+                                                            size: 25,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 20,
+                                                          ),
+                                                          Text(
+                                                            "FORM ID : " +
+                                                                widget
+                                                                    .data
+                                                                    .forms[
+                                                                        index]
+                                                                    .formID,
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.article,
+                                                            size: 25,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 20,
+                                                          ),
+                                                          Text(
+                                                            "NUMBER OF QUESTION: " +
+                                                                widget
+                                                                    .data
+                                                                    .forms[
+                                                                        index]
+                                                                    .listOfRubric
+                                                                    .length
+                                                                    .toString(),
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                                            child: Container(
+                                              height: 40,
+                                              width: size.width / 12,
+                                              child: FlatButton(
+                                                color: Colors.purple[800],
+                                                onPressed: () {
+                                                    widget.toggleFormpage(true);
+                                                widget.passForm(
+                                                    widget.data.forms[index]);
+                                                widget.currentindex(index);
+                                                },
+                                                child: Text(
+                                                  "View Form",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
                                               ),
                                             ),
-                                          )
+                                          ),
+                                        
                                         ],
                                       ),
                                     ),
