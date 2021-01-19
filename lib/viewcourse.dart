@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/sidebar.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 
@@ -128,6 +129,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w500),
                         ),
+                         widget.course.forms.formName == null ?
                         Container(
                           height: size.height / 20,
                           width: size.width / 15,
@@ -135,9 +137,28 @@ class _ViewCourseState extends State<ViewCourse> {
                               color: Colors.red[700],
                               border: Border.all(
                                   width: 3, color: Colors.grey[600])),
-                          child: Align(
+                          child:
+                          Align(
                             child: Text(
                               "No Form Apply",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                        ) : Container(
+                          height: size.height / 20,
+                          width: size.width / 15,
+                          decoration: BoxDecoration(
+                              color: Colors.red[700],
+                              border: Border.all(
+                                  width: 3, color: Colors.grey[600])),
+                          child:
+                          Align(
+                            child: Text(
+                              widget.course.forms.formName,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -275,7 +296,8 @@ class _ViewCourseState extends State<ViewCourse> {
                 height: size.height / 1.45,
                 width: size.width / 1.5,
                 color: Colors.grey[300],
-                child: ListView.builder(
+                child: widget.course.listOfGroup.length != 0 ?
+                ListView.builder(
                     shrinkWrap: true,
                     itemCount: widget.course.listOfGroup.length,
                     itemBuilder: (context, index) {
@@ -421,7 +443,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           ),
                         ),
                       );
-                    }),
+                    }) : Center(child: Text("No Group Created"),),
               ),
             ),
             SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -303,7 +304,7 @@ class CoursesPageState extends State<CoursesPage> {
                           );
                         },
                       )),
-          )
+          ),
         ],
       ),
     );

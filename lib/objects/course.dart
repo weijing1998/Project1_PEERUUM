@@ -9,6 +9,7 @@ class Courses {
   String courseBatch;
   List<Student> joinedStudent;
   List<Group> listOfGroup;
+  Forms forms = new Forms("From 1", "1");
 
   Courses(String cn, String ci, String cg, String cb) {
     this.courseName = cn;
@@ -22,29 +23,9 @@ class Courses {
       // Group("Group 3", "3"),
       // Group("Group 4", "4"),
     ];
+
+   
   }
 }
 
-class Data {
-  List<Courses> courses;
-  List<Forms> forms;
-  
 
-  Data() {
-    courses = [
-      Courses("WEB ENGINNERING", "STIW3045", "A", "A201"),
-      Courses("SOFTWARE TESTING", "STIW3045", "A", "A201"),
-      Courses("PUBLIC SPEAKING", "STIW3045", "A", "A201"),
-      Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
-      Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
-    ];
-
-    forms=[
-      Forms("Form1", "1"),
-      Forms("Form2", "2"),
-      Forms("Form3", "3"),
-      Forms("Form4", "4"),
-    ];
-
-  }
-}

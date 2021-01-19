@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/viewcourse.dart';
 
 import 'coursespage.dart';

@@ -6,7 +6,7 @@ class Forms {
   List<Rubric> listOfRubric;
 
   Forms(String fn, String fID) {
-    this.formName = formName;
+    this.formName = fn;
     this.formID = fID;
 
     listOfRubric = [

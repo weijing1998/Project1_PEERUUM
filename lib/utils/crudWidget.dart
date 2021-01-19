@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/data.dart';
+import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 
 //ADD COURSE
@@ -1505,6 +1507,223 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                     break;
                                   }
                                 }
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddFormDialog extends StatefulWidget {
+  final Data data;
+  final Function resetFromPage;
+  AddFormDialog({Key key, @required this.data, @required this.resetFromPage})
+      : super(key: key);
+
+  @override
+  _AddFormDialogState createState() => _AddFormDialogState();
+}
+
+class _AddFormDialogState extends State<AddFormDialog> {
+  TextEditingController formName = TextEditingController();
+  TextEditingController formID = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    var _formskey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 2,
+            width: size.width / 2.5,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "ADD FORM",
+                    style: TextStyle(
+                      color: Colors.purple[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 20,
+                  ),
+                  //Add form name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "FORM NAME : ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 4,
+                            child: TextFormField(
+                              controller: formName,
+                              decoration: new InputDecoration(
+                                labelText: "Form Name",
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Icon(Icons.book),
+                                ),
+                                fillColor: Colors.white,
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                //fillColor: Colors.green
+                              ),
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "Form Name cannot be empty";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Add Form ID
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          child: Text(
+                            "Form ID : ",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 4,
+                            child: TextFormField(
+                              controller: formID,
+                              decoration: new InputDecoration(
+                                labelText: "Form ID",
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Icon(Icons.article),
+                                ),
+                                fillColor: Colors.white,
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                //fillColor: Colors.green
+                              ),
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "Form ID cannot be empty";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.purple[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              if (_formskey.currentState.validate()) {
+                                setState(() {
+                                  widget.data.forms
+                                      .add(Forms(formName.text, formID.text));
+                                  widget.resetFromPage();
+                                  Navigator.pop(context);
+                                });
                               }
                             },
                           ),
