@@ -2682,7 +2682,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                           height: 40,
                           width: 150,
                           child: RaisedButton(
-                            color: Colors.blue[800],
+                            color: Colors.purple[800],
                             child: Text(
                               "Submit",
                               style: TextStyle(

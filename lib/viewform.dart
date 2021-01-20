@@ -19,6 +19,21 @@ class ViewFormPage extends StatefulWidget {
 }
 
 class _ViewFormPageState extends State<ViewFormPage> {
+  int selectedRadio;
+  List<TextEditingController> controllers = [];
+
+  void setSelectedRadio(int radio) {
+    setState(() {
+      selectedRadio = radio;
+    });
+  }
+
+  @override
+  void initState() {
+    selectedRadio = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -119,15 +134,12 @@ class _ViewFormPageState extends State<ViewFormPage> {
 
             //Rubric detail
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: size.width / 14,
-                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 25),
+                    padding: const EdgeInsets.fromLTRB(160, 0, 0, 0),
                     child: Text(
                       "EVALUATION RUBRICS",
                       style:
@@ -135,86 +147,65 @@ class _ViewFormPageState extends State<ViewFormPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: size.width / 5,
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      //ADD Rubric Button
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AddRubricDialog(
-                                      forms: widget.form,
-                                      resetViewFormPage: resetViewForms),
-                                );
-                              });
-                            },
-                            child: Text(
-                              "Add Rubric",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 160, 0),
+                  child: Container(
+                    child: Row(
+                      children: [
+                        //ADD Rubric Button
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            height: 40,
+                            width: 120,
+                            child: FlatButton(
+                              onPressed: () {
+                                setState(() {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AddRubricDialog(
+                                        forms: widget.form,
+                                        resetViewFormPage: resetViewForms),
+                                  );
+                                });
+                              },
+                              child: Text(
+                                "Add Rubric",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              color: Colors.purple[800],
                             ),
-                            color: Colors.purple[800],
                           ),
                         ),
-                      ),
 
-                      // Edit Rubric Button
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          child: FlatButton(
-                            onPressed: widget.form.formName.length != 0
-                                ? () {
-                                    showDialog();
-                                  }
-                                : () {},
-                            child: Text(
-                              "Edit Rubric",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
+                        // Edit Rubric Button
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            height: 40,
+                            width: 120,
+                            child: FlatButton(
+                              onPressed: widget.form.formName.length != 0
+                                  ? () {
+                                      showDialog();
+                                    }
+                                  : () {},
+                              child: Text(
+                                "Edit Rubric",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              color: Colors.purple[800],
                             ),
-                            color: Colors.purple[800],
                           ),
                         ),
-                      ),
-                      //Delete Rubric Button
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          child: FlatButton(
-                            onPressed: widget.form.formName.length != 0
-                                ? () {}
-                                : () {},
-                            child: Text(
-                              "Delete Rubric",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            color: Colors.purple[800],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -230,20 +221,403 @@ class _ViewFormPageState extends State<ViewFormPage> {
                         shrinkWrap: true,
                         itemCount: widget.form.listOfRubric.length,
                         itemBuilder: (context, index) {
-                          return Card(
-                            child: Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 600,
-                                width: double.infinity,
-                                color: Colors.purple[50],
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [],
-                                ),
-                              ),
-                            ),
-                          );
+                           controllers.add(TextEditingController(text: "Your Answer"));
+                          return widget.form.listOfRubric[index].type == "Scale"
+                              ? Card(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      color: Colors.purple[50],
+                                      child: Stack(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(15.0),
+                                                child: Container(
+                                                  child: Text(
+                                                    "Question : " +
+                                                        widget
+                                                            .form
+                                                            .listOfRubric[index]
+                                                            .question,
+                                                    style: TextStyle(
+                                                        height: 1.3,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(25.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0, 15, 20, 0),
+                                                      child: Text(
+                                                        widget
+                                                            .form
+                                                            .listOfRubric[index]
+                                                            .bad,
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ),
+                                                    ButtonBar(
+                                                      alignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Column(
+                                                          children: [
+                                                            Text("1"),
+                                                            Radio(
+                                                                value: 1,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setState(
+                                                                      () {});
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("2"),
+                                                            Radio(
+                                                                value: 2,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("3"),
+                                                            Radio(
+                                                                value: 3,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("4"),
+                                                            Radio(
+                                                                value: 4,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("5"),
+                                                            Radio(
+                                                                value: 5,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("6"),
+                                                            Radio(
+                                                                value: 6,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("7"),
+                                                            Radio(
+                                                                value: 7,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("8"),
+                                                            Radio(
+                                                                value: 8,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("9"),
+                                                            Radio(
+                                                                value: 9,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Text("10"),
+                                                            Radio(
+                                                                value: 10,
+                                                                groupValue:
+                                                                    selectedRadio,
+                                                                activeColor:
+                                                                    Colors.purple[
+                                                                        700],
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(
+                                                                      "Radio $val");
+                                                                  setSelectedRadio(
+                                                                      val);
+                                                                }),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          20, 15, 0, 0),
+                                                      child: Text(
+                                                        widget
+                                                            .form
+                                                            .listOfRubric[index]
+                                                            .good,
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 50,
+                                                        vertical: 30),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: IconButton(
+                                                      hoverColor: Colors.purple,
+                                                      tooltip: "Delete Rubric",
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.grey[600],
+                                                        size: 38,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          widget
+                                                              .form.listOfRubric
+                                                              .removeAt(index);
+                                                        });
+                                                      }),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Card(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      color: Colors.purple[50],
+                                      child: Stack(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(15.0),
+                                                child: Container(
+                                                  child: Text(
+                                                    "Question : " +
+                                                        widget
+                                                            .form
+                                                            .listOfRubric[index]
+                                                            .question,
+                                                    style: TextStyle(
+                                                        height: 1.3,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
+                                              //Display Textfield
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(20.0),
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: size.width / 4,
+                                                    child: TextFormField(
+                                                      controller: controllers[index],
+                                                      decoration:
+                                                          new InputDecoration(
+                                                        labelText:
+                                                            "Your Answer",
+
+                                                        fillColor: Colors.white,
+                                                        border:
+                                                            new OutlineInputBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  5.0),
+                                                          borderSide:
+                                                              new BorderSide(),
+                                                        ),
+                                                        //fillColor: Colors.green
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 50,
+                                                        vertical: 30),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: IconButton(
+                                                      hoverColor: Colors.purple,
+                                                      tooltip: "Delete Rubric",
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.grey[600],
+                                                        size: 38,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          widget
+                                                              .form.listOfRubric
+                                                              .removeAt(index);
+                                                        });
+                                                      }),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
                         })
                     : Center(
                         child: Text("No Rubrics Created"),
