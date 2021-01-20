@@ -18,7 +18,7 @@ void main() {
       primarySwatch: Colors.blue,
       textTheme: GoogleFonts.ubuntuTextTheme(),
     ),
-    home: HomePage(),
+    home: Sidebar(),
   ));
 }
 
@@ -393,7 +393,7 @@ class LargeChild extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "FOUNDER OF PEER UUM",
+                  "DEVELOPER OF PEER UUM",
                   style: TextStyle(color: Colors.grey, fontSize: 50),
                 ),
               ),
@@ -436,7 +436,7 @@ class LargeChild extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            "Founder of PEPELIST",
+                            "Developer of PEPELIST",
                             style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 15,

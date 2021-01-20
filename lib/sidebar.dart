@@ -117,7 +117,7 @@ class _SidebarState extends State<Sidebar> {
                           ),
                           SizedBox(width: 26),
                           Text(
-                            'Dashboard',
+                            'Courses',
                             style: TextStyle(fontSize: 17, color: Colors.white),
                           ),
                         ],

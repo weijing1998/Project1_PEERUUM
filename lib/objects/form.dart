@@ -10,10 +10,7 @@ class Forms {
     this.formID = fID;
 
     listOfRubric = [
-      Rubric("HOW WAS YOUR FRIEND PERFORME", "scale", " 4", ""),
-      Rubric("HOW WAS YOUR FRIEND PERFORME", "scale", " 4", ""),
-      Rubric("HOW WAS YOUR FRIEND PERFORME", "scale", " 4", ""),
-      Rubric("HOW WAS YOUR FRIEND PERFORME", "scale", " 4", ""),
+      
     ];
   }
 }

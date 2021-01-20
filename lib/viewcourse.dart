@@ -128,7 +128,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w500),
                         ),
-                        widget.course.forms.formName == null
+                        widget.course.listOfForm.length == 0
                             ? Container(
                                 height: size.height / 20,
                                 width: size.width / 15,
@@ -156,7 +156,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                         width: 3, color: Colors.grey[600])),
                                 child: Align(
                                   child: Text(
-                                    widget.course.forms.formName,
+                                    widget.course.listOfForm[0].formName,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,

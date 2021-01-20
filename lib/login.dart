@@ -135,7 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                                           width: 150,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors.red,
                                             image: DecorationImage(
                                               image: NetworkImage(
                                                   "assets/images/lecturer.png"),
@@ -152,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                                           width: 150,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors.red,
                                             image: DecorationImage(
                                               image: NetworkImage(
                                                   "assets/images/student.png"),

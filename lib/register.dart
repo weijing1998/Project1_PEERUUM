@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:pepelist/login.dart';
 import 'package:pepelist/utils/constants.dart';
 
@@ -121,7 +120,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         width: 150,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.red,
                                           image: DecorationImage(
                                             image: NetworkImage(
                                                 "assets/images/lecturer.png"),
@@ -138,7 +136,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         width: 150,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.red,
                                           image: DecorationImage(
                                             image: NetworkImage(
                                                 "assets/images/student.png"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/utils/crudWidget.dart';
 
 class ViewFormPage extends StatefulWidget {
   final Forms form;
@@ -51,7 +52,13 @@ class _ViewFormPageState extends State<ViewFormPage> {
                     child: FlatButton(
                       onPressed: () {
                         setState(() {
-                          showDialog();
+                          showDialog(
+                            context: context,
+                            builder: (context) => EditFormDialog(
+                              forms: widget.form,
+                              resetViewFormPage: resetViewForms,
+                            ),
+                          );
                         });
                       },
                       child: Text(
@@ -61,7 +68,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                             fontSize: 12,
                             fontWeight: FontWeight.w700),
                       ),
-                      color: Colors.blue[900],
+                      color: Colors.purple[800],
                     ),
                   ),
                 ),
@@ -72,7 +79,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
               height: size.height / 3,
               width: size.width / 1.5,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent, width: 2),
+                  border: Border.all(color: Colors.purpleAccent, width: 2),
                   color: Colors.grey[300]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,14 +129,14 @@ class _ViewFormPageState extends State<ViewFormPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 25),
                     child: Text(
-                      "RUBRIC DETAIL",
+                      "EVALUATION RUBRICS",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: size.width / 3.2,
+                  width: size.width / 5,
                 ),
                 Container(
                   child: Row(
@@ -143,7 +150,12 @@ class _ViewFormPageState extends State<ViewFormPage> {
                           child: FlatButton(
                             onPressed: () {
                               setState(() {
-                                showDialog();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AddRubricDialog(
+                                      forms: widget.form,
+                                      resetViewFormPage: resetViewForms),
+                                );
                               });
                             },
                             child: Text(
@@ -153,7 +165,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700),
                             ),
-                            color: Colors.blue[900],
+                            color: Colors.purple[800],
                           ),
                         ),
                       ),
@@ -177,7 +189,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700),
                             ),
-                            color: Colors.blue[900],
+                            color: Colors.purple[800],
                           ),
                         ),
                       ),
@@ -198,7 +210,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700),
                             ),
-                            color: Colors.blue[900],
+                            color: Colors.purple[800],
                           ),
                         ),
                       ),
@@ -234,7 +246,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                           );
                         })
                     : Center(
-                        child: Text("No Group Created"),
+                        child: Text("No Rubrics Created"),
                       ),
               ),
             ),
@@ -247,7 +259,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
     );
   }
 
-  void reset() {
+  void resetViewForms() {
     setState(() {});
   }
 }
