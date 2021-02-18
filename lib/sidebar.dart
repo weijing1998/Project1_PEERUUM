@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pepelist/main.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/objects/form.dart';
@@ -21,7 +22,7 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   bool atCoursePage = true;
-  bool atFormPage=false;
+  bool atFormPage = false;
   bool atViewCourse = false;
   bool atViewForm = false;
   Courses course;
@@ -131,9 +132,9 @@ class _SidebarState extends State<Sidebar> {
                       onPressed: () {
                         setState(() {
                           atCoursePage = false;
-                          atViewCourse=false;
-                          atFormPage=true;
-                          atViewForm=false;
+                          atViewCourse = false;
+                          atFormPage = true;
+                          atViewForm = false;
                         });
                       },
                       child: Row(
@@ -157,8 +158,10 @@ class _SidebarState extends State<Sidebar> {
                       padding: EdgeInsets.all(16),
                       color: Colors.transparent,
                       onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

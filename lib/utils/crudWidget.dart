@@ -2729,3 +2729,196 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
     );
   }
 }
+
+class ApplyFormDialog extends StatefulWidget {
+  final Data data;
+  final Forms forms;
+
+  ApplyFormDialog({Key key,@required this.data,@required this.forms}) : super(key: key);
+
+  @override
+  _ApplyFormDialogState createState() => _ApplyFormDialogState();
+}
+
+class _ApplyFormDialogState extends State<ApplyFormDialog> {
+  TextEditingController coursenameController = TextEditingController();
+  var _formskey = GlobalKey<FormState>();
+  bool disableDropdown = false;
+
+  void initState() {
+    widget.data.courses.length != 0
+        ? coursenameController.text = widget.data.courses[0].courseName
+        : coursenameController.text = "";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 1.8,
+            width: size.width / 2.4,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "APPLY FORM",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  disableDropdown
+                      ? DropdownButton(
+                          value: coursenameController.text,
+                          icon: Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                          onChanged: (newValue) {},
+                          items: [],
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Apply " + widget.forms.formName+" to : ",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Container(
+                                  height: 50,
+                                  width: size.width / 5,
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6.0),
+                                      color: Colors.transparent,
+                                      border:
+                                          Border.all(color: Colors.grey[600])),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      value: coursenameController.text,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 32,
+                                      elevation: 16,
+                                      style: TextStyle(
+                                          color: Colors.purple[800], fontSize: 15),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          coursenameController.text = newValue;
+                                        });
+                                      },
+                                      items: widget.data.courses.map((course) {
+                                        return DropdownMenuItem(
+                                          child: new Text(
+                                            course.courseName,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: course.courseName,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: RaisedButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                             
+                              setState(() {
+                                for(Courses c in widget.data.courses){
+                                if(c.courseName == coursenameController.text){
+                                  c.listOfForm.add(widget.forms);
+                                  break;
+                                }
+                              }
+                                disableDropdown = true;
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

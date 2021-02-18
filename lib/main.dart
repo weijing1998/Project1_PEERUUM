@@ -178,7 +178,7 @@ class LargeChild extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Center(
             child: Container(
-              height: size.height/1.2,
+              height: size.height / 1,
               width: size.width / 1.5,
               alignment: Alignment.topCenter,
               child: Column(
@@ -194,9 +194,9 @@ class LargeChild extends StatelessWidget {
                     ),
                   ),
                   // Change to PEER UUM page
-                  // Image(
-                  //   image: NetworkImage("assets/images/pepelist.png", scale: 2),
-                  // ),
+                  Image(
+                    image: NetworkImage("assets/images/peeruum.PNG", scale: 2),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(50.0),
                     child: Container(
@@ -298,7 +298,8 @@ class LargeChild extends StatelessWidget {
                             height: size.height / 6.5,
                             width: size.width / 6.5,
                             child: Image(
-                              image: NetworkImage("assets/images/form.png",scale: 4),
+                              image: NetworkImage("assets/images/form.png",
+                                  scale: 4),
                             ),
                           ),
                         ),
@@ -343,7 +344,8 @@ class LargeChild extends StatelessWidget {
                             height: size.height / 6.5,
                             width: size.width / 6.5,
                             child: Image(
-                                image: NetworkImage("assets/images/score.png",scale: 4)),
+                                image: NetworkImage("assets/images/score.png",
+                                    scale: 4)),
                           ),
                         ),
                         Padding(

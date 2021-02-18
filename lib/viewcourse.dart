@@ -147,23 +147,41 @@ class _ViewCourseState extends State<ViewCourse> {
                                 ),
                                 alignment: Alignment.center,
                               )
-                            : Container(
-                                height: size.height / 20,
-                                width: size.width / 15,
-                                decoration: BoxDecoration(
-                                    color: Colors.red[700],
-                                    border: Border.all(
-                                        width: 3, color: Colors.grey[600])),
-                                child: Align(
-                                  child: Text(
-                                    widget.course.listOfForm[0].formName,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w200),
-                                  ),
+                            : SingleChildScrollView(
+                                child: Container(
+                                  height: size.height / 20,
+                                  width: size.width / 2,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          widget.course.listOfForm.length,
+                                      itemBuilder:
+                                          (BuildContext ctxt, int index) {
+                                        return Card(
+                                          child: Container(
+                                            height: size.height / 20,
+                                            width: size.width / 15,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green[400],
+                                                border: Border.all(
+                                                    width: 3,
+                                                    color: Colors.grey[600])),
+                                            child: Align(
+                                              child: Text(
+                                                widget.course.listOfForm[index]
+                                                    .formName,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w200),
+                                              ),
+                                            ),
+                                            alignment: Alignment.center,
+                                          ),
+                                        );
+                                      }),
                                 ),
-                                alignment: Alignment.center,
                               )
                       ],
                     ),

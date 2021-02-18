@@ -8,7 +8,13 @@ class FormPage extends StatefulWidget {
   final Function passForm;
   final Function currentindex;
 
-  const FormPage({Key key, @required this.data, @required this.toggleFormpage,@required this.passForm,@required this.currentindex}) : super(key: key);
+  const FormPage(
+      {Key key,
+      @required this.data,
+      @required this.toggleFormpage,
+      @required this.passForm,
+      @required this.currentindex})
+      : super(key: key);
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -242,17 +248,18 @@ class _FormPageState extends State<FormPage> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15),
                                             child: Container(
                                               height: 40,
                                               width: size.width / 12,
                                               child: FlatButton(
                                                 color: Colors.purple[800],
                                                 onPressed: () {
-                                                    widget.toggleFormpage(true);
-                                                widget.passForm(
-                                                    widget.data.forms[index]);
-                                                widget.currentindex(index);
+                                                  widget.toggleFormpage(true);
+                                                  widget.passForm(
+                                                      widget.data.forms[index]);
+                                                  widget.currentindex(index);
                                                 },
                                                 child: Text(
                                                   "View Form",
@@ -265,7 +272,36 @@ class _FormPageState extends State<FormPage> {
                                               ),
                                             ),
                                           ),
-                                        
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                            child: Container(
+                                              height: 40,
+                                              width: size.width / 12,
+                                              child: FlatButton(
+                                                color: Colors.purple[800],
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        ApplyFormDialog(
+                                                      data: widget.data,
+                                                      forms: widget
+                                                          .data.forms[index],
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "Apply Form",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

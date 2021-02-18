@@ -8,18 +8,17 @@ class Data {
 
   Data() {
     courses = [
-      Courses("WEB ENGINNERING", "STIW3045", "A", "A201"),
-      Courses("SOFTWARE TESTING", "STIW3045", "A", "A201"),
-      Courses("PUBLIC SPEAKING", "STIW3045", "A", "A201"),
-      Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
-      Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
+      // Courses("WEB ENGINNERING", "STIW3045", "A", "A201"),
+      // Courses("SOFTWARE TESTING", "STIW3045", "A", "A201"),
+      // Courses("PUBLIC SPEAKING", "STIW3045", "A", "A201"),
+      // Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
+      // Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
+      Courses("PROJECT 1", "STIX3913", "C", "A201")
     ];
 
     forms=[
       Forms("Default Form", "1"),
-      Forms("Form2", "2"),
-      Forms("Form3", "3"),
-      Forms("Form4", "20"),
+  
     ];
 
   }
