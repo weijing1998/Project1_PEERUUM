@@ -234,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ],
                                     ),
                                     onTap: () {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => Sidebar()));
@@ -258,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                                             child: FlatButton(
                                                 hoverColor: Colors.transparent,
                                                 onPressed: () {
-                                                  Navigator.push(
+                                                  Navigator.pushReplacement(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
@@ -301,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
                     size: 32,
                   ),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );

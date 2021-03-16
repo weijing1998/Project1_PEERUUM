@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pepelist/login.dart';
+import 'package:pepelist/main.dart';
+import 'package:pepelist/objects/lecturer.dart';
 import 'package:pepelist/utils/constants.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,12 +19,15 @@ class _RegisterPageState extends State<RegisterPage> {
   double width;
   double height;
   bool submitting = false;
+  String typeOfUser = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController typeOfUserController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseStore = FirebaseFirestore.instance;
   final picker = ImagePicker();
   File _image;
 
@@ -39,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -110,106 +117,174 @@ class _RegisterPageState extends State<RegisterPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    InkWell(
-                                      focusColor: Colors.amber,
-                                      onTap: () {
-                                        print("Tap lecturer");
+                                    IconButton(
+                                      tooltip: "Lecturer",
+                                      icon: Image.asset('images/lecturer.png'),
+                                      iconSize: 140,
+                                      onPressed: () {
+                                        setState(() {
+                                          typeOfUser = "Lecturer";
+                                        });
                                       },
-                                      child: Container(
-                                        height: 150,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                "assets/images/lecturer.png"),
-                                          ),
-                                        ),
-                                      ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        print("Tap student");
+                                    IconButton(
+                                      tooltip: "Student",
+                                      icon: Image.asset('images/student.png'),
+                                      iconSize: 140,
+                                      onPressed: () {
+                                        setState(() {
+                                          typeOfUser = "Student";
+                                        });
                                       },
-                                      child: Container(
-                                        height: 150,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                "assets/images/student.png"),
-                                          ),
-                                        ),
-                                      ),
                                     ),
                                   ],
                                 ),
                                 SizedBox(height: 32),
                                 Form(
                                   key: _formKey,
-                                  child: Column(
-                                    children: [
-                                      TextFormField(
-                                        controller: nameController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Full Name',
+                                  child: typeOfUser == "Student"
+                                      ? Column(
+                                          children: [
+                                            TextFormField(
+                                              controller: nameController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Full Name',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Name';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(height: 4),
+                                            TextFormField(
+                                              controller: emailController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Email Address',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Email';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(height: 4),
+                                            TextFormField(
+                                              controller: passwordController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Password',
+                                              ),
+                                              obscureText: true,
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Password';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            TextFormField(
+                                              controller:
+                                                  confirmPasswordController,
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                hintText: 'Confirm Password',
+                                              ),
+                                              validator: (value) {
+                                                if (value !=
+                                                        passwordController
+                                                            .text ||
+                                                    value.isEmpty) {
+                                                  return 'Incorrect Password';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : Column(
+                                          children: [
+                                            TextFormField(
+                                              controller: nameController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Full Name',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Name';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(height: 4),
+                                            TextFormField(
+                                              controller: emailController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Email Address',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Email';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(height: 4),
+                                            TextFormField(
+                                              controller: passwordController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Password',
+                                              ),
+                                              obscureText: true,
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Invalid Password';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            TextFormField(
+                                              controller:
+                                                  confirmPasswordController,
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                hintText: 'Confirm Password',
+                                              ),
+                                              validator: (value) {
+                                                if (value !=
+                                                        passwordController
+                                                            .text ||
+                                                    value.isEmpty) {
+                                                  return 'Incorrect Password';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            TextFormField(
+                                              controller: typeOfUserController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Refer Key',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty ||
+                                                    value != "Lecturer") {
+                                                  return 'Need Refer Key';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Invalid Name';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                      SizedBox(height: 4),
-                                      TextFormField(
-                                        controller: emailController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Email Address',
-                                        ),
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Invalid Email';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                      SizedBox(height: 4),
-                                      TextFormField(
-                                        controller: passwordController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Password',
-                                        ),
-                                        obscureText: true,
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Invalid Password';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                      TextFormField(
-                                        controller: confirmPasswordController,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                          hintText: 'Confirm Password',
-                                        ),
-                                        validator: (value) {
-                                          if (value !=
-                                                  passwordController.text ||
-                                              value.isEmpty) {
-                                            return 'Incorrect Password';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
                                 ),
                                 SizedBox(height: 92),
                                 Container(
@@ -251,12 +326,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     onTap: () {
                                       if (_formKey.currentState.validate() &&
                                           !submitting) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()),
-                                        );
+                                        signup(emailController.text,
+                                            passwordController.text);
                                       }
                                     },
                                   ),
@@ -282,7 +353,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         child: FlatButton(
                                             hoverColor: Colors.transparent,
                                             onPressed: () {
-                                              Navigator.push(
+                                              Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -323,7 +394,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     size: 32,
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
                   },
                 ),
                 Padding(
@@ -338,6 +412,88 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ],
       ),
+    );
+  }
+
+  signup(String email, String password) async {
+    try {
+      await firebaseAuth.createUserWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+
+      Map<String, dynamic> data = {
+        "email": emailController.text,
+        "typeOfUser": typeOfUserController.text
+      };
+      CollectionReference collectionReference =
+          FirebaseFirestore.instance.collection("User");
+      await collectionReference.add(data);
+      print("User clode store added");
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showAlertDialogPass(context);
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        showAlertDialogEmail(context);
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    print("User authentication added");
+  }
+
+  showAlertDialogEmail(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Register Unsuccesful"),
+      content: Text("This email is registered."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogPass(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Register Unsuccesful"),
+      content: Text("This Password is too weak."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

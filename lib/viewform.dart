@@ -221,7 +221,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                         shrinkWrap: true,
                         itemCount: widget.form.listOfRubric.length,
                         itemBuilder: (context, index) {
-                           controllers.add(TextEditingController(text: "Your Answer"));
+                          controllers
+                              .add(TextEditingController(text: "Your Answer"));
                           return widget.form.listOfRubric[index].type == "Scale"
                               ? Card(
                                   child: Padding(
@@ -563,7 +564,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                     height: 50,
                                                     width: size.width / 4,
                                                     child: TextFormField(
-                                                      controller: controllers[index],
+                                                      controller:
+                                                          controllers[index],
                                                       decoration:
                                                           new InputDecoration(
                                                         labelText:

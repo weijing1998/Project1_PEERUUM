@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "peeruum",
     "public": "web",
     "ignore": [
       "firebase.json",

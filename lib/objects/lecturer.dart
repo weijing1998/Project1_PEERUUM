@@ -8,6 +8,15 @@ class Lecturer {
     this.name = n;
     this.email = em;
     this.password = pass;
-    this.email = email;
+    this.telephone=tele;
+  }
+
+  Map<String , dynamic > toMap(){
+    return {
+      'name':name,
+      'email':email,
+      'password':password,
+      'telephone':telephone
+    };
   }
 }

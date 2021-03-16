@@ -64,7 +64,7 @@ class NavBar extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
@@ -105,7 +105,7 @@ class NavBar extends StatelessWidget {
                           color: Colors.white),
                     ),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterPage()),
                       );
@@ -125,7 +125,7 @@ class NavBar extends StatelessWidget {
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );

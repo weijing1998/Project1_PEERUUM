@@ -4,23 +4,72 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pepelist/register.dart';
 import 'package:pepelist/sidebar.dart';
-
-import 'package:pepelist/utils/my_flutter_app_icons.dart';
 import 'widgets/navbar.dart';
 import 'utils/responsiveLayout.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
-void main() {
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
-    title: 'PEERUUM',
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-      textTheme: GoogleFonts.ubuntuTextTheme(),
-    ),
-    home: Sidebar(),
+    debugShowCheckedModeBanner: false ,
+    home: App(),
   ));
 }
+
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
+  @override
+  Widget  build(BuildContext context) {
+    // Show error message if initialization failed
+    if(_error) {
+      print("fail");
+      return Text("Something Went Wrong");
+      
+      
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      print("loading");
+      return CircularProgressIndicator();
+    }
+    print("Firebase run succesfully");
+    return HomePage();
+  }
+}
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -438,7 +487,7 @@ class LargeChild extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            "Developer of PEPELIST",
+                            "Developer of PEER UUM",
                             style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 15,
@@ -499,7 +548,7 @@ class LargeChild extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      "PEPELIST",
+                      "PEER UUM",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
