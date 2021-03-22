@@ -23,20 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: "^0.7.0"
-  cloud_firestore: "^0.16.0+1"
+  cloud_firestore: ^0.16.0+1
   cupertino_icons: ^1.0.1
+  firebase_auth: ^0.20.1
+  firebase_core: ^0.7.0
   fl_chart: ^0.12.2
   flutter_spinkit: ^4.1.2+1
   font_awesome_flutter: ^8.11.0
-  google_fonts: ^1.1.1
   image_picker: ^0.6.7+17
   image_picker_for_web: ^0.1.0+2
   intl: ^0.16.1
+  provider: ^5.0.0
   syncfusion_flutter_calendar: ^18.4.32
-  firebase_auth: "^0.20.1"
-  
-  
+  uuid: ^3.0.1
 
 dev_dependencies: null
 # flutter_test:

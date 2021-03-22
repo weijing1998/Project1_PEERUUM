@@ -1,14 +1,19 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pepelist/main.dart';
+import 'package:pepelist/coursespage.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:pepelist/viewcourse.dart';
 import 'package:pepelist/viewform.dart';
+import 'package:provider/provider.dart';
 
-import 'coursespage.dart';
 import 'formpages.dart';
+import 'homePage.dart';
 
 // ignore: must_be_immutable
 class Sidebar extends StatefulWidget {
@@ -154,11 +159,9 @@ class _SidebarState extends State<Sidebar> {
                       ),
                     ),
                     SizedBox(height: 24),
-                    FlatButton(
-                      padding: EdgeInsets.all(16),
-                      color: Colors.transparent,
+                    TextButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomePage()));

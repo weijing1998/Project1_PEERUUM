@@ -8,9 +8,7 @@ class Forms {
   Forms(String fn, String fID) {
     this.formName = fn;
     this.formID = fID;
-
-    listOfRubric = [
-      
+    listOfRubric = [      
     ];
   }
 }

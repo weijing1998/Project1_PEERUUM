@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/student.dart';
@@ -5,27 +6,36 @@ import 'package:pepelist/objects/student.dart';
 class Courses {
   String courseName;
   String courseID;
+  String courseCode;
   String courseGroup;
   String courseBatch;
-  List<Student> joinedStudent;
   List<Group> listOfGroup;
   List<Forms> listOfForm;
 
-  Courses(String cn, String ci, String cg, String cb) {
-    this.courseName = cn;
-    this.courseID = ci;
-    this.courseGroup = cg;
-    this.courseBatch = cb;
+  Courses(
+      {this.courseName,
+      @required this.courseID,
+      this.courseGroup,
+      this.courseBatch,
+      this.courseCode});
 
-    listOfGroup = [
-      // Group("Group 1", "1"),
-      // Group("Group 2", "2"),
-      // Group("Group 3", "3"),
-      // Group("Group 4", "4"),
-    ];
+  factory Courses.fromJson(Map<String, dynamic> json) {
+    return Courses(
+      courseName: json["coursename"],
+      courseID: json["courseid"],
+      courseGroup: json["coursegroup"],
+      courseBatch: json["coursebatch"],
+      courseCode: json['coursecode'],
+    );
+  }
 
-    listOfForm=[];
-
-
+  Map<String, dynamic> toJson() {
+    return {
+      "coursename": courseName,
+      "courseid": courseID,
+      "coursegroup": courseGroup,
+      "coursebatch": courseBatch,
+      "coursecode" : courseCode,
+    };
   }
 }

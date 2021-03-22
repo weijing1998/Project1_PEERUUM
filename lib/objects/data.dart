@@ -13,7 +13,7 @@ class Data {
       // Courses("PUBLIC SPEAKING", "STIW3045", "A", "A201"),
       // Courses("OPERATING SYSTEM", "STIW3045", "A", "A201"),
       // Courses("SOFTWARE ENGINEERING", "STIW3045", "A", "A201")
-      Courses("PROJECT 1", "STIX3913", "C", "A201")
+      //Courses("PROJECT 1", "STIX3913", "C", "A201")
     ];
 
     forms=[

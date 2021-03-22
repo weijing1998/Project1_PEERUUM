@@ -1,9 +1,12 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pepelist/main.dart';
+import 'package:pepelist/homePage.dart';
 import 'package:pepelist/register.dart';
 import 'package:pepelist/sidebar.dart';
+
 import 'package:pepelist/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,9 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   double width;
   double height;
   bool submitting = false;
+  bool identify = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String typeOfUser = "Student";
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseStore = FirebaseFirestore.instance.collection("User");
 
   @override
   void initState() {
@@ -125,38 +132,33 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      InkWell(
-                                        focusColor: Colors.amber,
-                                        onTap: () {
-                                          print("Tap lecturer");
-                                        },
-                                        child: Container(
-                                          height: 150,
-                                          width: 150,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  "assets/images/lecturer.png"),
-                                            ),
-                                          ),
+                                      IconButton(
+                                        focusColor: Colors.yellow,
+                                        splashColor: Colors.yellow,
+                                        padding: EdgeInsets.all(10),
+                                        tooltip: "Lecturer",
+                                        highlightColor: Colors.red,
+                                        hoverColor: Colors.red,
+                                        color: Colors.blue,
+                                        icon: Image.asset(
+                                          'images/lecturer.png',
                                         ),
+                                        iconSize: 140,
+                                        onPressed: () {
+                                          setState(() {
+                                            typeOfUser = "Lecturer";
+                                          });
+                                        },
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          print("Tap student");
+                                      IconButton(
+                                        tooltip: "Student",
+                                        icon: Image.asset('images/student.png'),
+                                        iconSize: 140,
+                                        onPressed: () {
+                                          setState(() {
+                                            typeOfUser = "Student";
+                                          });
                                         },
-                                        child: Container(
-                                          height: 150,
-                                          width: 150,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  "assets/images/student.png"),
-                                            ),
-                                          ),
-                                        ),
                                       ),
                                     ],
                                   ),
@@ -233,11 +235,17 @@ class _LoginPageState extends State<LoginPage> {
                                               ),
                                       ],
                                     ),
-                                    onTap: () {
+                                    onTap: () async {
+                                      setState(() {
+                                        submitting = true;
+                                      });
                                       Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Sidebar()));
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Sidebar()),
+                                      );
+                                      // await signIn(emailController.text,
+                                      //     passwordController.text);
                                     },
                                   ),
                                 ),
@@ -319,6 +327,124 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       ),
+    );
+  }
+
+  signIn(String email, String password) async {
+    try {
+      await firebaseAuth.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+
+      await firebaseStore.get().then((value) => value.docs.forEach((element) {
+            if (element.data()["email"] == emailController.text &&
+                element.data()["typeOfUser"] == typeOfUser) {
+              identify = true;
+            }
+          }));
+      if (identify == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Sidebar()),
+        );
+      } else {
+        setState(() {
+          submitting = false;
+        });
+
+        showAlertDialogType(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        setState(() {
+          submitting = false;
+        });
+        showAlertDialogEmail(context);
+        print('user not found.');
+      } else if (e.code == 'wrong-password') {
+        setState(() {
+          submitting = false;
+        });
+        showAlertDialogPass(context);
+        print('wrong password.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    print("User authentication added");
+  }
+
+  showAlertDialogEmail(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sign In Unsuccesful"),
+      content: Text("This email is not registered."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogPass(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sign In Unsuccesful"),
+      content: Text("The password is incorrect"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogType(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sign In Unsuccesful"),
+      content: Text("Incorrect Type Of User"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

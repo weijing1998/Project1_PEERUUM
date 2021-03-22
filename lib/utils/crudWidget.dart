@@ -4,6 +4,11 @@ import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/rubric.dart';
+import 'package:pepelist/utils/crudFirebase.dart';
+import 'package:pepelist/utils/projetcProvider.dart';
+import 'package:provider/provider.dart';
+
+Crudmethod crud = Crudmethod();
 
 //ADD COURSE
 class AddCourseDialog extends StatefulWidget {
@@ -18,11 +23,14 @@ class AddCourseDialog extends StatefulWidget {
 
 class _AddCourseDialogState extends State<AddCourseDialog> {
   TextEditingController courseName = TextEditingController();
-  TextEditingController courseID = TextEditingController();
+  TextEditingController courseCode = TextEditingController();
   TextEditingController courseGroup = TextEditingController();
   TextEditingController courseBatch = TextEditingController();
+  String initcn;
+
   @override
   Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
@@ -84,6 +92,9 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             width: size.width / 4,
                             child: TextFormField(
                               controller: courseName,
+                              initialValue: initcn,
+                              onChanged: (courseName)=>
+                                  projectProvider.changeCourseName= courseName,
                               decoration: new InputDecoration(
                                 labelText: "Course Name",
                                 suffixIcon: Padding(
@@ -96,7 +107,6 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   borderRadius: new BorderRadius.circular(5.0),
                                   borderSide: new BorderSide(),
                                 ),
-                                //fillColor: Colors.green
                               ),
                               validator: (val) {
                                 if (val.isEmpty) {
@@ -120,7 +130,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                           child: Text(
-                            "COURSE ID : ",
+                            "COURSE CODE : ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -131,9 +141,11 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
-                              controller: courseID,
+                              onChanged: (String value) =>
+                                  projectProvider.changeCourseCode = value,
+                              controller: courseCode,
                               decoration: new InputDecoration(
-                                labelText: "Course ID",
+                                labelText: "Course Code",
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -144,11 +156,10 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   borderRadius: new BorderRadius.circular(5.0),
                                   borderSide: new BorderSide(),
                                 ),
-                                //fillColor: Colors.green
                               ),
                               validator: (val) {
                                 if (val.isEmpty) {
-                                  return "Course ID cannot be empty";
+                                  return "Course Code cannot be empty";
                                 } else {
                                   return null;
                                 }
@@ -176,6 +187,8 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (String value) =>
+                                  projectProvider.changeCourseGroup = value,
                               controller: courseGroup,
                               decoration: new InputDecoration(
                                 labelText: "Course GROUP",
@@ -221,6 +234,8 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (String value) =>
+                                  projectProvider.changeCourseBatch = value,
                               controller: courseBatch,
                               decoration: new InputDecoration(
                                 labelText: "Course Batch",
@@ -259,7 +274,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -279,7 +294,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -288,18 +303,27 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700),
                             ),
-                            onPressed: () {
-                              if (_formskey.currentState.validate()) {
-                                setState(() {
-                                  widget.data.courses.add(
-                                    Courses(courseName.text, courseID.text,
-                                        courseGroup.text, courseBatch.text),
-                                  );
-                                  widget.reset();
-                                  print(widget.data.courses.length);
-                                  Navigator.pop(context);
-                                });
-                              }
+                            onPressed: () async {
+                              projectProvider.saveCourses();
+                              Navigator.pop(context);
+                              // var courses = Courses(
+                              //         courseName.text,
+                              //         courseID.text,
+                              //         courseGroup.text,
+                              //         courseBatch.text)
+                              //     .toJson();
+                              // await crud.addCourse(courses);
+                              // if (_formskey.currentState.validate()) {
+                              //   setState(() {
+                              //     widget.data.courses.add(
+                              //       Courses(courseName.text, courseID.text,
+                              //           courseGroup.text, courseBatch.text),
+                              //     );
+                              //     widget.reset();
+                              //     print(widget.data.courses.length);
+                              //     Navigator.pop(context);
+                              //   });
+                              // }
                             },
                           ),
                         ),
@@ -2734,7 +2758,8 @@ class ApplyFormDialog extends StatefulWidget {
   final Data data;
   final Forms forms;
 
-  ApplyFormDialog({Key key,@required this.data,@required this.forms}) : super(key: key);
+  ApplyFormDialog({Key key, @required this.data, @required this.forms})
+      : super(key: key);
 
   @override
   _ApplyFormDialogState createState() => _ApplyFormDialogState();
@@ -2810,7 +2835,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Apply " + widget.forms.formName+" to : ",
+                                "Apply " + widget.forms.formName + " to : ",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
@@ -2834,7 +2859,8 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.purple[800], fontSize: 15),
+                                          color: Colors.purple[800],
+                                          fontSize: 15),
                                       onChanged: (newValue) {
                                         setState(() {
                                           coursenameController.text = newValue;
@@ -2896,14 +2922,14 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
-                             
                               setState(() {
-                                for(Courses c in widget.data.courses){
-                                if(c.courseName == coursenameController.text){
-                                  c.listOfForm.add(widget.forms);
-                                  break;
+                                for (Courses c in widget.data.courses) {
+                                  if (c.courseName ==
+                                      coursenameController.text) {
+                                    c.listOfForm.add(widget.forms);
+                                    break;
+                                  }
                                 }
-                              }
                                 disableDropdown = true;
                               });
                               Navigator.pop(context);

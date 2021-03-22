@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pepelist/homePage.dart';
 import 'package:pepelist/login.dart';
-import 'package:pepelist/main.dart';
-import 'package:pepelist/objects/lecturer.dart';
 import 'package:pepelist/utils/constants.dart';
+import 'package:pepelist/utils/crudFirebase.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   double width;
   double height;
   bool submitting = false;
-  String typeOfUser = "";
+  String typeOfUser = "Student";
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -29,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseStore = FirebaseFirestore.instance;
   final picker = ImagePicker();
+  Crudmethod crud = new Crudmethod();
   File _image;
 
   @override
@@ -324,10 +325,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ],
                                     ),
                                     onTap: () {
-                                      if (_formKey.currentState.validate() &&
-                                          !submitting) {
-                                        signup(emailController.text,
-                                            passwordController.text);
+                                      setState(() {
+                                        submitting = true;
+                                      });
+                                      if (_formKey.currentState.validate()) {
+                                        signup(
+                                            emailController.text,
+                                            passwordController.text,
+                                            nameController.text);
                                       }
                                     },
                                   ),
@@ -415,29 +420,29 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  signup(String email, String password) async {
+  signup(String email, String password, String name) async {
     try {
       await firebaseAuth.createUserWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-
       Map<String, dynamic> data = {
         "email": emailController.text,
-        "typeOfUser": typeOfUserController.text
+        "typeOfUser": typeOfUser,
+        "name": nameController.text
       };
-      CollectionReference collectionReference =
-          FirebaseFirestore.instance.collection("User");
-      await collectionReference.add(data);
+      crud.addUser(data);
       print("User clode store added");
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
+      showAlertDialogSuccess(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        setState(() {
+          submitting = false;
+        });
         showAlertDialogPass(context);
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        setState(() {
+          submitting = false;
+        });
         showAlertDialogEmail(context);
         print('The account already exists for that email.');
       }
@@ -483,6 +488,34 @@ class _RegisterPageState extends State<RegisterPage> {
     AlertDialog alert = AlertDialog(
       title: Text("Register Unsuccesful"),
       content: Text("This Password is too weak."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogSuccess(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      ),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title:Text("Register Succesfully") ,
+      content: Text("You can go signin page to signin."),
       actions: [
         okButton,
       ],

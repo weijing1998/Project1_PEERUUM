@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pepelist/homePage.dart';
 import 'package:pepelist/login.dart';
-import 'package:pepelist/main.dart';
 import 'package:pepelist/register.dart';
+
 import '../utils/responsiveLayout.dart';
 
 class NavBar extends StatelessWidget {

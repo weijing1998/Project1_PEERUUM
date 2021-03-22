@@ -14,7 +14,5 @@ class Rubric {
     this.good=good;
     this.scaleAnswer=scaleAnswers;
     this.textAnswer=textanswer;
-
-    
   }
 }

@@ -382,11 +382,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                           color: Colors.transparent,
                                           child: ListView.builder(
                                               scrollDirection: Axis.horizontal,
-                                              itemCount: widget
-                                                  .course
-                                                  .listOfGroup[index]
-                                                  .groupStudent
-                                                  .length,
+                                              itemCount: null,
                                               itemBuilder:
                                                   (context, indexOfStudent) {
                                                 return Card(
@@ -410,46 +406,46 @@ class _ViewCourseState extends State<ViewCourse> {
                                                             radius: 52,
                                                           ),
                                                         ),
-                                                        Text(
-                                                          "NAME : " +
-                                                              widget
-                                                                  .course
-                                                                  .listOfGroup[
-                                                                      index]
-                                                                  .groupStudent[
-                                                                      indexOfStudent]
-                                                                  .name,
-                                                        ),
-                                                        Text(
-                                                          "Email : " +
-                                                              widget
-                                                                  .course
-                                                                  .listOfGroup[
-                                                                      index]
-                                                                  .groupStudent[
-                                                                      indexOfStudent]
-                                                                  .email,
-                                                        ),
-                                                        Text(
-                                                          "Course : " +
-                                                              widget
-                                                                  .course
-                                                                  .listOfGroup[
-                                                                      index]
-                                                                  .groupStudent[
-                                                                      indexOfStudent]
-                                                                  .course,
-                                                        ),
-                                                        Text(
-                                                          "Telephone No : " +
-                                                              widget
-                                                                  .course
-                                                                  .listOfGroup[
-                                                                      index]
-                                                                  .groupStudent[
-                                                                      indexOfStudent]
-                                                                  .telephone,
-                                                        ),
+                                                        Text(''
+                                                            // "NAME : " +
+                                                            //     widget
+                                                            //         .course
+                                                            //         .listOfGroup[
+                                                            //             index]
+                                                            //         .groupStudent[
+                                                            //             indexOfStudent]
+                                                            //         .name,
+                                                            ),
+                                                        Text(''
+                                                            // "Email : " +
+                                                            //     widget
+                                                            //         .course
+                                                            //         .listOfGroup[
+                                                            //             index]
+                                                            //         .groupStudent[
+                                                            //             indexOfStudent]
+                                                            //         .email,
+                                                            ),
+                                                        Text(''
+                                                            // "Course : " +
+                                                            //     widget
+                                                            //         .course
+                                                            //         .listOfGroup[
+                                                            //             index]
+                                                            //         .groupStudent[
+                                                            //             indexOfStudent]
+                                                            //         .course,
+                                                            ),
+                                                        Text(''
+                                                            // "Telephone No : " +
+                                                            //     widget
+                                                            //         .course
+                                                            //         .listOfGroup[
+                                                            //             index]
+                                                            //         .groupStudent[
+                                                            //             indexOfStudent]
+                                                            //         .telephone,
+                                                            ),
                                                       ],
                                                     ),
                                                   ),
