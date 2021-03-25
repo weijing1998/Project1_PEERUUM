@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
-import 'package:pepelist/objects/data.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/rubric.dart';
@@ -12,10 +11,8 @@ Crudmethod crud = Crudmethod();
 
 //ADD COURSE
 class AddCourseDialog extends StatefulWidget {
-  final Data data;
   final Function reset;
-  AddCourseDialog({Key key, @required this.data, @required this.reset})
-      : super(key: key);
+  AddCourseDialog({Key key, @required this.reset}) : super(key: key);
 
   @override
   _AddCourseDialogState createState() => _AddCourseDialogState();
@@ -93,8 +90,8 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             child: TextFormField(
                               controller: courseName,
                               initialValue: initcn,
-                              onChanged: (courseName)=>
-                                  projectProvider.changeCourseName= courseName,
+                              onChanged: (courseName) =>
+                                  projectProvider.changeCourseName = courseName,
                               decoration: new InputDecoration(
                                 labelText: "Course Name",
                                 suffixIcon: Padding(
@@ -128,7 +125,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: Text(
                             "COURSE CODE : ",
                             style: TextStyle(
@@ -304,26 +301,10 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () async {
-                              projectProvider.saveCourses();
-                              Navigator.pop(context);
-                              // var courses = Courses(
-                              //         courseName.text,
-                              //         courseID.text,
-                              //         courseGroup.text,
-                              //         courseBatch.text)
-                              //     .toJson();
-                              // await crud.addCourse(courses);
-                              // if (_formskey.currentState.validate()) {
-                              //   setState(() {
-                              //     widget.data.courses.add(
-                              //       Courses(courseName.text, courseID.text,
-                              //           courseGroup.text, courseBatch.text),
-                              //     );
-                              //     widget.reset();
-                              //     print(widget.data.courses.length);
-                              //     Navigator.pop(context);
-                              //   });
-                              // }
+                              if (_formskey.currentState.validate()) {
+                                projectProvider.saveCourses();
+                                Navigator.pop(context);
+                              }
                             },
                           ),
                         ),
@@ -342,10 +323,10 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
 
 //DELETE COURSE
 class DeleteCourseDialog extends StatefulWidget {
-  final Data data;
   final Function resetViewPage;
+  final List<Courses> data;
   DeleteCourseDialog(
-      {Key key, @required this.data, @required this.resetViewPage})
+      {Key key, @required this.resetViewPage, @required this.data})
       : super(key: key);
 
   @override
@@ -355,16 +336,17 @@ class DeleteCourseDialog extends StatefulWidget {
 class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
   @override
   void initState() {
-    widget.data.courses.length != 0
-        ? coursenameController.text = widget.data.courses[0].courseName
-        : coursenameController.text = "";
+    list = widget.data;
   }
 
-  TextEditingController coursenameController = TextEditingController();
+  List<Courses> list;
+  String valueOfButton;
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
+
     Size size = MediaQuery.of(context).size;
     return AlertDialog(
       content: Stack(
@@ -408,7 +390,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
 
                   disableDropdown
                       ? DropdownButton(
-                          value: coursenameController.text,
+                          value: valueOfButton,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
@@ -439,30 +421,34 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                                       color: Colors.transparent,
                                       border:
                                           Border.all(color: Colors.grey[600])),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: coursenameController.text,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 32,
-                                      elevation: 16,
-                                      style: TextStyle(
-                                          color: Colors.blue, fontSize: 15),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          coursenameController.text = newValue;
-                                        });
-                                      },
-                                      items: widget.data.courses.map((course) {
-                                        return DropdownMenuItem(
-                                          child: new Text(
-                                            course.courseName,
-                                            style: TextStyle(fontSize: 12),
+                                  child: list.length != 0
+                                      ? DropdownButtonHideUnderline(
+                                          child: DropdownButton(
+                                            value: valueOfButton,
+                                            icon: Icon(Icons.arrow_drop_down),
+                                            iconSize: 32,
+                                            elevation: 16,
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 15),
+                                            onChanged: (newValue) {
+                                              setState(() {
+                                                valueOfButton = newValue;
+                                              });
+                                            },
+                                            items: list.map((course) {
+                                              return DropdownMenuItem(
+                                                child: new Text(
+                                                  course.courseName,
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                value: course.courseID,
+                                              );
+                                            }).toList(),
                                           ),
-                                          value: course.courseName,
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
+                                        )
+                                      : Text("No data"),
                                 ),
                               ),
                             ],
@@ -478,7 +464,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -498,7 +484,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -509,10 +495,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                             ),
                             onPressed: () {
                               setState(() {
-                                widget.data.courses.removeWhere((course) =>
-                                    course.courseName ==
-                                    coursenameController.text);
-                                widget.resetViewPage();
+                                provider.deleteCourse(valueOfButton);
                                 disableDropdown = true;
                               });
                               Navigator.pop(context);
@@ -534,11 +517,12 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
 
 //EDIT COURSE BUTTON
 class EditCourseDialog extends StatefulWidget {
-  final Courses course;
+  final Courses courses;
   final Function resetViewPage;
-  EditCourseDialog(
-      {Key key, @required this.course, @required this.resetViewPage})
-      : super(key: key);
+  EditCourseDialog({
+    Key key,
+    @required this.resetViewPage, @required this.courses,
+  }) : super(key: key);
 
   @override
   _EditCourseDialogState createState() => _EditCourseDialogState();
@@ -546,12 +530,13 @@ class EditCourseDialog extends StatefulWidget {
 
 class _EditCourseDialogState extends State<EditCourseDialog> {
   TextEditingController courseName = TextEditingController();
-  TextEditingController courseID = TextEditingController();
+  TextEditingController courseCode = TextEditingController();
   TextEditingController courseGroup = TextEditingController();
   TextEditingController courseBatch = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
@@ -612,6 +597,8 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (string) => projectProvider
+                                  .changeCourseName = courseName.text,
                               controller: courseName,
                               decoration: new InputDecoration(
                                 labelText: "Course Name",
@@ -649,7 +636,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                           child: Text(
-                            "COURSE ID : ",
+                            "COURSE CODE : ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -660,9 +647,11 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
-                              controller: courseID,
+                              onChanged: (string) => projectProvider
+                                  .changeCourseCode = courseCode.text,
+                              controller: courseCode,
                               decoration: new InputDecoration(
-                                labelText: "Course ID",
+                                labelText: "Course Code",
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -705,6 +694,8 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (string) => projectProvider
+                                  .changeCourseGroup = courseGroup.text,
                               controller: courseGroup,
                               decoration: new InputDecoration(
                                 labelText: "Course GROUP",
@@ -750,6 +741,8 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (string) => projectProvider
+                                  .changeCourseBatch = courseBatch.text,
                               controller: courseBatch,
                               decoration: new InputDecoration(
                                 labelText: "Course Batch",
@@ -788,7 +781,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -808,7 +801,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -820,14 +813,12 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  widget.course.courseName = courseName.text;
-                                  widget.course.courseID = courseID.text;
-                                  widget.course.courseGroup = courseGroup.text;
-                                  widget.course.courseBatch = courseBatch.text;
-                                  widget.resetViewPage();
+                                  projectProvider
+                                      .editCourses(widget.courses.courseID);
                                   Navigator.pop(context);
                                 });
                               }
+                              widget.resetViewPage();
                             },
                           ),
                         ),
@@ -1557,10 +1548,8 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
 
 //Add form dialog
 class AddFormDialog extends StatefulWidget {
-  final Data data;
   final Function resetFromPage;
-  AddFormDialog({Key key, @required this.data, @required this.resetFromPage})
-      : super(key: key);
+  AddFormDialog({Key key, @required this.resetFromPage}) : super(key: key);
 
   @override
   _AddFormDialogState createState() => _AddFormDialogState();
@@ -1751,10 +1740,10 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  widget.data.forms
-                                      .add(Forms(formName.text, formID.text));
-                                  widget.resetFromPage();
-                                  Navigator.pop(context);
+                                  // widget.data.forms
+                                  //     .add(Forms(formName.text, formID.text));
+                                  // widget.resetFromPage();
+                                  // Navigator.pop(context);
                                 });
                               }
                             },
@@ -1774,11 +1763,8 @@ class _AddFormDialogState extends State<AddFormDialog> {
 }
 
 class DeleteFormDialog extends StatefulWidget {
-  final Data data;
   final Function refreshformpage;
-  DeleteFormDialog(
-      {Key key, @required this.data, @required this.refreshformpage})
-      : super(key: key);
+  DeleteFormDialog({Key key, @required this.refreshformpage}) : super(key: key);
 
   @override
   _DeleteFormDialogState createState() => _DeleteFormDialogState();
@@ -1786,11 +1772,7 @@ class DeleteFormDialog extends StatefulWidget {
 
 class _DeleteFormDialogState extends State<DeleteFormDialog> {
   @override
-  void initState() {
-    widget.data.forms.length != 0
-        ? formnameController.text = widget.data.forms[0].formName
-        : formnameController.text = "";
-  }
+  void initState() {}
 
   TextEditingController formnameController = TextEditingController();
   var _formskey = GlobalKey<FormState>();
@@ -1884,15 +1866,15 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                           formnameController.text = newValue;
                                         });
                                       },
-                                      items: widget.data.forms.map((form) {
-                                        return DropdownMenuItem(
-                                          child: new Text(
-                                            form.formName,
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                          value: form.formName,
-                                        );
-                                      }).toList(),
+                                      // items: widget.forms.map((form) {
+                                      //   return DropdownMenuItem(
+                                      //     child: new Text(
+                                      //       form.formName,
+                                      //       style: TextStyle(fontSize: 12),
+                                      //     ),
+                                      //     value: form.formName,
+                                      //   );
+                                      // }).toList(),
                                     ),
                                   ),
                                 ),
@@ -1940,12 +1922,12 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
-                              setState(() {
-                                widget.data.forms.removeWhere((form) =>
-                                    form.formName == formnameController.text);
-                                widget.refreshformpage();
-                                disableDropdown = true;
-                              });
+                              // setState(() {
+                              //   widget.data.forms.removeWhere((form) =>
+                              //       form.formName == formnameController.text);
+                              //   widget.refreshformpage();
+                              //   disableDropdown = true;
+                              // });
                               Navigator.pop(context);
                             },
                           ),
@@ -2755,11 +2737,9 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
 }
 
 class ApplyFormDialog extends StatefulWidget {
-  final Data data;
   final Forms forms;
 
-  ApplyFormDialog({Key key, @required this.data, @required this.forms})
-      : super(key: key);
+  ApplyFormDialog({Key key, @required this.forms}) : super(key: key);
 
   @override
   _ApplyFormDialogState createState() => _ApplyFormDialogState();
@@ -2770,11 +2750,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
 
-  void initState() {
-    widget.data.courses.length != 0
-        ? coursenameController.text = widget.data.courses[0].courseName
-        : coursenameController.text = "";
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -2866,15 +2842,15 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                           coursenameController.text = newValue;
                                         });
                                       },
-                                      items: widget.data.courses.map((course) {
-                                        return DropdownMenuItem(
-                                          child: new Text(
-                                            course.courseName,
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                          value: course.courseName,
-                                        );
-                                      }).toList(),
+                                      // items: widget.data.courses.map((course) {
+                                      //   return DropdownMenuItem(
+                                      //     child: new Text(
+                                      //       course.courseName,
+                                      //       style: TextStyle(fontSize: 12),
+                                      //     ),
+                                      //     value: course.courseName,
+                                      //   );
+                                      // }).toList(),
                                     ),
                                   ),
                                 ),
@@ -2923,14 +2899,14 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                             ),
                             onPressed: () {
                               setState(() {
-                                for (Courses c in widget.data.courses) {
-                                  if (c.courseName ==
-                                      coursenameController.text) {
-                                    c.listOfForm.add(widget.forms);
-                                    break;
-                                  }
-                                }
-                                disableDropdown = true;
+                                // for (Courses c in widget.data.courses) {
+                                //   if (c.courseName ==
+                                //       coursenameController.text) {
+                                //     c.listOfForm.add(widget.forms);
+                                //     break;
+                                //   }
+                                // }
+                                // disableDropdown = true;
                               });
                               Navigator.pop(context);
                             },

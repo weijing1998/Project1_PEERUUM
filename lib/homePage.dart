@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pepelist/login.dart';
 import 'package:pepelist/register.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
-
-import 'package:pepelist/utils/responsiveLayout.dart';
-import 'package:pepelist/widgets/navbar.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +14,6 @@ class _HomePageState extends State<HomePage> {
   ScrollController controllers = new ScrollController();
   @override
   void initState() {
-    //Initialize the  scrollController
     super.initState();
   }
 
@@ -51,25 +48,13 @@ class _HomePageState extends State<HomePage> {
 }
 
 class Body extends StatelessWidget {
-  ScrollController controller;
+  final ScrollController controller;
   Body({Key key, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveLayout(
-      largeScreen: LargeChild(controller: controller),
-      smallScreen: SmallChild(),
-    );
-  }
-}
-
-class LargeChild extends StatelessWidget {
-  ScrollController controller;
-  LargeChild({Key key, this.controller}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+     
     return Column(
       children: [
         Container(
@@ -128,14 +113,14 @@ class LargeChild extends StatelessWidget {
                                 ),
                                 height: size.height / 18,
                                 width: size.width / 12,
-                                child: FlatButton(
+                                child: MaterialButton(
                                   hoverColor: Colors.blue[900],
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => RegisterPage()),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => RegisterPage()),
+                                    // );
                                   },
                                   child: Text(
                                     "Lets Get Started",
@@ -396,92 +381,89 @@ class LargeChild extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   //weijing
-                  Expanded(
-                    child: Container(
-                      height: size.height / 2,
-                      width: size.width / 5,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage('images/weijing.png'),
-                              radius: 125,
-                            ),
+                  Container(
+                    height: size.height / 1.8,
+                    width: size.width / 5,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage('images/weijing.png'),
+                            radius: 125,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              "Yong Wei Jing",
-                              style: TextStyle(
-                                  color: Colors.grey[900],
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(
+                            "Yong Wei Jing",
+                            style: TextStyle(
+                                color: Colors.grey[900],
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              "weijing980924@gmail.com",
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(
+                            "weijing980924@gmail.com",
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              "Developer of PEER UUM",
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(
+                            "Developer of PEER UUM",
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              "Undergraduate Student In UUM",
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(
+                            "Undergraduate Student In UUM",
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.github,
-                                    size: 35,
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: FaIcon(
+                                  FontAwesomeIcons.github,
+                                  size: 35,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.facebook,
-                                    size: 35,
-                                  ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: FaIcon(
+                                  FontAwesomeIcons.facebook,
+                                  size: 35,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.instagram,
-                                    size: 35,
-                                  ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: FaIcon(
+                                  FontAwesomeIcons.instagram,
+                                  size: 35,
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ],
@@ -541,58 +523,130 @@ class LargeChild extends StatelessWidget {
   }
 }
 
-class SmallChild extends StatelessWidget {
+class NavBar extends StatefulWidget {
+  final ScrollController controller;
+
+  NavBar({Key key, this.controller}) : super(key: key);
+
+  @override
+  _NavBarState createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Hello!",
-              style: TextStyle(
-                  fontSize: 40,
-                  color: Color(0xFF8591B0),
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Montserrat-Regular"),
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text(
+                "PEER UUM",
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              )
+            ],
+          ),
+          Container(
+            width: size.width / 2,
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MaterialButton(
+                  height: 60,
+                  minWidth: 100,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Text(
+                    "HOME",
+                    style: TextStyle(
+                        fontSize: 23,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                ),
+                MaterialButton(
+                  height: 60,
+                  minWidth: 100,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Text(
+                    "ABOUT",
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  onPressed: () {
+                    widget.controller.animateTo(3600,
+                        duration: Duration(milliseconds: 2000),
+                        curve: Curves.fastLinearToSlowEaseIn);
+                  },
+                ),
+                MaterialButton(
+                  height: 60,
+                  minWidth: 100,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Text(
+                    "SIGN UP",
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                ),
+                MaterialButton(
+                  height: 50,
+                  minWidth: 130,
+                  color: Colors.blue[900],
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Text(
+                    "LOGIN",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                ),
+              ],
             ),
-            RichText(
-              text: TextSpan(
-                text: 'Welcome To ',
-                style: TextStyle(fontSize: 40, color: Color(0xFF8591B0)),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'PEPeLIST',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: Colors.black87)),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0, top: 20),
-              child: Text("LET’S EXPLORE THE WORLD"),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Image.network(
-                "assets/images/student.png",
-                scale: 1,
-              ),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            SizedBox(
-              height: 30,
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

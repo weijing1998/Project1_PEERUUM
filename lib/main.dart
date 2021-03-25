@@ -57,7 +57,5 @@ class _AppState extends State<App> {
     }
     print("Firebase run succesfully");
     return HomePage();
-    
-  
   }
 }

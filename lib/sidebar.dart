@@ -1,24 +1,15 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/coursespage.dart';
-import 'package:pepelist/objects/course.dart';
-import 'package:pepelist/objects/data.dart';
-import 'package:pepelist/objects/form.dart';
-import 'package:pepelist/utils/projetcProvider.dart';
+import 'package:pepelist/homePage.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/viewcourse.dart';
-import 'package:pepelist/viewform.dart';
-import 'package:provider/provider.dart';
 
-import 'formpages.dart';
-import 'homePage.dart';
-
-// ignore: must_be_immutable
 class Sidebar extends StatefulWidget {
+  final String email;
   Sidebar({
     Key key,
+    @required this.email,
   }) : super(key: key);
 
   @override
@@ -30,11 +21,15 @@ class _SidebarState extends State<Sidebar> {
   bool atFormPage = false;
   bool atViewCourse = false;
   bool atViewForm = false;
-  Courses course;
-  Forms forms;
   int courseIndex;
   int formIndex;
-  Data data = new Data();
+  PeerUser peeruser;
+  //Data data = new Data();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +82,7 @@ class _SidebarState extends State<Sidebar> {
                     Column(
                       children: [
                         Text(
-                          "WEIJING",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          "WEIJING@gmail.com",
+                          widget.email,
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white),
                         ),
@@ -104,7 +93,7 @@ class _SidebarState extends State<Sidebar> {
                       height: 80,
                     ),
                     //Dashboard
-                    FlatButton(
+                    MaterialButton(
                       padding: EdgeInsets.all(16),
                       color: Colors.transparent,
                       onPressed: () {
@@ -131,7 +120,7 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     SizedBox(height: 24),
                     //Form Page
-                    FlatButton(
+                    MaterialButton(
                       padding: EdgeInsets.all(16),
                       color: Colors.transparent,
                       onPressed: () {
@@ -189,28 +178,11 @@ class _SidebarState extends State<Sidebar> {
             SizedBox(
               height: size.height,
               child: atCoursePage
-                  ? atViewCourse
-                      ? ViewCourse(
-                          course: course,
-                          viewCourseIndex: courseIndex,
-                          data: data,
-                        )
-                      : CoursesPage(
-                          toggleViewCourse: toggleViewCourse,
-                          passCourse: setCourse,
-                          setCurrentIndex: currentCourseIndex,
-                          data: data,
-                        )
-                  : atViewForm
-                      ? ViewFormPage(
-                          form: forms, data: data, formIndex: formIndex)
-                      : FormPage(
-                          data: data,
-                          toggleFormpage: toggleFormpage,
-                          currentindex: currentFormIndex,
-                          passForm: setFrom,
-                        ),
-            ),
+                  ? CoursesPage(
+                      toggleViewCourse: toggleViewCourse,
+                    )
+                  : ViewCourse(),
+            )
           ],
         ),
       ),
@@ -220,30 +192,13 @@ class _SidebarState extends State<Sidebar> {
   void toggleViewCourse(bool b) {
     setState(() {
       atViewCourse = b;
-    });
-  }
-
-  void setCourse(Courses c) {
-    setState(() {
-      course = c;
-    });
-  }
-
-  void currentCourseIndex(int i) {
-    setState(() {
-      courseIndex = i;
+      atCoursePage = false;
     });
   }
 
   void toggleFormpage(bool b) {
     setState(() {
       atViewForm = b;
-    });
-  }
-
-  void setFrom(Forms f) {
-    setState(() {
-      forms = f;
     });
   }
 

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pepelist/homePage.dart';
-import 'package:pepelist/login.dart';
 import 'package:pepelist/utils/constants.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 
@@ -29,8 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseStore = FirebaseFirestore.instance;
   final picker = ImagePicker();
+  final highlightcolor = Colors.grey;
+
   Crudmethod crud = new Crudmethod();
-  File _image;
 
   @override
   void dispose() {
@@ -120,6 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   children: [
                                     IconButton(
                                       tooltip: "Lecturer",
+                                      highlightColor: highlightcolor,
                                       icon: Image.asset('images/lecturer.png'),
                                       iconSize: 140,
                                       onPressed: () {
@@ -355,15 +355,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                       Container(
                                         height: 20,
                                         width: 70,
-                                        child: FlatButton(
+                                        child: MaterialButton(
                                             hoverColor: Colors.transparent,
                                             onPressed: () {
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        LoginPage()),
-                                              );
+                                              // Navigator.pushReplacement(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           LoginPage()),
+                                              // );
                                             },
                                             child: Text(
                                               "Log In",
@@ -427,106 +427,83 @@ class _RegisterPageState extends State<RegisterPage> {
       Map<String, dynamic> data = {
         "email": emailController.text,
         "typeOfUser": typeOfUser,
-        "name": nameController.text
+        "name": nameController.text,
+        "userid": firebaseAuth.currentUser.uid
       };
       crud.addUser(data);
-      print("User clode store added");
-      showAlertDialogSuccess(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setState(() {
           submitting = false;
         });
         showAlertDialogPass(context);
-        print('The password provided is too weak.');
+ 
       } else if (e.code == 'email-already-in-use') {
         setState(() {
           submitting = false;
         });
-        showAlertDialogEmail(context);
-        print('The account already exists for that email.');
+
       }
     } catch (e) {
-      print(e);
+    
     }
-    print("User authentication added");
   }
 
-  showAlertDialogEmail(BuildContext context) {
+  showAlertDialogEmail(BuildContext _context) {
     // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () => Navigator.pop(context),
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Register Unsuccesful"),
-      content: Text("This email is registered."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Register Unsuccesful"),
+            content: Text("This email already registered."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 
-  showAlertDialogPass(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () => Navigator.pop(context),
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Register Unsuccesful"),
-      content: Text("This Password is too weak."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+  showAlertDialogPass(BuildContext _context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Register Unsuccesful"),
+            content: Text("The password is too weak."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 
-  showAlertDialogSuccess(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      ),
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title:Text("Register Succesfully") ,
-      content: Text("You can go signin page to signin."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+  showAlertDialogSuccess(BuildContext _context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Register Succesful"),
+            content: Text("Welcome to Peer UUM"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 }

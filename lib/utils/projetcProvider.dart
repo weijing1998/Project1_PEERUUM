@@ -1,28 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:uuid/uuid.dart';
 
 class ProjectProvider with ChangeNotifier {
   final firestoreservice = Crudmethod();
 
-  ///////////////////////(Courses)
+  //////////////////////////(Courses)
   String _courseName;
   String _courseId;
   String _courseGroup;
   String _courseBatch;
   String _courseCode;
+ 
   var uuid = Uuid();
   ///////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// (Courses)
+////////////////////////////(Courses)
   //Getter
   String get courseName => _courseName;
   String get courseId => _courseId;
   String get courseGroup => _courseGroup;
   String get courseBatch => _courseBatch;
   String get courseCode => _courseCode;
-  Stream<List<Courses>> get courselist => firestoreservice.getCourses();
+  Stream<Courses> get course => firestoreservice.getCourse(_courseId);
+  Stream<List<Courses>> get courselist => firestoreservice.getCoursesList();
+  Stream<List<PeerUser>> get userlist => firestoreservice.getUser();
 
   //Setter
   set changeCourseName(String coursename) {
@@ -66,19 +70,29 @@ class ProjectProvider with ChangeNotifier {
           courseCode: _courseCode);
 
       firestoreservice.setCourses(newCourses);
-    } else {
-      //Edit
-      var editCourses = Courses(
-          courseName: _courseName,
-          courseID: uuid.v1(),
-          courseGroup: _courseGroup,
-          courseBatch: _courseBatch,
-          courseCode: _courseCode);
-      firestoreservice.setCourses(editCourses);
     }
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  editCourses(String courseId) {
+    var newCourses = Courses(
+        courseID: courseId,
+        courseName: _courseName,
+        courseBatch: _courseBatch,
+        courseCode: _courseCode,
+        courseGroup: _courseGroup);
+    firestoreservice.setCourses(newCourses);
+    notifyListeners();
+  }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////(User)
+  deleteCourse(String courseId) {
+    firestoreservice.deleteCourses(courseId);
+  }
+
+  setCoursesId(String courseId) {
+    _courseId = courseId;
+    notifyListeners();
+  }
+  ///////////////////////////////////////////////
+
+  ///////////////////////////////////////////////(User)
 }
