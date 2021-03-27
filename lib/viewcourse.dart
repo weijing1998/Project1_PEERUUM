@@ -19,7 +19,7 @@ class _ViewCourseState extends State<ViewCourse> {
     Size size = MediaQuery.of(context).size;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Courses>(
-        stream: provider.course,
+        stream: provider.streamCourse,
         builder: (context, provider) {
           if (provider.hasData) {
             return Container(
@@ -58,9 +58,9 @@ class _ViewCourseState extends State<ViewCourse> {
                                         ChangeNotifierProvider(
                                       create: (context) => ProjectProvider(),
                                       child: EditCourseDialog(
-                                          courses: provider.data,
-                                          resetViewPage: resetViewPage,
-                                          ),
+                                        courses: provider.data,
+                                        resetViewPage: resetViewPage,
+                                      ),
                                     ),
                                   );
                                 });
@@ -101,7 +101,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              "COURSE ID : " + provider.data.courseCode,
+                              "COURSE CODE : " + provider.data.courseCode,
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
@@ -122,75 +122,80 @@ class _ViewCourseState extends State<ViewCourse> {
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(12.0),
-                          //   child: Row(
-                          //     children: [
-                          //       Text(
-                          //         "FORM STATUS : ",
-                          //         style: TextStyle(
-                          //             fontSize: 17, fontWeight: FontWeight.w500),
-                          //       ),
-                          //       provider.course.listOfForm.length == 0
-                          //           ? Container(
-                          //               height: size.height / 20,
-                          //               width: size.width / 15,
-                          //               decoration: BoxDecoration(
-                          //                   color: Colors.red[700],
-                          //                   border: Border.all(
-                          //                       width: 3, color: Colors.grey[600])),
-                          //               child: Align(
-                          //                 child: Text(
-                          //                   "No Form Apply",
-                          //                   style: TextStyle(
-                          //                       color: Colors.white,
-                          //                       fontSize: 12,
-                          //                       fontWeight: FontWeight.w200),
-                          //                 ),
-                          //               ),
-                          //               alignment: Alignment.center,
-                          //             )
-                          //           : SingleChildScrollView(
-                          //               child: Container(
-                          //                 height: size.height / 20,
-                          //                 width: size.width / 2,
-                          //                 child: ListView.builder(
-                          //                     scrollDirection: Axis.horizontal,
-                          //                     itemCount:
-                          //                         provider.course.listOfForm.length,
-                          //                     itemBuilder:
-                          //                         (BuildContext ctxt, int index) {
-                          //                       return Card(
-                          //                         child: Container(
-                          //                           height: size.height / 20,
-                          //                           width: size.width / 15,
-                          //                           decoration: BoxDecoration(
-                          //                               color: Colors.green[400],
-                          //                               border: Border.all(
-                          //                                   width: 3,
-                          //                                   color: Colors.grey[600])),
-                          //                           child: Align(
-                          //                             child: Text(
-                          //                               provider
-                          //                                   .course
-                          //                                   .listOfForm[index]
-                          //                                   .formName,
-                          //                               style: TextStyle(
-                          //                                   color: Colors.white,
-                          //                                   fontSize: 12,
-                          //                                   fontWeight:
-                          //                                       FontWeight.w200),
-                          //                             ),
-                          //                           ),
-                          //                           alignment: Alignment.center,
-                          //                         ),
-                          //                       );
-                          //                     }),
-                          //               ),
-                          //             )
-                          //     ],
-                          //   ),
-                          // )
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "FORM STATUS : ",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                provider.data.listOfForm.length == 0
+                                    ? Container(
+                                        height: size.height / 20,
+                                        width: size.width / 15,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red[700],
+                                            border: Border.all(
+                                                width: 3,
+                                                color: Colors.grey[600])),
+                                        child: Align(
+                                          child: Text(
+                                            "No Form Apply",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w200),
+                                          ),
+                                        ),
+                                        alignment: Alignment.center,
+                                      )
+                                    : SingleChildScrollView(
+                                        child: Container(
+                                          height: size.height / 20,
+                                          width: size.width / 2,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: provider
+                                                  .data.listOfForm.length,
+                                              itemBuilder: (BuildContext ctxt,
+                                                  int index) {
+                                                return Card(
+                                                  child: Container(
+                                                    height: size.height / 20,
+                                                    width: size.width / 15,
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.green[400],
+                                                        border: Border.all(
+                                                            width: 3,
+                                                            color: Colors
+                                                                .grey[600])),
+                                                    child: Align(
+                                                      child: Text(
+                                                        provider
+                                                            .data
+                                                            .listOfForm[index]["formname"]
+                                                            ,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w200),
+                                                      ),
+                                                    ),
+                                                    alignment: Alignment.center,
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

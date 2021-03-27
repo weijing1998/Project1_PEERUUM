@@ -1,4 +1,3 @@
-
 class Group {
   String groupName;
   String groupID;

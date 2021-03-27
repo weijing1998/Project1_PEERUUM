@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/coursespage.dart';
+import 'package:pepelist/formpages.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/viewcourse.dart';
+import 'package:pepelist/viewform.dart';
 
 class Sidebar extends StatefulWidget {
   final String email;
@@ -178,11 +180,17 @@ class _SidebarState extends State<Sidebar> {
             SizedBox(
               height: size.height,
               child: atCoursePage
-                  ? CoursesPage(
-                      toggleViewCourse: toggleViewCourse,
-                    )
-                  : ViewCourse(),
-            )
+                  ? atViewCourse
+                      ? ViewCourse()
+                      : CoursesPage(
+                          toggleViewCourse: toggleViewCourse,
+                        )
+                  : atViewForm
+                      ? ViewFormPage()
+                      : FormPage(
+                          toggleFormpage: toggleViewFormpage,
+                        ),
+            ),
           ],
         ),
       ),
@@ -192,19 +200,12 @@ class _SidebarState extends State<Sidebar> {
   void toggleViewCourse(bool b) {
     setState(() {
       atViewCourse = b;
-      atCoursePage = false;
     });
   }
 
-  void toggleFormpage(bool b) {
+  void toggleViewFormpage(bool b) {
     setState(() {
       atViewForm = b;
-    });
-  }
-
-  void currentFormIndex(int i) {
-    setState(() {
-      formIndex = i;
     });
   }
 }

@@ -7,12 +7,5 @@ class Rubric {
   String bad;
   
 
-  Rubric(String question, String type , String scaleAnswers, String textanswer, String good, String bad) {
-    this.question = question;
-    this.type = type;
-    this.bad=bad;
-    this.good=good;
-    this.scaleAnswer=scaleAnswers;
-    this.textAnswer=textanswer;
-  }
+  Rubric({this.bad,this.good,this.question,this.scaleAnswer,this.textAnswer,this.type}); 
 }

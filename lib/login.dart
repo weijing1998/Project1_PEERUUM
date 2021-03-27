@@ -350,10 +350,6 @@ class _LoginPageState extends State<LoginPage> {
       await firebaseAuth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
 
-      firebaseAuth.authStateChanges().listen((User user) {
-        print(user.getIdToken().toString());
-      });
-
       await firebaseStore.get().then((value) => value.docs.forEach((element) {
             if (element.data()["email"] == emailController.text &&
                 element.data()["typeOfUser"] == typeOfUser) {

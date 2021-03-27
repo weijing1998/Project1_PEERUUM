@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/objects/course.dart';
 
@@ -14,7 +15,7 @@ class Crudmethod {
     }
   }
 
-/////////////////////////////////////////////(User)
+  /////////////////////////////////////////////(User)
   //Add user
   Future<void> addUser(userData) async {
     db.collection("User").add(userData).catchError((e) {
@@ -28,9 +29,9 @@ class Crudmethod {
         (event) => event.docs.map((e) => PeerUser.fromJson(e.data())).toList());
   }
 
-///////////////////////////////////////////////
+  /////////////////////////////////////////////(User)
 
-////////////////////////////////////////////(Course)
+  ////////////////////////////////////////////(Course)
   //Get Courses
   Stream<List<Courses>> getCoursesList() {
     return db.collection("Courses").snapshots().map(
@@ -54,5 +55,32 @@ class Crudmethod {
   Future deleteCourses(String coursesId) async {
     return db.collection("Courses").doc(coursesId).delete();
   }
+  ////////////////////////////////////////////(Course)
+
+  //////////////////////////////////////////////(Form)
+
+  Stream<List<Forms>> getFormsList() {
+    return db.collection("Form").snapshots().map(
+        (event) => event.docs.map((e) => Forms.fromJson(e.data())).toList());
+  }
+
+  Stream<Forms> getForms(String formsid) {
+    return db
+        .collection("Form")
+        .doc(formsid)
+        .snapshots()
+        .map((event) => Forms.fromJson(event.data()));
+  }
+
+
+  Future setForms(Forms forms) async {
+    return db.collection("Form").doc(forms.formID).set(forms.toJson());
+  }
+
+  //delete
+  Future deleteForms(String formId) async {
+    return db.collection("Form").doc(formId).delete();
+  }
+
+  //////////////////////////////////////////////(Form)
 }
-///////////////////////////////////////////////

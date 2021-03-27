@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pepelist/objects/form.dart';
-import 'package:pepelist/objects/group.dart';
 
 class Courses {
   String courseName;
@@ -8,8 +6,8 @@ class Courses {
   String courseCode;
   String courseGroup;
   String courseBatch;
-  List<Group> listOfGroup=[];
-  List<Forms> listOfForm=[];
+  List listOfGroup=[];
+  List listOfForm=[];
 
   Courses(
       {this.courseName,
@@ -27,6 +25,8 @@ class Courses {
       courseGroup: json["coursegroup"],
       courseBatch: json["coursebatch"],
       courseCode: json['coursecode'],
+      listOfForm: json['listofform'],
+      listOfGroup: json['listofgroup'],
     );
   }
 
@@ -37,6 +37,8 @@ class Courses {
       "coursegroup": courseGroup,
       "coursebatch": courseBatch,
       "coursecode": courseCode,
+      "listofform" : listOfForm,
+      "listofgroup" : listOfGroup,
     };
   }
 }

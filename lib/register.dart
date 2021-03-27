@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pepelist/homePage.dart';
+import 'package:pepelist/login.dart';
 import 'package:pepelist/utils/constants.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 
@@ -358,12 +359,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                         child: MaterialButton(
                                             hoverColor: Colors.transparent,
                                             onPressed: () {
-                                              // Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //       builder: (context) =>
-                                              //           LoginPage()),
-                                              // );
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginPage()),
+                                              );
                                             },
                                             child: Text(
                                               "Log In",
@@ -430,23 +431,28 @@ class _RegisterPageState extends State<RegisterPage> {
         "name": nameController.text,
         "userid": firebaseAuth.currentUser.uid
       };
-      crud.addUser(data);
+      await crud.addUser(data);
+      setState(() {
+        submitting = false;
+      });
+      await showAlertDialogSuccess(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setState(() {
           submitting = false;
         });
         showAlertDialogPass(context);
- 
       } else if (e.code == 'email-already-in-use') {
         setState(() {
+          showAlertDialogEmail(context);
           submitting = false;
         });
-
       }
-    } catch (e) {
-    
-    }
+    } catch (e) {}
   }
 
   showAlertDialogEmail(BuildContext _context) {

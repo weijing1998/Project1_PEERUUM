@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
-import 'package:pepelist/objects/rubric.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +10,9 @@ Crudmethod crud = Crudmethod();
 
 //ADD COURSE
 class AddCourseDialog extends StatefulWidget {
-  final Function reset;
-  AddCourseDialog({Key key, @required this.reset}) : super(key: key);
+  AddCourseDialog({
+    Key key,
+  }) : super(key: key);
 
   @override
   _AddCourseDialogState createState() => _AddCourseDialogState();
@@ -323,11 +323,8 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
 
 //DELETE COURSE
 class DeleteCourseDialog extends StatefulWidget {
-  final Function resetViewPage;
   final List<Courses> data;
-  DeleteCourseDialog(
-      {Key key, @required this.resetViewPage, @required this.data})
-      : super(key: key);
+  DeleteCourseDialog({Key key, @required this.data}) : super(key: key);
 
   @override
   _DeleteCourseDialogState createState() => _DeleteCourseDialogState();
@@ -337,6 +334,8 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
   @override
   void initState() {
     list = widget.data;
+
+    super.initState();
   }
 
   List<Courses> list;
@@ -521,7 +520,8 @@ class EditCourseDialog extends StatefulWidget {
   final Function resetViewPage;
   EditCourseDialog({
     Key key,
-    @required this.resetViewPage, @required this.courses,
+    @required this.resetViewPage,
+    @required this.courses,
   }) : super(key: key);
 
   @override
@@ -813,8 +813,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  projectProvider
-                                      .editCourses(widget.courses.courseID);
+                                  projectProvider.editCourses(widget.courses);
                                   Navigator.pop(context);
                                 });
                               }
@@ -1548,8 +1547,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
 
 //Add form dialog
 class AddFormDialog extends StatefulWidget {
-  final Function resetFromPage;
-  AddFormDialog({Key key, @required this.resetFromPage}) : super(key: key);
+  AddFormDialog({Key key}) : super(key: key);
 
   @override
   _AddFormDialogState createState() => _AddFormDialogState();
@@ -1558,9 +1556,9 @@ class AddFormDialog extends StatefulWidget {
 class _AddFormDialogState extends State<AddFormDialog> {
   TextEditingController formName = TextEditingController();
   TextEditingController formID = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
@@ -1622,6 +1620,8 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (String value) =>
+                                  projectProvider.changeFormName = value,
                               controller: formName,
                               decoration: new InputDecoration(
                                 labelText: "Form Name",
@@ -1659,7 +1659,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                           child: Text(
-                            "Form ID : ",
+                            "Form Code : ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -1670,9 +1670,11 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (value) =>
+                                  projectProvider.changeFormCode = value,
                               controller: formID,
                               decoration: new InputDecoration(
-                                labelText: "Form ID",
+                                labelText: "Form Code",
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -1708,7 +1710,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -1728,7 +1730,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
                               "Submit",
@@ -1740,10 +1742,8 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  // widget.data.forms
-                                  //     .add(Forms(formName.text, formID.text));
-                                  // widget.resetFromPage();
-                                  // Navigator.pop(context);
+                                  projectProvider.saveForm();
+                                  Navigator.pop(context);
                                 });
                               }
                             },
@@ -1763,8 +1763,11 @@ class _AddFormDialogState extends State<AddFormDialog> {
 }
 
 class DeleteFormDialog extends StatefulWidget {
-  final Function refreshformpage;
-  DeleteFormDialog({Key key, @required this.refreshformpage}) : super(key: key);
+  final List<Forms> forms;
+  DeleteFormDialog({
+    Key key,
+    @required this.forms,
+  }) : super(key: key);
 
   @override
   _DeleteFormDialogState createState() => _DeleteFormDialogState();
@@ -1772,13 +1775,19 @@ class DeleteFormDialog extends StatefulWidget {
 
 class _DeleteFormDialogState extends State<DeleteFormDialog> {
   @override
-  void initState() {}
+  void initState() {
+    forms = widget.forms;
+    super.initState();
+  }
 
-  TextEditingController formnameController = TextEditingController();
+  List<Forms> forms;
+  String value;
   var _formskey = GlobalKey<FormState>();
+
   bool disableDropdown = false;
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     return AlertDialog(
       content: Stack(
@@ -1822,7 +1831,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
 
                   disableDropdown
                       ? DropdownButton(
-                          value: formnameController.text,
+                          value: value,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
@@ -1855,7 +1864,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                           Border.all(color: Colors.grey[600])),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton(
-                                      value: formnameController.text,
+                                      value: value,
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 32,
                                       elevation: 16,
@@ -1863,18 +1872,18 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                           color: Colors.blue, fontSize: 15),
                                       onChanged: (newValue) {
                                         setState(() {
-                                          formnameController.text = newValue;
+                                          value = newValue;
                                         });
                                       },
-                                      // items: widget.forms.map((form) {
-                                      //   return DropdownMenuItem(
-                                      //     child: new Text(
-                                      //       form.formName,
-                                      //       style: TextStyle(fontSize: 12),
-                                      //     ),
-                                      //     value: form.formName,
-                                      //   );
-                                      // }).toList(),
+                                      items: widget.forms.map((form) {
+                                        return DropdownMenuItem(
+                                          child: new Text(
+                                            form.formName,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: form.formID,
+                                        );
+                                      }).toList(),
                                     ),
                                   ),
                                 ),
@@ -1892,7 +1901,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -1912,7 +1921,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -1922,12 +1931,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
-                              // setState(() {
-                              //   widget.data.forms.removeWhere((form) =>
-                              //       form.formName == formnameController.text);
-                              //   widget.refreshformpage();
-                              //   disableDropdown = true;
-                              // });
+                              provider.deleteForm(value);
                               Navigator.pop(context);
                             },
                           ),
@@ -1947,10 +1951,10 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
 
 class EditFormDialog extends StatefulWidget {
   final Forms forms;
-  final Function resetViewFormPage;
-  EditFormDialog(
-      {Key key, @required this.forms, @required this.resetViewFormPage})
-      : super(key: key);
+  EditFormDialog({
+    Key key,
+    @required this.forms,
+  }) : super(key: key);
 
   @override
   _EditFormDialogState createState() => _EditFormDialogState();
@@ -1958,10 +1962,11 @@ class EditFormDialog extends StatefulWidget {
 
 class _EditFormDialogState extends State<EditFormDialog> {
   TextEditingController formName = TextEditingController();
-  TextEditingController formID = TextEditingController();
+  TextEditingController formCode = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var provider = Provider.of<ProjectProvider>(context);
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -2021,6 +2026,8 @@ class _EditFormDialogState extends State<EditFormDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (string) =>
+                                  provider.changeFormName = formName.text,
                               controller: formName,
                               decoration: new InputDecoration(
                                 labelText: "Form Name",
@@ -2058,7 +2065,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                           child: Text(
-                            "FORM ID : ",
+                            "FORM CODE : ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -2069,9 +2076,11 @@ class _EditFormDialogState extends State<EditFormDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
-                              controller: formID,
+                              onChanged: (string) =>
+                                  provider.changeFormCode = formCode.text,
+                              controller: formCode,
                               decoration: new InputDecoration(
-                                labelText: "FORM ID",
+                                labelText: "FORM CODE",
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -2086,7 +2095,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                               ),
                               validator: (val) {
                                 if (val.isEmpty) {
-                                  return "Form ID cannot be empty";
+                                  return "Form Code cannot be empty";
                                 } else {
                                   return null;
                                 }
@@ -2107,7 +2116,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -2127,7 +2136,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -2139,10 +2148,8 @@ class _EditFormDialogState extends State<EditFormDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  widget.forms.formName = formName.text;
-                                  widget.forms.formID = formID.text;
+                                  provider.editForm(widget.forms);
 
-                                  widget.resetViewFormPage();
                                   Navigator.pop(context);
                                 });
                               }
@@ -2699,25 +2706,25 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  rubricStyle == "Scale"
-                                      ? widget.forms.listOfRubric.add(
-                                          Rubric(
-                                              rubricQuestion.text,
-                                              rubricStyle,
-                                              "",
-                                              "",
-                                              higherScaleText.text,
-                                              lowScaleText.text),
-                                        )
-                                      : widget.forms.listOfRubric.add(Rubric(
-                                          rubricQuestion.text,
-                                          rubricStyle,
-                                          "",
-                                          "",
-                                          "",
-                                          ""));
-                                  widget.resetViewFormPage();
-                                  Navigator.pop(context);
+                                  // rubricStyle == "Scale"
+                                  //     ? widget.forms.listOfRubric.add(
+                                  //         Rubric(
+                                  //             rubricQuestion.text,
+                                  //             rubricStyle,
+                                  //             "",
+                                  //             "",
+                                  //             higherScaleText.text,
+                                  //             lowScaleText.text),
+                                  //       )
+                                  //     : widget.forms.listOfRubric.add(Rubric(
+                                  //         rubricQuestion.text,
+                                  //         rubricStyle,
+                                  //         "",
+                                  //         "",
+                                  //         "",
+                                  //         ""));
+                                  // widget.resetViewFormPage();
+                                  // Navigator.pop(context);
                                 });
                               }
                             },
@@ -2746,181 +2753,225 @@ class ApplyFormDialog extends StatefulWidget {
 }
 
 class _ApplyFormDialogState extends State<ApplyFormDialog> {
-  TextEditingController coursenameController = TextEditingController();
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
+  Courses course;
 
-  void initState() {}
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
-    return AlertDialog(
-      content: Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          Positioned(
-            right: -10.0,
-            top: -10.0,
-            child: InkResponse(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: CircleAvatar(
-                radius: 15,
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 25,
-                ),
-                backgroundColor: Colors.red,
-              ),
-            ),
-          ),
-          Container(
-            height: size.height / 1.8,
-            width: size.width / 2.4,
-            child: Form(
-              key: _formskey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    "APPLY FORM",
-                    style: TextStyle(
-                      color: Colors.blue[800],
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
+    return StreamBuilder<List<Courses>>(
+        stream: provider.courselist,
+        builder: (context, snapshot) {
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -10.0,
+                  top: -10.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      radius: 15,
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      backgroundColor: Colors.red,
                     ),
                   ),
-
-                  disableDropdown
-                      ? DropdownButton(
-                          value: coursenameController.text,
-                          icon: Icon(Icons.arrow_drop_down),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: TextStyle(color: Colors.red, fontSize: 12),
-                          onChanged: (newValue) {},
-                          items: [],
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                ),
+                snapshot.hasData
+                    ? Container(
+                        height: size.height / 1.8,
+                        width: size.width / 2.4,
+                        child: Form(
+                          key: _formskey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
                               Text(
-                                "Apply " + widget.forms.formName + " to : ",
+                                "APPLY FORM",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Container(
-                                  height: 50,
-                                  width: size.width / 5,
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      color: Colors.transparent,
-                                      border:
-                                          Border.all(color: Colors.grey[600])),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: coursenameController.text,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 32,
-                                      elevation: 16,
-                                      style: TextStyle(
-                                          color: Colors.purple[800],
-                                          fontSize: 15),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          coursenameController.text = newValue;
-                                        });
-                                      },
-                                      // items: widget.data.courses.map((course) {
-                                      //   return DropdownMenuItem(
-                                      //     child: new Text(
-                                      //       course.courseName,
-                                      //       style: TextStyle(fontSize: 12),
-                                      //     ),
-                                      //     value: course.courseName,
-                                      //   );
-                                      // }).toList(),
-                                    ),
-                                  ),
+                                  color: Colors.blue[800],
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
+
+                              snapshot.data.length < 1
+                                  ? DropdownButton(
+                                      value: course,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 24,
+                                      elevation: 16,
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 12),
+                                      onChanged: (newValue) {},
+                                      items: [],
+                                    )
+                                  : disableDropdown
+                                      ? DropdownButton(
+                                          value: course,
+                                          icon: Icon(Icons.arrow_drop_down),
+                                          iconSize: 24,
+                                          elevation: 16,
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                          onChanged: (newValue) {},
+                                          items: [],
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Apply " +
+                                                    widget.forms.formName +
+                                                    " to : ",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15),
+                                                child: Container(
+                                                  height: 50,
+                                                  width: size.width / 5,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0,
+                                                          right: 10.0),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6.0),
+                                                      color: Colors.transparent,
+                                                      border: Border.all(
+                                                          color: Colors
+                                                              .grey[600])),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child:
+                                                        DropdownButton<Courses>(
+                                                      value: course ??
+                                                          snapshot.data[0],
+                                                      icon: Icon(Icons
+                                                          .arrow_drop_down),
+                                                      iconSize: 32,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                          color: Colors
+                                                              .purple[800],
+                                                          fontSize: 15),
+                                                      onChanged: (newValue) {
+                                                        course = newValue;
+                                                        provider.changeCourse =
+                                                            newValue;
+                                                        print(provider
+                                                            .course.courseID);
+                                                      },
+                                                      items: snapshot.data
+                                                          .map((snapcourse) {
+                                                        return DropdownMenuItem<
+                                                            Courses>(
+                                                          child: new Text(
+                                                            snapcourse
+                                                                .courseName,
+                                                            style: TextStyle(
+                                                                fontSize: 12),
+                                                          ),
+                                                          value: snapcourse,
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                              //Submit button
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(25.0),
+                                    child: Container(
+                                      height: 40,
+                                      width: 150,
+                                      child: MaterialButton(
+                                        color: Colors.red[800],
+                                        child: Text(
+                                          "Cancel",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(25.0),
+                                    child: Container(
+                                      height: 40,
+                                      width: 150,
+                                      child: MaterialButton(
+                                        color: Colors.blue[800],
+                                        child: Text(
+                                          "Submit",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        onPressed: () {
+                                          provider
+                                              .applyFormtoCourse(widget.forms);
+                                          disableDropdown = true;
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
-
-                  //Submit button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
+                      )
+                    : Center(
                         child: Container(
-                          height: 40,
-                          width: 150,
-                          child: RaisedButton(
-                            color: Colors.red[800],
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          child: RaisedButton(
-                            color: Colors.blue[800],
-                            child: Text(
-                              "Submit",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                // for (Courses c in widget.data.courses) {
-                                //   if (c.courseName ==
-                                //       coursenameController.text) {
-                                //     c.listOfForm.add(widget.forms);
-                                //     break;
-                                //   }
-                                // }
-                                // disableDropdown = true;
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
