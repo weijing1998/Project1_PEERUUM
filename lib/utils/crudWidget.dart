@@ -837,9 +837,11 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
 //ADD GROUP BUTTON
 class AddGroupDialog extends StatefulWidget {
   final Courses course;
-  final Function resetViewPage;
-  AddGroupDialog({Key key, @required this.course, @required this.resetViewPage})
-      : super(key: key);
+
+  AddGroupDialog({
+    Key key,
+    @required this.course,
+  }) : super(key: key);
 
   @override
   _AddGroupDialogState createState() => _AddGroupDialogState();
@@ -851,6 +853,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
@@ -911,6 +914,8 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (String value) =>
+                                  provider.changeGroupName = value,
                               controller: groupName,
                               decoration: new InputDecoration(
                                 labelText: "Group Name",
@@ -939,54 +944,6 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                       ],
                     ),
                   ),
-                  //Add Course ID
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
-                          child: Text(
-                            "GROUP ID : ",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 50,
-                            width: size.width / 4,
-                            child: TextFormField(
-                              controller: groupID,
-                              decoration: new InputDecoration(
-                                labelText: "Group ID",
-                                suffixIcon: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Icon(Icons.article),
-                                ),
-                                fillColor: Colors.white,
-                                border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(5.0),
-                                  borderSide: new BorderSide(),
-                                ),
-                                //fillColor: Colors.green
-                              ),
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return "Group ID cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
 
                   //Submit button
                   Row(
@@ -997,7 +954,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -1017,7 +974,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -1029,14 +986,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  widget.course.listOfGroup.add(
-                                    Group(
-                                      groupName.text,
-                                      groupID.text,
-                                    ),
-                                  );
-                                  widget.resetViewPage();
-                                  //groupname.add(groupName.text);
+                                  provider.addGrouptoCourse(widget.course);
                                   Navigator.pop(context);
                                 });
                               }
@@ -1059,30 +1009,32 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
 //DELETE GROUP BUTTON
 class DeleteGroupDialog extends StatefulWidget {
   final Courses course;
-  final Function resetViewPage;
-  DeleteGroupDialog(
-      {Key key, @required this.course, @required this.resetViewPage})
-      : super(key: key);
+
+  DeleteGroupDialog({
+    Key key,
+    @required this.course,
+  }) : super(key: key);
 
   @override
   _DeleteGroupDialogState createState() => _DeleteGroupDialogState();
 }
 
 class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
-  TextEditingController groupnameController = TextEditingController();
+  Map<String, dynamic> group;
+  List listofgroup;
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
 
   @override
   void initState() {
-    widget.course.listOfGroup.length != 0
-        ? groupnameController.text = widget.course.listOfGroup[0].groupName
-        : groupnameController.text = "No group";
+    listofgroup = widget.course.listOfGroup;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var provider = Provider.of<ProjectProvider>(context);
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -1125,7 +1077,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
 
                   disableDropdown
                       ? DropdownButton(
-                          value: groupnameController.text,
+                          value: group,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
@@ -1158,7 +1110,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                                           Border.all(color: Colors.grey[600])),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton(
-                                      value: groupnameController.text,
+                                      value: group,
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 32,
                                       elevation: 16,
@@ -1166,14 +1118,15 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                                           color: Colors.blue, fontSize: 15),
                                       onChanged: (newValue) {
                                         setState(() {
-                                          groupnameController.text = newValue;
+                                          group = newValue;
+                                          print(group["groupname"]);
                                         });
                                       },
                                       items: widget.course.listOfGroup
                                           .map((groups) {
                                         return DropdownMenuItem(
-                                          child: new Text(groups.groupName),
-                                          value: groups.groupName,
+                                          child: new Text(groups["groupname"]),
+                                          value: groups,
                                         );
                                       }).toList(),
                                     ),
@@ -1193,7 +1146,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -1213,7 +1166,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -1224,16 +1177,14 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                             ),
                             onPressed: () {
                               setState(() {
-                                print(widget.course.listOfGroup.length);
                                 disableDropdown = true;
-                                widget.course.listOfGroup.removeWhere(
-                                    (groups) =>
-                                        groups.groupName ==
-                                        groupnameController.text);
-                                widget.resetViewPage();
-                                print("FOund");
-                                print(widget.course.listOfGroup.length);
+                                listofgroup
+                                    .removeWhere((element) => element == group);
+                                print(listofgroup.length);
+                                provider.deleteGroupfromCourse(
+                                    widget.course, listofgroup);
                               });
+
                               Navigator.pop(context);
                             },
                           ),
@@ -1254,32 +1205,32 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
 //EDIT GROUP BUTTON
 class EditGroupDialog extends StatefulWidget {
   final Courses course;
-  final Function resetViewPage;
 
-  EditGroupDialog(
-      {Key key, @required this.course, @required this.resetViewPage})
-      : super(key: key);
+  EditGroupDialog({
+    Key key,
+    @required this.course,
+  }) : super(key: key);
 
   @override
   _EditGroupDialogState createState() => _EditGroupDialogState();
 }
 
 class _EditGroupDialogState extends State<EditGroupDialog> {
-  TextEditingController groupName = TextEditingController();
-  TextEditingController groupID = TextEditingController();
   TextEditingController groupnameController = TextEditingController();
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
+  Map<String, dynamic> group;
+  List listofgroup;
 
   @override
   void initState() {
-    widget.course.listOfGroup.length != 0
-        ? groupnameController.text = widget.course.listOfGroup[0].groupName
-        : groupnameController.text = "";
+    super.initState();
+    listofgroup = widget.course.listOfGroup;
   }
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     return AlertDialog(
       content: Stack(
@@ -1324,7 +1275,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                   ),
                   disableDropdown
                       ? DropdownButton(
-                          value: groupnameController.text,
+                          value: group,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
@@ -1357,7 +1308,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                           Border.all(color: Colors.grey[600])),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton(
-                                      value: groupnameController.text,
+                                      value: group,
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 32,
                                       elevation: 16,
@@ -1365,14 +1316,14 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                           color: Colors.blue, fontSize: 15),
                                       onChanged: (newValue) {
                                         setState(() {
-                                          groupnameController.text = newValue;
+                                          group = newValue;
                                         });
                                       },
                                       items: widget.course.listOfGroup
                                           .map((groups) {
                                         return DropdownMenuItem(
-                                          child: new Text(groups.groupName),
-                                          value: groups.groupName,
+                                          child: new Text(groups["groupname"]),
+                                          value: groups,
                                         );
                                       }).toList(),
                                     ),
@@ -1400,7 +1351,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
-                              controller: groupName,
+                              controller: groupnameController,
                               decoration: new InputDecoration(
                                 labelText: "Group Name",
                                 suffixIcon: Padding(
@@ -1428,53 +1379,6 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                       ],
                     ),
                   ),
-                  //Edit Course ID
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
-                          child: Text(
-                            "GROUP ID : ",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 50,
-                            width: size.width / 4,
-                            child: TextFormField(
-                              controller: groupID,
-                              decoration: new InputDecoration(
-                                labelText: "Group ID",
-                                suffixIcon: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Icon(Icons.article),
-                                ),
-                                fillColor: Colors.white,
-                                border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(5.0),
-                                  borderSide: new BorderSide(),
-                                ),
-                              ),
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return "Group ID cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
 
                   //Submit button
                   Row(
@@ -1485,7 +1389,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -1505,7 +1409,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
@@ -1516,15 +1420,16 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                             ),
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
-                                for (Group g in widget.course.listOfGroup) {
-                                  if (groupnameController.text == g.groupName) {
+                                for (Map<String, dynamic> g in listofgroup) {
+                                  if (group["groupname"] == g["groupname"]) {
                                     setState(() {
                                       disableDropdown = true;
-                                      g.groupName = groupName.text;
-                                      g.groupID = groupID.text;
-                                      widget.resetViewPage();
+                                      g["groupname"] = groupnameController.text;
                                     });
+                                    provider.editGroupfromCourse(
+                                        widget.course, listofgroup);
                                     Navigator.pop(context);
+
                                     break;
                                   }
                                 }

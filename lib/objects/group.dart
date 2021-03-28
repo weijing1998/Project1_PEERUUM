@@ -1,17 +1,23 @@
 class Group {
   String groupName;
   String groupID;
+  List listofStudent;
 
-  Group(String gn, String gID) {
-    this.groupName = gn;
-    this.groupID = gID;
+  Group({this.groupName, this.groupID, this.listofStudent});
 
-    // groupStudent = [
-    //   // Student("YONG", "YONG@gmail.com", "12323", "0127762335","IT"),
-    //   // Student("Likey", "YONG@gmail.com", "12323", "0127762335","IT"),
-    //   // Student("Waynn", "YONG@gmail.com", "12323", "0127762335","IT"),
-    //   // Student("Waynn", "YONG@gmail.com", "12323", "0127762335","IT"),
-    //   // Student("Wesley", "YONG@gmail.com", "12323", "0127762335","IT"),
-    // ];
+  factory Group.fromJson(Map<String, dynamic> json) {
+    return Group(
+      groupName: json["groupname"],
+      groupID: json['groupid'],
+      listofStudent: json['listofstudent'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "groupname": groupName,
+      "groupid": groupID,
+      "listofstudent": listofStudent,
+    };
   }
 }

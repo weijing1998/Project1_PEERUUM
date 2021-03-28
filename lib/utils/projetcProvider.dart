@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/objects/rubric.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
@@ -167,13 +168,81 @@ class ProjectProvider with ChangeNotifier {
     _formId = formId;
     notifyListeners();
   }
+  ////////////////////////////////////////(Forms)
 
-  // List<Map> convertListFormToMap({List customSteps}) {
-  //   List<Map> steps = [];
-  //   customSteps.forEach((customStep) {
-  //     Map step = customStep.toJson();
-  //     steps.add(step);
-  //   });
-  //   return steps;
-  // }
+  ///////////////////////////////////////(Groups)
+  String _groupName;
+  String _groupId;
+
+  String get groupName => _groupName;
+  String get groupId => _groupId;
+  Stream<Group> get group => firestoreservice.getGroups(_groupId);
+  Stream<List<Group>> get groupList => firestoreservice.getGroupList();
+
+  set changeGroupName(String groupName) {
+    _groupName = groupName;
+  }
+
+  setGroupId(String groupId) {
+    _groupId = groupId;
+    notifyListeners();
+  }
+
+  deleteGroup(String groupId) {
+    firestoreservice.deleteGroup(groupId);
+  }
+
+  editGroup(Group group) {
+    var newGroup = Group(
+      groupName: _groupName,
+      groupID: group.groupID,
+      listofStudent: group.listofStudent,
+    );
+    firestoreservice.setGroup(newGroup);
+    notifyListeners();
+  }
+
+  addGrouptoCourse(Courses course) {
+    Group group =
+        Group(groupID: uuid.v1(), groupName: _groupName, listofStudent: []);
+    List newlist = course.listOfGroup;
+    newlist.add(group.toJson());
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: newlist);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+  deleteGroupfromCourse(Courses course, List listofgroup) {
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: listofgroup);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+    editGroupfromCourse(Courses course, List listofgroup) {
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: listofgroup);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+  ///////////////////////////////////////(Groups)
 }

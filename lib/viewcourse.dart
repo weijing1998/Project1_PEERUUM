@@ -20,8 +20,8 @@ class _ViewCourseState extends State<ViewCourse> {
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Courses>(
         stream: provider.streamCourse,
-        builder: (context, provider) {
-          if (provider.hasData) {
+        builder: (context, snapshotCourse) {
+          if (snapshotCourse.hasData) {
             return Container(
               height: size.height,
               width: size.width - size.width / 6,
@@ -58,7 +58,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                         ChangeNotifierProvider(
                                       create: (context) => ProjectProvider(),
                                       child: EditCourseDialog(
-                                        courses: provider.data,
+                                        courses: snapshotCourse.data,
                                         resetViewPage: resetViewPage,
                                       ),
                                     ),
@@ -93,7 +93,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              "COURSE NAME : " + provider.data.courseName,
+                              "COURSE NAME : " + snapshotCourse.data.courseName,
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
@@ -101,7 +101,7 @@ class _ViewCourseState extends State<ViewCourse> {
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              "COURSE CODE : " + provider.data.courseCode,
+                              "COURSE CODE : " + snapshotCourse.data.courseCode,
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
@@ -109,7 +109,8 @@ class _ViewCourseState extends State<ViewCourse> {
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              "COURSE GROUP : " + provider.data.courseGroup,
+                              "COURSE GROUP : " +
+                                  snapshotCourse.data.courseGroup,
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
@@ -117,7 +118,8 @@ class _ViewCourseState extends State<ViewCourse> {
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              "COURSE BATCH : " + provider.data.courseBatch,
+                              "COURSE BATCH : " +
+                                  snapshotCourse.data.courseBatch,
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500),
                             ),
@@ -132,7 +134,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                provider.data.listOfForm.length == 0
+                                snapshotCourse.data.listOfForm.length == 0
                                     ? Container(
                                         height: size.height / 20,
                                         width: size.width / 15,
@@ -158,7 +160,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                           width: size.width / 2,
                                           child: ListView.builder(
                                               scrollDirection: Axis.horizontal,
-                                              itemCount: provider
+                                              itemCount: snapshotCourse
                                                   .data.listOfForm.length,
                                               itemBuilder: (BuildContext ctxt,
                                                   int index) {
@@ -175,10 +177,9 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                 .grey[600])),
                                                     child: Align(
                                                       child: Text(
-                                                        provider
-                                                            .data
-                                                            .listOfForm[index]["formname"]
-                                                            ,
+                                                        snapshotCourse.data
+                                                                .listOfForm[
+                                                            index]["formname"],
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 12,
@@ -204,280 +205,293 @@ class _ViewCourseState extends State<ViewCourse> {
                     ),
 
                     //Group detail
-                    // Row(
-                    //   children: [
-                    //     SizedBox(
-                    //       width: size.width / 14,
-                    //     ),
-                    //     Align(
-                    //       alignment: Alignment.centerLeft,
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.symmetric(
-                    //             horizontal: 15, vertical: 25),
-                    //         child: Text(
-                    //           "GROUP DETAIL",
-                    //           style: TextStyle(
-                    //               fontSize: 30, fontWeight: FontWeight.bold),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     SizedBox(
-                    //       width: size.width / 3.2,
-                    //     ),
-                    //     Container(
-                    //       child: Row(
-                    //         children: [
-                    //           //ADD Group Button
-                    //           Padding(
-                    //             padding: const EdgeInsets.all(12.0),
-                    //             child: Container(
-                    //               height: 40,
-                    //               width: 120,
-                    //               child: MaterialButton(
-                    //                 onPressed: () {
-                    //                   setState(() {
-                    //                     // showDialog(
-                    //                     //   context: context,
-                    //                     //   builder: (context) => AddGroupDialog(
-                    //                     //     course: widget.course,
-                    //                     //     resetViewPage: reset,
-                    //                     //   ),
-                    //                     // );
-                    //                   });
-                    //                 },
-                    //                 child: Text(
-                    //                   "Add Group",
-                    //                   style: TextStyle(
-                    //                       color: Colors.white,
-                    //                       fontSize: 12,
-                    //                       fontWeight: FontWeight.w700),
-                    //                 ),
-                    //                 color: Colors.blue[900],
-                    //               ),
-                    //             ),
-                    //           ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width / 14,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 25),
+                            child: Text(
+                              "GROUP DETAIL",
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width / 3.2,
+                        ),
+                        Container(
+                          child: Row(
+                            children: [
+                              //ADD Group Button
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 40,
+                                  width: 120,
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              ChangeNotifierProvider(
+                                                create: (context) =>
+                                                    ProjectProvider(),
+                                                child: AddGroupDialog(
+                                                  course: snapshotCourse.data,
+                                                ),
+                                              ));
+                                    },
+                                    child: Text(
+                                      "Add Group",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    color: Colors.blue[900],
+                                  ),
+                                ),
+                              ),
 
-                    //           // Edit Group Button
-                    //           Padding(
-                    //             padding: const EdgeInsets.all(12.0),
-                    //             child: Container(
-                    //               height: 40,
-                    //               width: 120,
-                    //               child: MaterialButton(
-                    //                   // onPressed: widget.course.listOfGroup.length != 0
-                    //                   //     ? () {
-                    //                   //         showDialog(
-                    //                   //           context: context,
-                    //                   //           builder: (context) => EditGroupDialog(
-                    //                   //             course: widget.course,
-                    //                   //             resetViewPage: reset,
-                    //                   //           ),
-                    //                   //         );
-                    //                   //       }
-                    //                   //     : () {},
-                    //                   // child: Text(
-                    //                   //   "Edit Group",
-                    //                   //   style: TextStyle(
-                    //                   //       color: Colors.white,
-                    //                   //       fontSize: 12,
-                    //                   //       fontWeight: FontWeight.w700),
-                    //                   // ),
-                    //                   // color: Colors.blue[900],
-                    //                   ),
-                    //             ),
-                    //           ),
-                    //           //Delete Group Button
-                    //           Padding(
-                    //             padding: const EdgeInsets.all(12.0),
-                    //             child: Container(
-                    //               height: 40,
-                    //               width: 120,
-                    //               child: MaterialButton(
-                    //                 // onPressed: widget.course.listOfGroup.length != 0
-                    //                 //     ? () {
-                    //                 //         showDialog(
-                    //                 //           context: context,
-                    //                 //           builder: (context) => DeleteGroupDialog(
-                    //                 //             course: widget.course,
-                    //                 //             resetViewPage: reset,
-                    //                 //           ),
-                    //                 //         );
-                    //                 //       }
-                    //                 //     : () {},
-                    //                 child: Text(
-                    //                   "Delete Group",
-                    //                   style: TextStyle(
-                    //                       color: Colors.white,
-                    //                       fontSize: 12,
-                    //                       fontWeight: FontWeight.w700),
-                    //                 ),
-                    //                 color: Colors.blue[900],
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
+                              // Edit Group Button
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 40,
+                                  width: 120,
+                                  child: MaterialButton(
+                                    onPressed: snapshotCourse
+                                                .data.listOfGroup.length !=
+                                            0
+                                        ? () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    ChangeNotifierProvider(
+                                                      create: (context) =>
+                                                          ProjectProvider(),
+                                                      child: EditGroupDialog(
+                                                        course:
+                                                            snapshotCourse.data,
+                                                      ),
+                                                    ));
+                                          }
+                                        : () {},
+                                    child: Text(
+                                      "Edit Group",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    // color: Colors.blue[900],
+                                    color: Colors.blue[900],
+                                  ),
+                                ),
+                              ),
+                              //Delete Group Button
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 40,
+                                  width: 120,
+                                  child: MaterialButton(
+                                    onPressed: snapshotCourse
+                                                .data.listOfGroup.length !=
+                                            0
+                                        ? () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    ChangeNotifierProvider(
+                                                      create: (context) =>
+                                                          ProjectProvider(),
+                                                      child: DeleteGroupDialog(
+                                                        course:
+                                                            snapshotCourse.data,
+                                                      ),
+                                                    ));
+                                          }
+                                        : () {},
+                                    child: Text(
+                                      "Delete Group",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    color: Colors.blue[900],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
 
-                    // SingleChildScrollView(
-                    //   child: Container(
-                    //     height: size.height / 1.45,
-                    //     width: size.width / 1.5,
-                    //     color: Colors.grey[300],
-                    //     child: provider.course.listOfGroup.length != 0
-                    //         ? ListView.builder(
-                    //             shrinkWrap: true,
-                    //             itemCount: widget.course.listOfGroup.length,
-                    //             itemBuilder: (context, index) {
-                    //               return Card(
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.all(4.0),
-                    //                   child: Container(
-                    //                     height: 600,
-                    //                     width: double.infinity,
-                    //                     color: Colors.blueGrey[500],
-                    //                     child: Column(
-                    //                       crossAxisAlignment:
-                    //                           CrossAxisAlignment.start,
-                    //                       children: [
-                    //                         Container(
-                    //                           height: 60,
-                    //                           width: double.infinity,
-                    //                           color: Colors.blueGrey[800],
-                    //                           child: Align(
-                    //                             alignment: Alignment.center,
-                    //                             child: Text(
-                    //                               widget.course.listOfGroup[index]
-                    //                                   .groupName
-                    //                                   .toUpperCase(),
-                    //                               style: TextStyle(
-                    //                                   color: Colors.white,
-                    //                                   fontSize: 25,
-                    //                                   fontWeight: FontWeight.w700),
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                         Padding(
-                    //                           padding: const EdgeInsets.all(18.0),
-                    //                           child: Text(
-                    //                             "GROUP ID : " +
-                    //                                 widget.course.listOfGroup[index]
-                    //                                     .groupID,
-                    //                             style: TextStyle(
-                    //                                 color: Colors.white,
-                    //                                 fontSize: 20,
-                    //                                 fontWeight: FontWeight.w700),
-                    //                           ),
-                    //                         ),
-                    //                         Padding(
-                    //                           padding: const EdgeInsets.all(18.0),
-                    //                           child: Text(
-                    //                             "STUDENT INFO IN " +
-                    //                                 widget.course.listOfGroup[index]
-                    //                                     .groupName
-                    //                                     .toUpperCase(),
-                    //                             style: TextStyle(
-                    //                               color: Colors.white,
-                    //                               fontSize: 20,
-                    //                               fontWeight: FontWeight.w700,
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                         Align(
-                    //                           alignment: Alignment.center,
-                    //                           child: SingleChildScrollView(
-                    //                             child: Container(
-                    //                               height: size.height / 2.6,
-                    //                               width: size.width / 1.9,
-                    //                               color: Colors.transparent,
-                    //                               child: ListView.builder(
-                    //                                   scrollDirection:
-                    //                                       Axis.horizontal,
-                    //                                   itemCount: null,
-                    //                                   itemBuilder:
-                    //                                       (context, indexOfStudent) {
-                    //                                     return Card(
-                    //                                       child: Container(
-                    //                                         color: Colors.teal[200],
-                    //                                         height: double.infinity,
-                    //                                         width: 330,
-                    //                                         child: Column(
-                    //                                           mainAxisAlignment:
-                    //                                               MainAxisAlignment
-                    //                                                   .spaceEvenly,
-                    //                                           children: [
-                    //                                             Padding(
-                    //                                               padding:
-                    //                                                   const EdgeInsets
-                    //                                                       .all(8.0),
-                    //                                               child: CircleAvatar(
-                    //                                                 backgroundImage:
-                    //                                                     NetworkImage(
-                    //                                                         'images/header.jpg'),
-                    //                                                 radius: 52,
-                    //                                               ),
-                    //                                             ),
-                    //                                             Text(''
-                    //                                                 // "NAME : " +
-                    //                                                 //     widget
-                    //                                                 //         .course
-                    //                                                 //         .listOfGroup[
-                    //                                                 //             index]
-                    //                                                 //         .groupStudent[
-                    //                                                 //             indexOfStudent]
-                    //                                                 //         .name,
-                    //                                                 ),
-                    //                                             Text(''
-                    //                                                 // "Email : " +
-                    //                                                 //     widget
-                    //                                                 //         .course
-                    //                                                 //         .listOfGroup[
-                    //                                                 //             index]
-                    //                                                 //         .groupStudent[
-                    //                                                 //             indexOfStudent]
-                    //                                                 //         .email,
-                    //                                                 ),
-                    //                                             Text(''
-                    //                                                 // "Course : " +
-                    //                                                 //     widget
-                    //                                                 //         .course
-                    //                                                 //         .listOfGroup[
-                    //                                                 //             index]
-                    //                                                 //         .groupStudent[
-                    //                                                 //             indexOfStudent]
-                    //                                                 //         .course,
-                    //                                                 ),
-                    //                                             Text(''
-                    //                                                 // "Telephone No : " +
-                    //                                                 //     widget
-                    //                                                 //         .course
-                    //                                                 //         .listOfGroup[
-                    //                                                 //             index]
-                    //                                                 //         .groupStudent[
-                    //                                                 //             indexOfStudent]
-                    //                                                 //         .telephone,
-                    //                                                 ),
-                    //                                           ],
-                    //                                         ),
-                    //                                       ),
-                    //                                     );
-                    //                                   }),
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               );
-                    //             })
-                    //         : Center(
-                    //             child: Text("No Group Created"),
-                    //           ),
-                    //   ),
-                    // ),
+                    SingleChildScrollView(
+                      child: Container(
+                        height: size.height / 1.45,
+                        width: size.width / 1.5,
+                        color: Colors.grey[300],
+                        child: snapshotCourse.data.listOfGroup.length != 0
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    snapshotCourse.data.listOfGroup.length,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Container(
+                                        height: 600,
+                                        width: double.infinity,
+                                        color: Colors.blueGrey[500],
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 60,
+                                              width: double.infinity,
+                                              color: Colors.blueGrey[800],
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  snapshotCourse
+                                                      .data
+                                                      .listOfGroup[index]
+                                                          ["groupname"]
+                                                      .toUpperCase(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(18.0),
+                                              child: Text(
+                                                "STUDENT INFO IN " +
+                                                    snapshotCourse
+                                                        .data
+                                                        .listOfGroup[index]
+                                                            ["groupname"]
+                                                        .toUpperCase(),
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                            // Align(
+                                            //   alignment: Alignment.center,
+                                            //   child: SingleChildScrollView(
+                                            //     child: Container(
+                                            //       height: size.height / 2.6,
+                                            //       width: size.width / 1.9,
+                                            //       color: Colors.transparent,
+                                            //       child: ListView.builder(
+                                            //           scrollDirection:
+                                            //               Axis.horizontal,
+                                            //           itemCount: null,
+                                            //           itemBuilder: (context,
+                                            //               indexOfStudent) {
+                                            //             return Card(
+                                            //               child: Container(
+                                            //                 color: Colors
+                                            //                     .teal[200],
+                                            //                 height:
+                                            //                     double.infinity,
+                                            //                 width: 330,
+                                            //                 child: Column(
+                                            //                   mainAxisAlignment:
+                                            //                       MainAxisAlignment
+                                            //                           .spaceEvenly,
+                                            //                   children: [
+                                            //                     Padding(
+                                            //                       padding:
+                                            //                           const EdgeInsets
+                                            //                                   .all(
+                                            //                               8.0),
+                                            //                       child:
+                                            //                           CircleAvatar(
+                                            //                         backgroundImage:
+                                            //                             NetworkImage(
+                                            //                                 'images/header.jpg'),
+                                            //                         radius: 52,
+                                            //                       ),
+                                            //                     ),
+                                            //                     Text(
+                                            //                       "NAME : " +
+                                            //                           snapshotCourse
+                                            //                               .data
+                                            //                               .listOfGroup[
+                                            //                                   index]
+                                            //                               .groupStudent[
+                                            //                                   indexOfStudent]
+                                            //                               .name,
+                                            //                     ),
+                                            //                     Text(
+                                            //                       "Email : " +
+                                            //                           snapshotCourse
+                                            //                               .data
+                                            //                               .listOfGroup[
+                                            //                                   index]
+                                            //                               .groupStudent[
+                                            //                                   indexOfStudent]
+                                            //                               .email,
+                                            //                     ),
+                                            //                     Text(
+                                            //                       "Course : " +
+                                            //                           snapshotCourse
+                                            //                               .data
+                                            //                               .listOfGroup[
+                                            //                                   index]
+                                            //                               .groupStudent[
+                                            //                                   indexOfStudent]
+                                            //                               .course,
+                                            //                     ),
+                                            //                     Text(
+                                            //                       "Telephone No : " +
+                                            //                           snapshotCourse
+                                            //                               .data
+                                            //                               .listOfGroup[
+                                            //                                   index]
+                                            //                               .groupStudent[
+                                            //                                   indexOfStudent]
+                                            //                               .telephone,
+                                            //                     ),
+                                            //                   ],
+                                            //                 ),
+                                            //               ),
+                                            //             );
+                                            //           }),
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                })
+                            : Center(
+                                child: Text("No Group Created"),
+                              ),
+                      ),
+                    ),
                     SizedBox(
                       height: size.height / 4,
                     ),

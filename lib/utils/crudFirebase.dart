@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/objects/course.dart';
 
@@ -72,7 +73,6 @@ class Crudmethod {
         .map((event) => Forms.fromJson(event.data()));
   }
 
-
   Future setForms(Forms forms) async {
     return db.collection("Form").doc(forms.formID).set(forms.toJson());
   }
@@ -83,4 +83,31 @@ class Crudmethod {
   }
 
   //////////////////////////////////////////////(Form)
+
+  //////////////////////////////////////////////(Group)
+
+  Stream<List<Group>> getGroupList() {
+    return db.collection("Group").snapshots().map(
+        (event) => event.docs.map((e) => Group.fromJson(e.data())).toList());
+  }
+
+  Stream<Group> getGroups(String groupid) {
+    return db
+        .collection("Group")
+        .doc(groupid)
+        .snapshots()
+        .map((event) => Group.fromJson(event.data()));
+  }
+  
+  //add
+  Future setGroup(Group groups) async {
+    return db.collection("Group").doc(groups.groupID).set(groups.toJson());
+  }
+
+  //delete
+  Future deleteGroup(String groupId) async {
+    return db.collection("Group").doc(groupId).delete();
+  }
+
+  //////////////////////////////////////////////(Group)
 }

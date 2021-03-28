@@ -19,7 +19,7 @@ class Forms {
         formCode: json["formcode"],
         formID: json['formid'],
         formName: json['formname'],
-        listOfRubric: json['listr']);
+        listOfRubric: json['listofrubric']);
   }
 
   Map<String, dynamic> toJson() {
@@ -27,7 +27,7 @@ class Forms {
       "formcode": formCode,
       "formid": formID,
       "formname": formName,
-      "listr": listOfRubric,
+      "listofrubric": listOfRubric,
     };
   }
 }

@@ -6,15 +6,6 @@ class PeerUser {
 
   PeerUser({this.userName, this.email, this.password, this.typeOfUser});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': userName,
-      'email': email,
-      'password': password,
-      'typeofuser': typeOfUser,
-    };
-  }
-
   factory PeerUser.fromJson(Map<String, dynamic> json) {
     return PeerUser(
       userName: json["name"],
@@ -24,6 +15,10 @@ class PeerUser {
   }
 
   Map<String, dynamic> toJson() {
-    return {"email": email, "typeOfUser": typeOfUser, "name": userName};
+    return {
+      "email": email,
+      "typeOfUser": typeOfUser,
+      "name": userName,
+    };
   }
 }
