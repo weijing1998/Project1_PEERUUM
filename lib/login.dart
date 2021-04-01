@@ -255,8 +255,14 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               submitting = true;
                                             });
-                                            await signIn(emailController.text,
-                                                passwordController.text);
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                     Sidebar(email: "email")),
+                                            );
+                                            // await signIn(emailController.text,
+                                            //     passwordController.text);
                                           },
                                         ),
                                       ),

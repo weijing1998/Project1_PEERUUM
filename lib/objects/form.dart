@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pepelist/objects/rubric.dart';
 
 class Forms {
   String formName;

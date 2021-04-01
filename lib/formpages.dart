@@ -211,7 +211,7 @@ class _FormPageState extends State<FormPage> {
                                                                     "FORM CODE : " +
                                                                         snapshot
                                                                             .data[index]
-                                                                            .formCode,
+                                                                            .formCode.toUpperCase(),
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             15,
@@ -236,21 +236,19 @@ class _FormPageState extends State<FormPage> {
                                                                   SizedBox(
                                                                     width: 20,
                                                                   ),
-                                                                  // Text(
-                                                                  //   "NUMBER OF QUESTION: " +
-                                                                  //       widget
-                                                                  //           .data
-                                                                  //           .forms[
-                                                                  //               index]
-                                                                  //           .listOfRubric
-                                                                  //           .length
-                                                                  //           .toString(),
-                                                                  //   style: TextStyle(
-                                                                  //       fontSize: 15,
-                                                                  //       fontWeight:
-                                                                  //           FontWeight
-                                                                  //               .w500),
-                                                                  // )
+                                                                  Text(
+                                                                    "NUMBER OF QUESTION: " +
+                                                                        snapshot
+                                                                            .data[index]
+                                                                            .listOfRubric
+                                                                            .length
+                                                                            .toString(),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  )
                                                                 ],
                                                               ),
                                                             ),

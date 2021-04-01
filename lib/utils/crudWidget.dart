@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
-import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
@@ -2076,11 +2077,11 @@ class _EditFormDialogState extends State<EditFormDialog> {
 
 class AddRubricDialog extends StatefulWidget {
   final Forms forms;
-  final Function resetViewFormPage;
 
-  AddRubricDialog(
-      {Key key, @required this.forms, @required this.resetViewFormPage})
-      : super(key: key);
+  AddRubricDialog({
+    Key key,
+    @required this.forms,
+  }) : super(key: key);
 
   @override
   _AddRubricDialogState createState() => _AddRubricDialogState();
@@ -2090,25 +2091,34 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
   TextEditingController rubricQuestion = TextEditingController();
   TextEditingController lowScaleText = TextEditingController();
   TextEditingController higherScaleText = TextEditingController();
-  String rubricStyle = "Scale";
-  int selectedRadio;
+  String rubricStyle;
+  int selectedScaleNumber;
+  List<int> scalenumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  List mapScalenumber = [];
+  List<DynamicWidget> listTextform = [];
+  List multiplequestion = [];
+  var _formskey = GlobalKey<FormState>();
 
-  void setSelectedRadio(int radio) {
-    setState(() {
-      selectedRadio = radio;
-    });
+  addTextForm() {
+    listTextform.add(new DynamicWidget());
+    setState(() {});
+  }
+
+  delteTextForm() {
+    listTextform.removeLast();
+    setState(() {});
   }
 
   @override
   void initState() {
-    selectedRadio = 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
-    var _formskey = GlobalKey<FormState>();
+
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -2167,6 +2177,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                             height: 50,
                             width: size.width / 4,
                             child: TextFormField(
+                              onChanged: (value) =>
+                                  provider.changeQuestion = value,
                               controller: rubricQuestion,
                               decoration: new InputDecoration(
                                 labelText: "Rubric Question",
@@ -2228,9 +2240,14 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 onChanged: (newValue) {
                                   setState(() {
                                     rubricStyle = newValue;
+                                    provider.changeType = newValue;
                                   });
                                 },
-                                items: <String>["Scale", "Text"].map((style) {
+                                items: <String>[
+                                  "Scale",
+                                  "Text",
+                                  "Multiple Choice"
+                                ].map((style) {
                                   return DropdownMenuItem(
                                     child: new Text(style),
                                     value: style,
@@ -2264,7 +2281,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Container(
-                                  height: size.height / 5,
+                                  height: size.height / 4,
                                   width: size.width / 2,
                                   decoration: BoxDecoration(
                                       color: Colors.transparent,
@@ -2286,264 +2303,192 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                       //Lower Scale Text
                                       Padding(
                                         padding: const EdgeInsets.all(20.0),
-                                        child: Row(
+                                        child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
+                                            //Number of scale
                                             Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                width: size.width / 12,
-                                                child: TextFormField(
-                                                  cursorColor:
-                                                      Colors.purple[800],
-                                                  controller: lowScaleText,
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    labelText:
-                                                        "Lower Scale Text",
-                                                    focusColor:
-                                                        Colors.purple[800],
-                                                    hoverColor:
-                                                        Colors.purple[800],
-
-                                                    fillColor: Colors.white,
-                                                    border:
-                                                        new OutlineInputBorder(
-                                                      borderRadius:
-                                                          new BorderRadius
-                                                              .circular(5.0),
-                                                      borderSide:
-                                                          new BorderSide(
-                                                              color: Colors
-                                                                  .purple[800]),
-                                                    ),
-                                                    //fillColor: Colors.green
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      30, 10, 0, 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  //Number of scale
+                                                  Text(
+                                                    "Number of Scale : ",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                  validator: (val) {
-                                                    if (val.isEmpty) {
-                                                      return "Lower Scale Text cannot be empty";
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                ),
+                                                  Container(
+                                                    width: size.width / 10,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 15),
+                                                      child: Container(
+                                                        width: size.width / 4,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10.0,
+                                                                right: 10.0),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.0),
+                                                            color: Colors
+                                                                .transparent,
+                                                            border: Border.all(
+                                                                color:
+                                                                    Colors.grey[
+                                                                        600])),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child: DropdownButton(
+                                                            value:
+                                                                selectedScaleNumber,
+                                                            icon: Icon(Icons
+                                                                .arrow_drop_down),
+                                                            iconSize: 32,
+                                                            elevation: 16,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .purple,
+                                                                fontSize: 15),
+                                                            onChanged:
+                                                                (newValue) {
+                                                              setState(() {
+                                                                selectedScaleNumber =
+                                                                    newValue;
+                                                                for (int i = 1;
+                                                                    i <=
+                                                                        newValue;
+                                                                    i++) {
+                                                                  Map<String,
+                                                                          dynamic>
+                                                                      map = {
+                                                                    "index": i
+                                                                  };
+                                                                  mapScalenumber
+                                                                      .add(map);
+                                                                }
+                                                              });
+                                                            },
+                                                            items: scalenumber
+                                                                .map((style) {
+                                                              return DropdownMenuItem(
+                                                                child: new Text(
+                                                                  style
+                                                                      .toString(),
+                                                                ),
+                                                                value: style,
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            //Scales
                                             Row(
-                                              children: <Widget>[
-                                                ButtonBar(
-                                                  alignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Text("1"),
-                                                        Radio(
-                                                            value: 1,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    width: size.width / 12,
+                                                    child: TextFormField(
+                                                      onChanged: (value) =>
+                                                          provider.changeScaleLowLable =
+                                                              value,
+                                                      cursorColor:
+                                                          Colors.purple[800],
+                                                      controller: lowScaleText,
+                                                      decoration:
+                                                          new InputDecoration(
+                                                        labelText:
+                                                            "Lower Scale Text",
+                                                        focusColor:
+                                                            Colors.purple[800],
+                                                        hoverColor:
+                                                            Colors.purple[800],
+
+                                                        fillColor: Colors.white,
+                                                        border:
+                                                            new OutlineInputBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  5.0),
+                                                          borderSide:
+                                                              new BorderSide(
+                                                                  color: Colors
+                                                                          .purple[
+                                                                      800]),
+                                                        ),
+                                                        //fillColor: Colors.green
+                                                      ),
+                                                      validator: (val) {
+                                                        if (val.isEmpty) {
+                                                          return "Lower Scale Text cannot be empty";
+                                                        } else {
+                                                          return null;
+                                                        }
+                                                      },
                                                     ),
-                                                    Column(
-                                                      children: [
-                                                        Text("2"),
-                                                        Radio(
-                                                            value: 2,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
+                                                  ),
+                                                ),
+                                                //Higher Scale Text
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    width: size.width / 12,
+                                                    child: TextFormField(
+                                                      onChanged: (value) =>
+                                                          provider.changeScaleHighLable =
+                                                              value,
+                                                      controller:
+                                                          higherScaleText,
+                                                      decoration:
+                                                          new InputDecoration(
+                                                        labelText:
+                                                            "Higher Scale Text",
+
+                                                        fillColor: Colors.white,
+                                                        border:
+                                                            new OutlineInputBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  5.0),
+                                                          borderSide:
+                                                              new BorderSide(),
+                                                        ),
+                                                        //fillColor: Colors.green
+                                                      ),
+                                                      validator: (val) {
+                                                        if (val.isEmpty) {
+                                                          return "Higher Scale Text cannot be empty";
+                                                        } else {
+                                                          return null;
+                                                        }
+                                                      },
                                                     ),
-                                                    Column(
-                                                      children: [
-                                                        Text("3"),
-                                                        Radio(
-                                                            value: 3,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("4"),
-                                                        Radio(
-                                                            value: 4,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("5"),
-                                                        Radio(
-                                                            value: 5,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("6"),
-                                                        Radio(
-                                                            value: 6,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("7"),
-                                                        Radio(
-                                                            value: 7,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("8"),
-                                                        Radio(
-                                                            value: 8,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("9"),
-                                                        Radio(
-                                                            value: 9,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Text("10"),
-                                                        Radio(
-                                                            value: 10,
-                                                            groupValue:
-                                                                selectedRadio,
-                                                            activeColor: Colors
-                                                                .purple[700],
-                                                            onChanged: (val) {
-                                                              print(
-                                                                  "Radio $val");
-                                                              setSelectedRadio(
-                                                                  val);
-                                                            }),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                            //Higher Scale Text
-                                            Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                width: size.width / 12,
-                                                child: TextFormField(
-                                                  controller: higherScaleText,
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    labelText:
-                                                        "Higher Scale Text",
 
-                                                    fillColor: Colors.white,
-                                                    border:
-                                                        new OutlineInputBorder(
-                                                      borderRadius:
-                                                          new BorderRadius
-                                                              .circular(5.0),
-                                                      borderSide:
-                                                          new BorderSide(),
-                                                    ),
-                                                    //fillColor: Colors.green
-                                                  ),
-                                                  validator: (val) {
-                                                    if (val.isEmpty) {
-                                                      return "Higher Scale Text cannot be empty";
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                ),
-                                              ),
-                                            ),
+                                            //Scales
                                           ],
                                         ),
                                       ),
@@ -2554,21 +2499,87 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                             ],
                           ),
                         )
-                      : Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Container(
-                                  height: size.height / 5,
-                                  width: size.width / 2,
-                                ),
+                      : rubricStyle == "Text"
+                          ?
+                          //Text type
+                          Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Container(
+                                      height: size.height / 5,
+                                      width: size.width / 2,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            )
+                          : rubricStyle == "Multiple Choice"
+                              ?
+                              //Multiple type
+                              Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blueAccent)),
+                                        height: size.height / 5,
+                                        width: size.width / 2,
+                                        child: ListView.builder(
+                                          itemCount: listTextform.length,
+                                          itemBuilder: (_, index) {
+                                            return listTextform[index];
+                                          },
+                                        ),
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Container(
+                                                height: size.height / 20,
+                                                width: size.width / 20,
+                                                child: IconButton(
+                                                  color: Colors.blue,
+                                                  onPressed: addTextForm,
+                                                  icon: Icon(
+                                                    FontAwesomeIcons.plus,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Container(
+                                                height: size.height / 20,
+                                                width: size.width / 20,
+                                                child: IconButton(
+                                                  color: Colors.blue,
+                                                  onPressed:
+                                                      listTextform.length == 0
+                                                          ? () {}
+                                                          : delteTextForm,
+                                                  icon: Icon(
+                                                      FontAwesomeIcons.minus),
+                                                ),
+                                              ),
+                                            )
+                                          ]),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
 
                   //Submit button
                   Row(
@@ -2579,7 +2590,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
@@ -2599,7 +2610,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                         child: Container(
                           height: 40,
                           width: 150,
-                          child: RaisedButton(
+                          child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
                               "Submit",
@@ -2610,27 +2621,16 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                             ),
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
-                                setState(() {
-                                  // rubricStyle == "Scale"
-                                  //     ? widget.forms.listOfRubric.add(
-                                  //         Rubric(
-                                  //             rubricQuestion.text,
-                                  //             rubricStyle,
-                                  //             "",
-                                  //             "",
-                                  //             higherScaleText.text,
-                                  //             lowScaleText.text),
-                                  //       )
-                                  //     : widget.forms.listOfRubric.add(Rubric(
-                                  //         rubricQuestion.text,
-                                  //         rubricStyle,
-                                  //         "",
-                                  //         "",
-                                  //         "",
-                                  //         ""));
-                                  // widget.resetViewFormPage();
-                                  // Navigator.pop(context);
+                                listTextform.forEach((element) {
+                                  Map<String, dynamic> map = {
+                                    "option": element.option.text ?? "No Value",
+                                    "value": element.value.text ?? "No Value",
+                                  };
+                                  multiplequestion.add(map);
                                 });
+                                provider.addRubrictoForm(widget.forms,
+                                    mapScalenumber, multiplequestion);
+                                Navigator.pop(context);
                               }
                             },
                           ),
@@ -2643,6 +2643,85 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class DynamicWidget extends StatelessWidget {
+  TextEditingController option = TextEditingController();
+  TextEditingController value = TextEditingController();
+  var formskeys = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height / 12,
+      width: size.width / 14,
+      child: Form(
+        key: formskeys,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Container(
+                height: 50,
+                width: size.width / 4,
+                child: TextFormField(
+                  controller: option,
+                  decoration: new InputDecoration(
+                    labelText: "Option",
+                    fillColor: Colors.white,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Option cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Container(
+                height: 50,
+                width: size.width / 10,
+                child: TextFormField(
+                  controller: value,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  ],
+                  decoration: new InputDecoration(
+                    labelText: "Value",
+                    fillColor: Colors.white,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Value cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -2867,10 +2946,14 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                       )
                     : Center(
                         child: Container(
-                          height: 30,
-                          width: 30,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
+                          height: size.height / 1.8,
+                          width: size.width / 2.4,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                            ),
                           ),
                         ),
                       ),
@@ -2878,5 +2961,182 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
             ),
           );
         });
+  }
+}
+
+class DeleteFormFromCourse extends StatefulWidget {
+  final Courses course;
+
+  DeleteFormFromCourse({Key key, this.course}) : super(key: key);
+
+  @override
+  _DeleteFormFromCourseState createState() => _DeleteFormFromCourseState();
+}
+
+@override
+class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
+  List list;
+  bool disableDropdown = false;
+  var value;
+
+  void initState() {
+    super.initState();
+    list = widget.course.listOfForm;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<ProjectProvider>(context);
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+        content: Stack(clipBehavior: Clip.none, children: <Widget>[
+      Positioned(
+        right: -10.0,
+        top: -10.0,
+        child: InkResponse(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: CircleAvatar(
+            radius: 15,
+            child: Icon(
+              Icons.close,
+              color: Colors.white,
+              size: 25,
+            ),
+            backgroundColor: Colors.red,
+          ),
+        ),
+      ),
+      Container(
+        height: size.height / 1.8,
+        width: size.width / 2.4,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              "DELETE FORM",
+              style: TextStyle(
+                color: Colors.purple[800],
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            disableDropdown
+                ? DropdownButton(
+                    value: value,
+                    icon: Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                    onChanged: (newValue) {},
+                    items: [],
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "SELECTED FORM : ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 5,
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                color: Colors.transparent,
+                                border: Border.all(color: Colors.grey[600])),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: value,
+                                icon: Icon(Icons.arrow_drop_down),
+                                iconSize: 32,
+                                elevation: 16,
+                                style:
+                                    TextStyle(color: Colors.blue, fontSize: 15),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    value = newValue;
+                                  });
+                                },
+                                items: widget.course.listOfForm.map((form) {
+                                  return DropdownMenuItem(
+                                    child: new Text(
+                                      form["formname"],
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                    value: form['formid'],
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+            //Submit button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Container(
+                    height: 40,
+                    width: 150,
+                    child: MaterialButton(
+                      color: Colors.red[800],
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Container(
+                    height: 40,
+                    width: 150,
+                    child: MaterialButton(
+                      color: Colors.blue[800],
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      onPressed: () {
+                        list.removeWhere(
+                            (element) => element["formid"] == value);
+                        provider.deleteFormFromCourse(widget.course, list);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      )
+    ]));
   }
 }

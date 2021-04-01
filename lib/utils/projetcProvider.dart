@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
@@ -17,8 +18,6 @@ class ProjectProvider with ChangeNotifier {
   String _courseBatch;
   String _courseCode;
   Courses _course;
-  List _listOfForms;
-  List _listOfGroups = [];
 
   //Getter
   String get courseName => _courseName;
@@ -107,6 +106,8 @@ class ProjectProvider with ChangeNotifier {
   String get formCode => _formCode;
   Stream<Forms> get form => firestoreservice.getForms(_formId);
   Stream<List<Forms>> get formList => firestoreservice.getFormsList();
+  Stream<List<Map<String, dynamic>>> get listofrubric =>
+      firestoreservice.getListOfRubric();
 
   //Setter
   set changeFormName(String formname) {
@@ -155,6 +156,19 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: newlist,
+        listOfGroup: course.listOfGroup);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+  deleteFormFromCourse(Courses course, List list) {
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: list,
         listOfGroup: course.listOfGroup);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
@@ -232,7 +246,7 @@ class ProjectProvider with ChangeNotifier {
     notifyListeners();
   }
 
-    editGroupfromCourse(Courses course, List listofgroup) {
+  editGroupfromCourse(Courses course, List listofgroup) {
     var newCourse = Courses(
         courseName: course.courseName,
         courseID: course.courseID,
@@ -245,4 +259,105 @@ class ProjectProvider with ChangeNotifier {
     notifyListeners();
   }
   ///////////////////////////////////////(Groups)
+
+  ///////////////////////////////////////(Rubric)
+  String _question = "";
+  String _type = "";
+  String _scaleAnswer = "";
+  String _textAnswer = '';
+  String _scaleHighLable = '';
+  String _scaleLowLable = '';
+  String _rubricId;
+  List _numberOfScale = [];
+
+  String get question => _question;
+  String get type => _type;
+  String get scaleAnswer => _scaleAnswer;
+  String get textAnswer => _textAnswer;
+  String get scaleHighLable => _scaleHighLable;
+  String get scaleLowLable => _scaleLowLable;
+  String get rubricId => _rubricId;
+  List get numberOfScale => _numberOfScale;
+
+  set changeQuestion(String question) {
+    _question = question;
+  }
+
+  set changeType(String type) {
+    _type = type;
+  }
+
+  set changeScaleAnswer(String scaleAnswer) {
+    _scaleAnswer = scaleAnswer;
+  }
+
+  set changeTextAnswer(String textAnswer) {
+    _textAnswer = textAnswer;
+  }
+
+  set changeScaleHighLable(String scaleHighLable) {
+    _scaleHighLable = scaleHighLable;
+  }
+
+  set changeScaleLowLable(String scaleLowLable) {
+    _scaleLowLable = scaleLowLable;
+  }
+
+  set changeNumberOfScale(List nfs) {
+    _numberOfScale = nfs;
+  }
+
+  setRubricId(String rubricId) {
+    _rubricId = rubricId;
+    notifyListeners();
+  }
+
+  addRubrictoForm(
+      Forms form, List numberofscalelist, List multipleQuestionlist) {
+    Rubric rubric = Rubric(
+        question: question,
+        rubricId: uuid.v1(),
+        scaleAnswer: scaleAnswer,
+        scaleHighLable: scaleHighLable,
+        scaleLowLable: scaleLowLable,
+        textAnswer: textAnswer,
+        type: type,
+        numberOfscale: numberofscalelist,
+        multipleQuestion: multipleQuestionlist);
+    List newlist = form.listOfRubric;
+    newlist.add(rubric.toJson());
+    var newForm = Forms(
+      formID: form.formID,
+      formCode: form.formCode,
+      formName: form.formName,
+      listOfRubric: newlist,
+    );
+    firestoreservice.setForms(newForm);
+    notifyListeners();
+  }
+
+  deleteRubricfromForm(Forms forms, List listofRubric) {
+    var newForm = Forms(
+      formID: forms.formID,
+      formCode: forms.formCode,
+      formName: forms.formName,
+      listOfRubric: listofRubric,
+    );
+    firestoreservice.setForms(newForm);
+  }
+
+  editRubricfromForm(Courses course, List listofgroup) {
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: listofgroup);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+  ///////////////////////////////////////(Rubric)
+
 }

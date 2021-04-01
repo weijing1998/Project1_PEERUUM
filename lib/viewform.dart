@@ -14,18 +14,11 @@ class ViewFormPage extends StatefulWidget {
 }
 
 class _ViewFormPageState extends State<ViewFormPage> {
-  int selectedRadio;
   List<TextEditingController> controllers = [];
-
-  void setSelectedRadio(int radio) {
-    setState(() {
-      selectedRadio = radio;
-    });
-  }
+  List listofrubric;
 
   @override
   void initState() {
-    selectedRadio = 0;
     super.initState();
   }
 
@@ -127,7 +120,9 @@ class _ViewFormPageState extends State<ViewFormPage> {
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(
-                                  "NUMBER OF RUBRIC : ",
+                                  "NUMBER OF RUBRIC : " +
+                                      snapshot.data.listOfRubric.length
+                                          .toString(),
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500),
@@ -170,42 +165,21 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                         width: 120,
                                         child: MaterialButton(
                                           onPressed: () {
-                                            // setState(() {
-                                            //   showDialog(
-                                            //     context: context,
-                                            //     builder: (context) => AddRubricDialog(
-                                            //         forms: widget.form,
-                                            //         resetViewFormPage:
-                                            //             resetViewForms),
-                                            //   );
-                                            // });
+                                            setState(() {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    ChangeNotifierProvider(
+                                                  create: (context) =>
+                                                      ProjectProvider(),
+                                                  child: AddRubricDialog(
+                                                      forms: snapshot.data),
+                                                ),
+                                              );
+                                            });
                                           },
                                           child: Text(
                                             "Add Rubric",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          color: Colors.purple[800],
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Edit Rubric Button
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 120,
-                                        child: MaterialButton(
-                                          // onPressed: widget.form.formName.length != 0
-                                          //     ? () {
-                                          //         showDialog();
-                                          //       }
-                                          //     : () {},
-                                          child: Text(
-                                            "Edit Rubric",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12,
@@ -255,21 +229,42 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(15.0),
-                                                            child: Container(
-                                                              child: Text(
-                                                                "Question : " +
-                                                                    snapshot.data
-                                                                            .listOfRubric[index]
-                                                                        [
-                                                                        'question'],
-                                                                style: TextStyle(
-                                                                    height: 1.3,
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              ),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  child: Text(
+                                                                    "Question : " +
+                                                                        snapshot
+                                                                            .data
+                                                                            .listOfRubric[index]['question'],
+                                                                    style: TextStyle(
+                                                                        height:
+                                                                            1.3,
+                                                                        fontSize:
+                                                                            20,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  child: Text(
+                                                                    "Type of Question : " +
+                                                                        snapshot
+                                                                            .data
+                                                                            .listOfRubric[index]["type"],
+                                                                    style: TextStyle(
+                                                                        height:
+                                                                            1.3,
+                                                                        fontSize:
+                                                                            20,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
                                                           Padding(
@@ -296,188 +291,16 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         ['bad'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            20,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
                                                                 ),
-                                                                ButtonBar(
-                                                                  alignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "1"),
-                                                                        Radio(
-                                                                            value:
-                                                                                1,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setState(() {});
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "2"),
-                                                                        Radio(
-                                                                            value:
-                                                                                2,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "3"),
-                                                                        Radio(
-                                                                            value:
-                                                                                3,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "4"),
-                                                                        Radio(
-                                                                            value:
-                                                                                4,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "5"),
-                                                                        Radio(
-                                                                            value:
-                                                                                5,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "6"),
-                                                                        Radio(
-                                                                            value:
-                                                                                6,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "7"),
-                                                                        Radio(
-                                                                            value:
-                                                                                7,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "8"),
-                                                                        Radio(
-                                                                            value:
-                                                                                8,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "9"),
-                                                                        Radio(
-                                                                            value:
-                                                                                9,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                            "10"),
-                                                                        Radio(
-                                                                            value:
-                                                                                10,
-                                                                            groupValue:
-                                                                                selectedRadio,
-                                                                            activeColor:
-                                                                                Colors.purple[700],
-                                                                            onChanged: (val) {
-                                                                              print("Radio $val");
-                                                                              setSelectedRadio(val);
-                                                                            }),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                radiobuttonForScale(
+                                                                    context,
+                                                                    snapshot.data
+                                                                            .listOfRubric[
+                                                                        index]),
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsets
@@ -493,7 +316,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         'good'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            20,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -527,127 +350,18 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                     size: 38,
                                                                   ),
                                                                   onPressed:
-                                                                      () {}),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          : Card(
-                                              child: Padding(
-                                                padding: EdgeInsets.all(4.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  color: Colors.purple[50],
-                                                  child: Stack(
-                                                    children: [
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(15.0),
-                                                            child: Container(
-                                                              child: Text(
-                                                                "Question : " +
-                                                                    snapshot.data
-                                                                            .listOfRubric[index]
-                                                                        [
-                                                                        'question'],
-                                                                style: TextStyle(
-                                                                    height: 1.3,
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          //Display Textfield
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(
-                                                                          20.0),
-                                                              child: Container(
-                                                                height: 50,
-                                                                width:
-                                                                    size.width /
-                                                                        4,
-                                                                child:
-                                                                    TextFormField(
-                                                                  controller:
-                                                                      controllers[
-                                                                          index],
-                                                                  decoration:
-                                                                      new InputDecoration(
-                                                                    labelText:
-                                                                        "Your Answer",
-
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    border:
-                                                                        new OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          new BorderRadius.circular(
-                                                                              5.0),
-                                                                      borderSide:
-                                                                          new BorderSide(),
-                                                                    ),
-                                                                    //fillColor: Colors.green
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        50,
-                                                                    vertical:
-                                                                        30),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .bottomRight,
-                                                              child: IconButton(
-                                                                  hoverColor:
-                                                                      Colors
-                                                                          .purple,
-                                                                  tooltip:
-                                                                      "Delete Rubric",
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .delete,
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        600],
-                                                                    size: 38,
-                                                                  ),
-                                                                  onPressed:
                                                                       () {
-                                                                    // setState(
-                                                                    //     () {
-                                                                    //   widget
-                                                                    //       .form
-                                                                    //       .listOfRubric
-                                                                    //       .removeAt(
-                                                                    //           index);
-                                                                    // });
+                                                                    listofrubric =
+                                                                        snapshot
+                                                                            .data
+                                                                            .listOfRubric;
+                                                                    listofrubric
+                                                                        .removeAt(
+                                                                            index);
+                                                                    provider.deleteRubricfromForm(
+                                                                        snapshot
+                                                                            .data,
+                                                                        listofrubric);
                                                                   }),
                                                             ),
                                                           ),
@@ -657,7 +371,261 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                   ),
                                                 ),
                                               ),
-                                            );
+                                            )
+                                          : snapshot.data.listOfRubric[index]
+                                                      ['type'] ==
+                                                  "Text"
+                                              ? Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      color: Colors.purple[50],
+                                                      child: Stack(
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        15.0),
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          Text(
+                                                                        "Question : " +
+                                                                            snapshot.data.listOfRubric[index]['question'],
+                                                                        style: TextStyle(
+                                                                            height:
+                                                                                1.3,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        15.0),
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          Text(
+                                                                        "Question : " +
+                                                                            snapshot.data.listOfRubric[index]['type'],
+                                                                        style: TextStyle(
+                                                                            height:
+                                                                                1.3,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              //Display Textfield
+                                                              Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              20.0),
+                                                                  child:
+                                                                      Container(
+                                                                    height:
+                                                                        size.height /
+                                                                            4,
+                                                                    width:
+                                                                        size.width /
+                                                                            4,
+                                                                    child:
+                                                                        TextFormField(
+                                                                      maxLength:
+                                                                          400,
+                                                                      maxLines:
+                                                                          10,
+                                                                      controller:
+                                                                          controllers[
+                                                                              index],
+                                                                      decoration:
+                                                                          new InputDecoration(
+                                                                        labelText:
+                                                                            "Your Answer",
+
+                                                                        fillColor:
+                                                                            Colors.white,
+                                                                        border:
+                                                                            new OutlineInputBorder(
+                                                                          borderRadius:
+                                                                              new BorderRadius.circular(5.0),
+                                                                          borderSide:
+                                                                              new BorderSide(),
+                                                                        ),
+                                                                        //fillColor: Colors.green
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        50,
+                                                                    vertical:
+                                                                        30),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomRight,
+                                                                  child: IconButton(
+                                                                      hoverColor: Colors.purple,
+                                                                      tooltip: "Delete Rubric",
+                                                                      icon: Icon(
+                                                                        Icons
+                                                                            .delete,
+                                                                        color: Colors
+                                                                            .grey[600],
+                                                                        size:
+                                                                            38,
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        listofrubric = snapshot
+                                                                            .data
+                                                                            .listOfRubric;
+                                                                        listofrubric
+                                                                            .removeAt(index);
+                                                                        provider.deleteRubricfromForm(
+                                                                            snapshot.data,
+                                                                            listofrubric);
+                                                                      }),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              // Multiple type
+                                              : Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      color: Colors.purple[50],
+                                                      child: Stack(
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        15.0),
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Container(
+                                                                      child:
+                                                                          Text(
+                                                                        "Question : " +
+                                                                            snapshot.data.listOfRubric[index]['question'],
+                                                                        style: TextStyle(
+                                                                            height:
+                                                                                1.3,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      child:
+                                                                          Text(
+                                                                        "Type of Question : " +
+                                                                            snapshot.data.listOfRubric[index]['type'],
+                                                                        style: TextStyle(
+                                                                            height:
+                                                                                1.3,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              radiobuttonForMultiple(
+                                                                  context,
+                                                                  snapshot.data
+                                                                          .listOfRubric[
+                                                                      index]),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        50,
+                                                                    vertical:
+                                                                        30),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomRight,
+                                                                  child: IconButton(
+                                                                      hoverColor: Colors.purple,
+                                                                      tooltip: "Delete Rubric",
+                                                                      icon: Icon(
+                                                                        Icons
+                                                                            .delete,
+                                                                        color: Colors
+                                                                            .grey[600],
+                                                                        size:
+                                                                            38,
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        listofrubric = snapshot
+                                                                            .data
+                                                                            .listOfRubric;
+                                                                        listofrubric
+                                                                            .removeAt(index);
+                                                                        provider.deleteRubricfromForm(
+                                                                            snapshot.data,
+                                                                            listofrubric);
+                                                                      }),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
                                     })
                                 : Center(
                                     child: Text("No Rubrics Created"),
@@ -683,5 +651,70 @@ class _ViewFormPageState extends State<ViewFormPage> {
         });
   }
 
+  Widget radiobuttonForScale(BuildContext context, listofrubric) {
+    int selectedRadio = 1;
+    List numberofscale = listofrubric["numberofscale"];
+    Size size = MediaQuery.of(context).size;
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: numberofscale
+            .map((e) => Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20,
+                      width: size.width / 25,
+                      child: Transform.scale(
+                        scale: 0.8,
+                        child: Radio(
+                          value: e["index"],
+                          groupValue: selectedRadio,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRadio = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Text(e["index"].toString()),
+                  ],
+                ))
+            .toList());
+  }
 
+  Widget radiobuttonForMultiple(BuildContext context, listofrubric) {
+    String selectedRadio = "1";
+    List numberofscale = listofrubric["multiplequestion"];
+    Size size = MediaQuery.of(context).size;
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: numberofscale
+            .map((e) => Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 20,
+                        width: size.width / 25,
+                        child: Transform.scale(
+                          scale: 0.8,
+                          child: Radio(
+                            value: e['value'],
+                            groupValue: selectedRadio,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedRadio = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      Text(e["option"].toString()),
+                    ],
+                  ),
+                ))
+            .toList());
+  }
 }

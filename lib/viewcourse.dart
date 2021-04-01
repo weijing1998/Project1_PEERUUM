@@ -42,40 +42,84 @@ class _ViewCourseState extends State<ViewCourse> {
                                 fontSize: 30, fontWeight: FontWeight.bold),
                           ),
                         ),
-
-                        //Edit Button
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 180, 20),
-                          child: Container(
-                            height: 40,
-                            width: 120,
-                            child: MaterialButton(
-                              onPressed: () {
-                                setState(() {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        ChangeNotifierProvider(
-                                      create: (context) => ProjectProvider(),
-                                      child: EditCourseDialog(
-                                        courses: snapshotCourse.data,
-                                        resetViewPage: resetViewPage,
+                          padding: const EdgeInsets.fromLTRB(0, 0, 145, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 20, 20, 20),
+                                child: Container(
+                                  height: 40,
+                                  width: 120,
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              ChangeNotifierProvider(
+                                            create: (context) =>
+                                                ProjectProvider(),
+                                            child: EditCourseDialog(
+                                              courses: snapshotCourse.data,
+                                              resetViewPage: resetViewPage,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                    child: Text(
+                                      "Edit Course",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    color: Colors.blue[900],
+                                  ),
+                                ),
+                              ),
+                              snapshotCourse.data.listOfForm.length == 0
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 20, 20, 20),
+                                      child: Container(
+                                        height: 40,
+                                        width: 120,
+                                        child: MaterialButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    ChangeNotifierProvider(
+                                                  create: (context) =>
+                                                      ProjectProvider(),
+                                                  child: DeleteFormFromCourse(
+                                                    course: snapshotCourse.data,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: Text(
+                                            "Delete Form",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          color: Colors.blue[900],
+                                        ),
                                       ),
                                     ),
-                                  );
-                                });
-                              },
-                              child: Text(
-                                "Edit Course",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              color: Colors.blue[900],
-                            ),
+                            ],
                           ),
                         ),
+                        //Edit Button
                       ],
                     ),
                     //Course detail

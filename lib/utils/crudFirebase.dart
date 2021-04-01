@@ -98,7 +98,7 @@ class Crudmethod {
         .snapshots()
         .map((event) => Group.fromJson(event.data()));
   }
-  
+
   //add
   Future setGroup(Group groups) async {
     return db.collection("Group").doc(groups.groupID).set(groups.toJson());
@@ -107,6 +107,16 @@ class Crudmethod {
   //delete
   Future deleteGroup(String groupId) async {
     return db.collection("Group").doc(groupId).delete();
+  }
+
+  Stream<List<Map<String, dynamic>>> getListOfRubric() {
+    return db
+        .collection("Form")
+        .where("listofrubric",
+            isEqualTo: "a7ab8d20-8fe6-11eb-ae87-c51269295350")
+        .snapshots()
+        .map((QuerySnapshot snapshot) =>
+            snapshot.docs.map((DocumentSnapshot doc) => doc.data()).toList());
   }
 
   //////////////////////////////////////////////(Group)
