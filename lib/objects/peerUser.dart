@@ -10,7 +10,7 @@ class PeerUser {
     return PeerUser(
       userName: json["name"],
       email: json["email"],
-      typeOfUser: json["typeofuser"],
+      typeOfUser: json["typeOfUser"],
     );
   }
 

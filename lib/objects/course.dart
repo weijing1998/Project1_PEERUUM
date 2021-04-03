@@ -8,6 +8,7 @@ class Courses {
   String courseBatch;
   List listOfGroup=[];
   List listOfForm=[];
+  List listOfStudent=[];
 
   Courses(
       {this.courseName,
@@ -16,7 +17,8 @@ class Courses {
       this.courseBatch,
       this.courseCode,
       this.listOfGroup,
-      this.listOfForm});
+      this.listOfForm,
+      this.listOfStudent});
 
   factory Courses.fromJson(Map<String, dynamic> json) {
     return Courses(
@@ -27,6 +29,7 @@ class Courses {
       courseCode: json['coursecode'],
       listOfForm: json['listofform'],
       listOfGroup: json['listofgroup'],
+      listOfStudent: json['listofstudent'],
     );
   }
 
@@ -39,6 +42,7 @@ class Courses {
       "coursecode": courseCode,
       "listofform" : listOfForm,
       "listofgroup" : listOfGroup,
+      'listofstudent' : listOfStudent,
     };
   }
 }

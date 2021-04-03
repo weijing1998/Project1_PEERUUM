@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/homePage.dart';
+import 'package:pepelist/joinCourses.dart';
 import 'package:pepelist/objects/peerUser.dart';
+import 'package:pepelist/sutdentCoursePage.dart';
 
 class StudentPage extends StatefulWidget {
   final PeerUser users;
@@ -12,14 +14,8 @@ class StudentPage extends StatefulWidget {
 }
 
 class _StudentPageState extends State<StudentPage> {
-  bool atCoursePage = true;
-  bool atFormPage = false;
-  bool atViewCourse = false;
-  bool atViewForm = false;
-  int courseIndex;
-  int formIndex;
-  PeerUser peeruser;
-  //Data data = new Data();
+  bool atStudentCoursePage = true;
+  bool atJoinCourse = false;
 
   @override
   void initState() {
@@ -104,8 +100,8 @@ class _StudentPageState extends State<StudentPage> {
                       color: Colors.transparent,
                       onPressed: () {
                         setState(() {
-                          atCoursePage = true;
-                          atViewCourse = false;
+                          atStudentCoursePage = true;
+                          atJoinCourse = false;
                         });
                       },
                       child: Row(
@@ -131,10 +127,8 @@ class _StudentPageState extends State<StudentPage> {
                       color: Colors.transparent,
                       onPressed: () {
                         setState(() {
-                          atCoursePage = false;
-                          atViewCourse = false;
-                          atFormPage = true;
-                          atViewForm = false;
+                          atStudentCoursePage = false;
+                          atJoinCourse = false;
                         });
                       },
                       child: Row(
@@ -181,22 +175,23 @@ class _StudentPageState extends State<StudentPage> {
                 ),
               ),
             ),
-            SizedBox(),
+            SizedBox(
+              child: atStudentCoursePage
+                  ? StudentCoursesPage(
+                      toggleJoinCourse: toggleJoinCourse,
+                      user: widget.users,
+                    )
+                  : JoinCourse(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void toggleViewCourse(bool b) {
+  void toggleJoinCourse(bool b) {
     setState(() {
-      atViewCourse = b;
-    });
-  }
-
-  void toggleViewFormpage(bool b) {
-    setState(() {
-      atViewForm = b;
+      atStudentCoursePage = b;
     });
   }
 }

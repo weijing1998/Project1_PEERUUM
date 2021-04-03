@@ -65,7 +65,8 @@ class ProjectProvider with ChangeNotifier {
           courseBatch: _courseBatch,
           courseCode: _courseCode,
           listOfForm: [],
-          listOfGroup: []);
+          listOfGroup: [],
+          listOfStudent: []);
 
       firestoreservice.setCourses(newCourses);
     }
@@ -79,7 +80,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: _courseCode,
         courseGroup: _courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: course.listOfGroup);
+        listOfGroup: course.listOfGroup,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourses);
     notifyListeners();
   }
@@ -92,6 +94,38 @@ class ProjectProvider with ChangeNotifier {
     _courseId = courseId;
     notifyListeners();
   }
+
+  addStudentToCourse(Courses course, PeerUser user) {
+    List student = course.listOfStudent;
+    bool validator = true;
+    for (var i = 0; i < student.length; i++) {
+      // you may have to check the equality operator
+      if (student[i]["email"] == user.email) {
+        validator = false;
+        break;
+      }
+    }
+
+    if (validator == true) {
+      student.add(user.toJson());
+      var newCourse = Courses(
+          courseName: course.courseName,
+          courseID: course.courseID,
+          courseBatch: course.courseBatch,
+          courseCode: course.courseCode,
+          courseGroup: course.courseGroup,
+          listOfForm: course.listOfForm,
+          listOfGroup: course.listOfGroup,
+          listOfStudent: student);
+      firestoreservice.setCourses(newCourse);
+      notifyListeners();
+      return true;
+    } else {
+      print('Same student');
+      return false;
+    }
+  }
+
   ///////////////////////////////////////////////
 
   ////////////////////////////////////////(Forms)
@@ -167,7 +201,8 @@ class ProjectProvider with ChangeNotifier {
           courseCode: course.courseCode,
           courseGroup: course.courseGroup,
           listOfForm: newlist,
-          listOfGroup: course.listOfGroup);
+          listOfGroup: course.listOfGroup,
+          listOfStudent: course.listOfStudent);
       firestoreservice.setCourses(newCourse);
       notifyListeners();
       return true;
@@ -185,7 +220,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: list,
-        listOfGroup: course.listOfGroup);
+        listOfGroup: course.listOfGroup,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -244,7 +280,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: newlist);
+        listOfGroup: newlist,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -257,7 +294,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: listofgroup);
+        listOfGroup: listofgroup,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -270,7 +308,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: listofgroup);
+        listOfGroup: listofgroup,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -370,7 +409,8 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: listofgroup);
+        listOfGroup: listofgroup,
+        listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }

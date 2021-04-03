@@ -8,12 +8,12 @@ import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
 class StudentCoursesPage extends StatefulWidget {
-  final Function toggleViewCourse;
+  final Function toggleJoinCourse;
   final PeerUser user;
 
   const StudentCoursesPage({
     Key key,
-    @required this.toggleViewCourse,
+    @required this.toggleJoinCourse,
     this.user,
   }) : super(key: key);
 
@@ -73,70 +73,6 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                               "COURSES PAGE",
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: AddCourseDialog(),
-                                          ));
-                                },
-                                child: Text(
-                                  "Add Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: snapshot.hasData
-                                    ? () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: DeleteCourseDialog(
-                                              data: snapshot.data,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    : () {},
-                                child: Text(
-                                  "Delete Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -329,12 +265,42 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                       .data[
                                                                           index]
                                                                       .courseID);
-                                                              widget
-                                                                  .toggleViewCourse(
-                                                                      true);
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (context) =>
+                                                                      ChangeNotifierProvider(
+                                                                          create: (context) =>
+                                                                              ProjectProvider(),
+                                                                          child:
+                                                                              AlertDialog(
+                                                                            title:
+                                                                                new Text("Join Course"),
+                                                                            content: new Text("You are joining " +
+                                                                                snapshot.data[index].courseName +
+                                                                                ", click ok to join"),
+                                                                            actions: <Widget>[
+                                                                              MaterialButton(
+                                                                                child: Text('Cancel'),
+                                                                                onPressed: () {
+                                                                                  setState(() {
+                                                                                    Navigator.of(context).pop();
+                                                                                  });
+                                                                                },
+                                                                              ),
+                                                                              MaterialButton(
+                                                                                child: Text('Ok'),
+                                                                                onPressed: () async {
+                                                                                  await provider.addStudentToCourse(snapshot.data[index], widget.user) ;
+                                                                                  widget.toggleJoinCourse(false);
+                                                                                  Navigator.of(context).pop();
+                                                                                },
+                                                                              )
+                                                                            ],
+                                                                          )));
                                                             },
                                                             child: Text(
-                                                              "View Couses",
+                                                              "Join Couses",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white,
@@ -371,6 +337,50 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
               ],
             ),
           );
+        });
+  }
+
+  successAlert(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Apply successfully"),
+      content: Text('The form is applied successfully'),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  failAlert(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Apply Fail"),
+      content: Text('System detect duplicate form apply'),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
         });
   }
 }
