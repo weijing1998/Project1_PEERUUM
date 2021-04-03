@@ -7,20 +7,21 @@ import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
-class CoursesPage extends StatefulWidget {
+class StudentCoursesPage extends StatefulWidget {
   final Function toggleViewCourse;
   final PeerUser user;
 
-  const CoursesPage({
+  const StudentCoursesPage({
     Key key,
-    @required this.toggleViewCourse, this.user,
+    @required this.toggleViewCourse,
+    this.user,
   }) : super(key: key);
 
   @override
-  CoursesPageState createState() => CoursesPageState();
+  StudentCoursesPageState createState() => StudentCoursesPageState();
 }
 
-class CoursesPageState extends State<CoursesPage> {
+class StudentCoursesPageState extends State<StudentCoursesPage> {
   Crudmethod crud;
   Future<List<Map<String, dynamic>>> list;
 

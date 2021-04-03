@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
@@ -146,19 +146,35 @@ class ProjectProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  applyFormtoCourse(Forms forms) {
+  applyFormtoCourse(Forms forms, context) {
     List newlist = course.listOfForm;
-    newlist.add(forms.toJson());
-    var newCourse = Courses(
-        courseName: course.courseName,
-        courseID: course.courseID,
-        courseBatch: course.courseBatch,
-        courseCode: course.courseCode,
-        courseGroup: course.courseGroup,
-        listOfForm: newlist,
-        listOfGroup: course.listOfGroup);
-    firestoreservice.setCourses(newCourse);
-    notifyListeners();
+    bool validator = true;
+    for (var i = 0; i < newlist.length; i++) {
+      // you may have to check the equality operator
+      if (forms.formID == newlist[i]['formid']) {
+        validator = false;
+        print('same form');
+        break;
+      }
+    }
+
+    if (validator == true) {
+      newlist.add(forms.toJson());
+      var newCourse = Courses(
+          courseName: course.courseName,
+          courseID: course.courseID,
+          courseBatch: course.courseBatch,
+          courseCode: course.courseCode,
+          courseGroup: course.courseGroup,
+          listOfForm: newlist,
+          listOfGroup: course.listOfGroup);
+      firestoreservice.setCourses(newCourse);
+      notifyListeners();
+      return true;
+    } else {
+      print('same form');
+      return false;
+    }
   }
 
   deleteFormFromCourse(Courses course, List list) {

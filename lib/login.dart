@@ -7,6 +7,7 @@ import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/register.dart';
 import 'package:pepelist/sidebar.dart';
+import 'package:pepelist/studentSidebar.dart';
 
 import 'package:pepelist/utils/constants.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
@@ -259,8 +260,12 @@ class _LoginPageState extends State<LoginPage> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                     Sidebar(email: "email")),
+                                                      StudentPage(
+                                                          users: PeerUser(
+                                                              userName: "",
+                                                              email: ""))),
                                             );
+
                                             // await signIn(emailController.text,
                                             //     passwordController.text);
                                           },
@@ -352,6 +357,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   signIn(String email, String password) async {
+    PeerUser user;
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
@@ -360,6 +366,7 @@ class _LoginPageState extends State<LoginPage> {
             if (element.data()["email"] == emailController.text &&
                 element.data()["typeOfUser"] == typeOfUser) {
               identify = true;
+              user = PeerUser.fromJson(element.data());
             }
           }));
       if (identify == true && typeOfUser == "Lecturer") {
@@ -367,13 +374,15 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(
               builder: (context) => Sidebar(
-                    email: emailController.text,
+                    users: user,
                   )),
         );
       } else if (identify == true && typeOfUser == "Student") {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(
+            builder: (context) => StudentPage(users: user),
+          ),
         );
       } else {
         setState(() {

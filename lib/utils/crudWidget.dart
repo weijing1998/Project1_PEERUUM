@@ -2729,8 +2729,9 @@ class DynamicWidget extends StatelessWidget {
 
 class ApplyFormDialog extends StatefulWidget {
   final Forms forms;
-
-  ApplyFormDialog({Key key, @required this.forms}) : super(key: key);
+  final List<Courses> snapshot;
+  ApplyFormDialog({Key key, @required this.forms, @required this.snapshot})
+      : super(key: key);
 
   @override
   _ApplyFormDialogState createState() => _ApplyFormDialogState();
@@ -2749,217 +2750,215 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
-    return StreamBuilder<List<Courses>>(
-        stream: provider.courselist,
-        builder: (context, snapshot) {
-          return AlertDialog(
-            content: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Positioned(
-                  right: -10.0,
-                  top: -10.0,
-                  child: InkResponse(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CircleAvatar(
-                      radius: 15,
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      backgroundColor: Colors.red,
+
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 1.8,
+            width: size.width / 2.4,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "APPLY FORM",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                snapshot.hasData
-                    ? Container(
-                        height: size.height / 1.8,
-                        width: size.width / 2.4,
-                        child: Form(
-                          key: _formskey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                "APPLY FORM",
-                                style: TextStyle(
-                                  color: Colors.blue[800],
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
 
-                              snapshot.data.length < 1
-                                  ? DropdownButton(
-                                      value: course,
+                  disableDropdown
+                      ? DropdownButton(
+                          value: course ?? widget.snapshot[0],
+                          icon: Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                          onChanged: (newValue) {},
+                          items: [],
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Apply " + widget.forms.formName + " to : ",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Container(
+                                  height: 50,
+                                  width: size.width / 5,
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6.0),
+                                      color: Colors.transparent,
+                                      border:
+                                          Border.all(color: Colors.grey[600])),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<Courses>(
+                                      value: course ?? widget.snapshot[0],
                                       icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 24,
+                                      iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.red, fontSize: 12),
-                                      onChanged: (newValue) {},
-                                      items: [],
-                                    )
-                                  : disableDropdown
-                                      ? DropdownButton(
-                                          value: course,
-                                          icon: Icon(Icons.arrow_drop_down),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: TextStyle(
-                                              color: Colors.red, fontSize: 12),
-                                          onChanged: (newValue) {},
-                                          items: [],
-                                        )
-                                      : Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Apply " +
-                                                    widget.forms.formName +
-                                                    " to : ",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15),
-                                                child: Container(
-                                                  height: 50,
-                                                  width: size.width / 5,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10.0,
-                                                          right: 10.0),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6.0),
-                                                      color: Colors.transparent,
-                                                      border: Border.all(
-                                                          color: Colors
-                                                              .grey[600])),
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child:
-                                                        DropdownButton<Courses>(
-                                                      value: course ??
-                                                          snapshot.data[0],
-                                                      icon: Icon(Icons
-                                                          .arrow_drop_down),
-                                                      iconSize: 32,
-                                                      elevation: 16,
-                                                      style: TextStyle(
-                                                          color: Colors
-                                                              .purple[800],
-                                                          fontSize: 15),
-                                                      onChanged: (newValue) {
-                                                        course = newValue;
-                                                        provider.changeCourse =
-                                                            newValue;
-                                                        print(provider
-                                                            .course.courseID);
-                                                      },
-                                                      items: snapshot.data
-                                                          .map((snapcourse) {
-                                                        return DropdownMenuItem<
-                                                            Courses>(
-                                                          child: new Text(
-                                                            snapcourse
-                                                                .courseName,
-                                                            style: TextStyle(
-                                                                fontSize: 12),
-                                                          ),
-                                                          value: snapcourse,
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                          color: Colors.purple[800],
+                                          fontSize: 15),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          course = newValue;
+                                          provider.changeCourse = newValue;
+                                          print(provider.course.courseID);
+                                        });
+                                      },
+                                      items: widget.snapshot.map((snapcourse) {
+                                        return DropdownMenuItem<Courses>(
+                                          child: new Text(
+                                            snapcourse.courseName,
+                                            style: TextStyle(fontSize: 12),
                                           ),
-                                        ),
-
-                              //Submit button
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(25.0),
-                                    child: Container(
-                                      height: 40,
-                                      width: 150,
-                                      child: MaterialButton(
-                                        color: Colors.red[800],
-                                        child: Text(
-                                          "Cancel",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
+                                          value: snapcourse,
+                                        );
+                                      }).toList(),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(25.0),
-                                    child: Container(
-                                      height: 40,
-                                      width: 150,
-                                      child: MaterialButton(
-                                        color: Colors.blue[800],
-                                        child: Text(
-                                          "Submit",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        onPressed: () {
-                                          provider
-                                              .applyFormtoCourse(widget.forms);
-                                          disableDropdown = true;
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      )
-                    : Center(
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: size.height / 1.8,
-                          width: size.width / 2.4,
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 3,
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
                             ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
                         ),
                       ),
-              ],
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                provider.applyFormtoCourse(
+                                        widget.forms, context)
+                                    ? successAlert(context)
+                                    : failAlert(context);
+                              });
+                              disableDropdown = true;
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          );
+          ),
+        ],
+      ),
+    );
+  }
+
+  successAlert(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Apply successfully"),
+      content: Text('The form is applied successfully'),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  failAlert(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Apply Fail"),
+      content: Text('System detect duplicate form apply'),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
         });
   }
 }
@@ -3127,6 +3126,7 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                         list.removeWhere(
                             (element) => element["formid"] == value);
                         provider.deleteFormFromCourse(widget.course, list);
+                        disableDropdown=true;
                         Navigator.pop(context);
                       },
                     ),

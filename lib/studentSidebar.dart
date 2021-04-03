@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pepelist/coursespage.dart';
-import 'package:pepelist/formpages.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
-import 'package:pepelist/viewcourse.dart';
-import 'package:pepelist/viewform.dart';
 
-class Sidebar extends StatefulWidget {
+class StudentPage extends StatefulWidget {
   final PeerUser users;
-  Sidebar({
-    Key key,
-    @required this.users,
-  }) : super(key: key);
+  StudentPage({Key key, @required this.users}) : super(key: key);
 
   @override
-  _SidebarState createState() => _SidebarState();
+  _StudentPageState createState() => _StudentPageState();
 }
 
-class _SidebarState extends State<Sidebar> {
+class _StudentPageState extends State<StudentPage> {
   bool atCoursePage = true;
   bool atFormPage = false;
   bool atViewCourse = false;
@@ -188,21 +181,7 @@ class _SidebarState extends State<Sidebar> {
                 ),
               ),
             ),
-            SizedBox(
-              height: size.height,
-              child: atCoursePage
-                  ? atViewCourse
-                      ? ViewCourse()
-                      : CoursesPage(
-                          toggleViewCourse: toggleViewCourse,
-                          user: widget.users,
-                        )
-                  : atViewForm
-                      ? ViewFormPage()
-                      : FormPage(
-                          toggleFormpage: toggleViewFormpage,
-                        ),
-            ),
+            SizedBox(),
           ],
         ),
       ),

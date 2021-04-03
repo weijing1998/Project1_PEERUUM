@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
@@ -211,7 +212,8 @@ class _FormPageState extends State<FormPage> {
                                                                     "FORM CODE : " +
                                                                         snapshot
                                                                             .data[index]
-                                                                            .formCode.toUpperCase(),
+                                                                            .formCode
+                                                                            .toUpperCase(),
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             15,
@@ -288,48 +290,74 @@ class _FormPageState extends State<FormPage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 15),
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: size.width / 12,
-                                                      child: MaterialButton(
-                                                        color:
-                                                            Colors.purple[800],
-                                                        onPressed: () {
-                                                          provider.setFormId(
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .formID);
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (context) =>
-                                                                  ChangeNotifierProvider(
-                                                                    create: (context) =>
-                                                                        ProjectProvider(),
-                                                                    child:
-                                                                        ApplyFormDialog(
-                                                                      forms: snapshot
-                                                                              .data[
-                                                                          index],
+                                                  StreamBuilder<List<Courses>>(
+                                                      stream:
+                                                          provider.courselist,
+                                                      builder: (context,
+                                                          snapshotcourses) {
+                                                        return snapshotcourses
+                                                                .hasData
+                                                            ? Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        15),
+                                                                child:
+                                                                    Container(
+                                                                  height: 40,
+                                                                  width:
+                                                                      size.width /
+                                                                          12,
+                                                                  child:
+                                                                      MaterialButton(
+                                                                    color: Colors
+                                                                            .purple[
+                                                                        800],
+                                                                    onPressed:
+                                                                        () {
+                                                                      provider.setFormId(snapshot
+                                                                          .data[
+                                                                              index]
+                                                                          .formID);
+                                                                      showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder: (context) =>
+                                                                              ChangeNotifierProvider(
+                                                                                create: (context) => ProjectProvider(),
+                                                                                child: ApplyFormDialog(
+                                                                                  forms: snapshot.data[index],
+                                                                                  snapshot: snapshotcourses.data,
+                                                                                ),
+                                                                              ));
+                                                                    },
+                                                                    child: Text(
+                                                                      "Apply Form",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontWeight:
+                                                                              FontWeight.w600),
                                                                     ),
-                                                                  ));
-                                                        },
-                                                        child: Text(
-                                                          "Apply Form",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : Center(
+                                                                child: Container(
+                                                                    height:
+                                                                        size.height /
+                                                                            20,
+                                                                    width:
+                                                                        size.width /
+                                                                            40,
+                                                                    child:
+                                                                        CircularProgressIndicator(
+
+                                                                        )),
+                                                              );
+                                                      }),
                                                 ],
                                               ),
                                             ),
