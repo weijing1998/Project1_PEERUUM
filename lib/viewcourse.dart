@@ -439,92 +439,84 @@ class _ViewCourseState extends State<ViewCourse> {
                                                 ),
                                               ),
                                             ),
-                                            // Align(
-                                            //   alignment: Alignment.center,
-                                            //   child: SingleChildScrollView(
-                                            //     child: Container(
-                                            //       height: size.height / 2.6,
-                                            //       width: size.width / 1.9,
-                                            //       color: Colors.transparent,
-                                            //       child: ListView.builder(
-                                            //           scrollDirection:
-                                            //               Axis.horizontal,
-                                            //           itemCount: null,
-                                            //           itemBuilder: (context,
-                                            //               indexOfStudent) {
-                                            //             return Card(
-                                            //               child: Container(
-                                            //                 color: Colors
-                                            //                     .teal[200],
-                                            //                 height:
-                                            //                     double.infinity,
-                                            //                 width: 330,
-                                            //                 child: Column(
-                                            //                   mainAxisAlignment:
-                                            //                       MainAxisAlignment
-                                            //                           .spaceEvenly,
-                                            //                   children: [
-                                            //                     Padding(
-                                            //                       padding:
-                                            //                           const EdgeInsets
-                                            //                                   .all(
-                                            //                               8.0),
-                                            //                       child:
-                                            //                           CircleAvatar(
-                                            //                         backgroundImage:
-                                            //                             NetworkImage(
-                                            //                                 'images/header.jpg'),
-                                            //                         radius: 52,
-                                            //                       ),
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "NAME : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .name,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Email : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .email,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Course : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .course,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Telephone No : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .telephone,
-                                            //                     ),
-                                            //                   ],
-                                            //                 ),
-                                            //               ),
-                                            //             );
-                                            //           }),
-                                            //     ),
-                                            //   ),
-                                            // ),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: SingleChildScrollView(
+                                                child: Container(
+                                                  height: size.height / 2.6,
+                                                  width: size.width / 1.9,
+                                                  color: Colors.transparent,
+                                                  child: snapshotCourse
+                                                              .data
+                                                              .listOfGroup[
+                                                                  index][
+                                                                  "listofstudent"]
+                                                              .length !=
+                                                          0
+                                                      ? ListView.builder(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          itemCount: snapshotCourse
+                                                              .data
+                                                              .listOfGroup[
+                                                                  index][
+                                                                  "listofstudent"]
+                                                              .length,
+                                                          itemBuilder: (context,
+                                                              indexOfStudent) {
+                                                            return Card(
+                                                              child: Container(
+                                                                color: Colors
+                                                                    .teal[200],
+                                                                height: double
+                                                                    .infinity,
+                                                                width: 330,
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceEvenly,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          CircleAvatar(
+                                                                        backgroundImage:
+                                                                            NetworkImage('images/header.jpg'),
+                                                                        radius:
+                                                                            52,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      "NAME : " +
+                                                                          snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                    ),
+                                                                    Text(
+                                                                      "Email : " +
+                                                                          snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
+                                                                    ),
+                                                                    Text(
+                                                                      snapshotCourse
+                                                                          .data
+                                                                          .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            );
+                                                          })
+                                                      : Center(
+                                                          child: Text(
+                                                              "No Students"),
+                                                        ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

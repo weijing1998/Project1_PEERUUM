@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/joinCourses.dart';
+import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/peerUser.dart';
+import 'package:pepelist/studentAddedCourse.dart';
 import 'package:pepelist/sutdentCoursePage.dart';
+import 'package:pepelist/utils/projetcProvider.dart';
+import 'package:provider/provider.dart';
 
 class StudentPage extends StatefulWidget {
   final PeerUser users;
@@ -16,6 +20,7 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   bool atStudentCoursePage = true;
   bool atJoinCourse = false;
+  bool atStudentAddedCoursePage = false;
 
   @override
   void initState() {
@@ -24,6 +29,7 @@ class _StudentPageState extends State<StudentPage> {
 
   @override
   Widget build(BuildContext context) {
+      var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -101,7 +107,7 @@ class _StudentPageState extends State<StudentPage> {
                       onPressed: () {
                         setState(() {
                           atStudentCoursePage = true;
-                          atJoinCourse = false;
+                          atStudentAddedCoursePage = false;
                         });
                       },
                       child: Row(
@@ -127,8 +133,8 @@ class _StudentPageState extends State<StudentPage> {
                       color: Colors.transparent,
                       onPressed: () {
                         setState(() {
+                          atStudentAddedCoursePage = true;
                           atStudentCoursePage = false;
-                          atJoinCourse = false;
                         });
                       },
                       child: Row(
@@ -141,13 +147,13 @@ class _StudentPageState extends State<StudentPage> {
                           ),
                           SizedBox(width: 26),
                           Text(
-                            'Form',
+                            'Added Course',
                             style: TextStyle(fontSize: 17, color: Colors.white),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: size.height / 10),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -175,14 +181,27 @@ class _StudentPageState extends State<StudentPage> {
                 ),
               ),
             ),
-            SizedBox(
-              child: atStudentCoursePage
-                  ? StudentCoursesPage(
-                      toggleJoinCourse: toggleJoinCourse,
-                      user: widget.users,
-                    )
-                  : JoinCourse(),
-            ),
+            StreamBuilder<List<Courses>>(
+                stream:provider.courselist ,
+                builder: (context, snapshot) {
+                  return SizedBox(
+                    child: atStudentCoursePage
+                        ? StudentCoursesPage(
+                            toggleJoinCourse: toggleJoinCourse,
+                            user: widget.users,
+                          )
+                        : atStudentAddedCoursePage
+                            ? StudentAddedCoursesPage(
+                                toggleJoinCourse:
+                                    toggleJoinCoursefromAddedCourses,
+                                user: widget.users,
+                                courselist: snapshot.data,
+                              )
+                            : JoinCourse(
+                                user: widget.users,
+                              ),
+                  );
+                }),
           ],
         ),
       ),
@@ -192,6 +211,12 @@ class _StudentPageState extends State<StudentPage> {
   void toggleJoinCourse(bool b) {
     setState(() {
       atStudentCoursePage = b;
+    });
+  }
+
+  void toggleJoinCoursefromAddedCourses(bool b) {
+    setState(() {
+      atStudentAddedCoursePage = b;
     });
   }
 }

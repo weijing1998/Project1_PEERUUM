@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
-import 'package:pepelist/utils/crudWidget.dart';
+import 'package:pepelist/objects/group.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
 class JoinCourse extends StatefulWidget {
+  final PeerUser user;
   JoinCourse({
     Key key,
+    @required this.user,
   }) : super(key: key);
 
   @override
@@ -40,6 +43,31 @@ class _JoinCourseState extends State<JoinCourse> {
                             "COURSE DETAIL",
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 220, 20),
+                          child: Container(
+                            height: 40,
+                            width: 120,
+                            child: MaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  provider.leaveCourses(
+                                      snapshotCourse.data, widget.user);
+                                  successLeaveCourseAlert(context);
+                                });
+                              },
+                              child: Text(
+                                "Leave Course",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              color: Colors.blue[900],
+                            ),
                           ),
                         ),
 
@@ -190,117 +218,6 @@ class _JoinCourseState extends State<JoinCourse> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: size.width / 3.2,
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              //ADD Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
-                                  child: MaterialButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              ChangeNotifierProvider(
-                                                create: (context) =>
-                                                    ProjectProvider(),
-                                                child: AddGroupDialog(
-                                                  course: snapshotCourse.data,
-                                                ),
-                                              ));
-                                    },
-                                    child: Text(
-                                      "Add Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    color: Colors.blue[900],
-                                  ),
-                                ),
-                              ),
-
-                              // Edit Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
-                                  child: MaterialButton(
-                                    onPressed: snapshotCourse
-                                                .data.listOfGroup.length !=
-                                            0
-                                        ? () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    ChangeNotifierProvider(
-                                                      create: (context) =>
-                                                          ProjectProvider(),
-                                                      child: EditGroupDialog(
-                                                        course:
-                                                            snapshotCourse.data,
-                                                      ),
-                                                    ));
-                                          }
-                                        : () {},
-                                    child: Text(
-                                      "Edit Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    // color: Colors.blue[900],
-                                    color: Colors.blue[900],
-                                  ),
-                                ),
-                              ),
-                              //Delete Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
-                                  child: MaterialButton(
-                                    onPressed: snapshotCourse
-                                                .data.listOfGroup.length !=
-                                            0
-                                        ? () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    ChangeNotifierProvider(
-                                                      create: (context) =>
-                                                          ProjectProvider(),
-                                                      child: DeleteGroupDialog(
-                                                        course:
-                                                            snapshotCourse.data,
-                                                      ),
-                                                    ));
-                                          }
-                                        : () {},
-                                    child: Text(
-                                      "Delete Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    color: Colors.blue[900],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
                       ],
                     ),
 
@@ -346,109 +263,203 @@ class _JoinCourseState extends State<JoinCourse> {
                                                 ),
                                               ),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
-                                              child: Text(
-                                                "STUDENT INFO IN " +
-                                                    snapshotCourse
-                                                        .data
-                                                        .listOfGroup[index]
-                                                            ["groupname"]
-                                                        .toUpperCase(),
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                            Container(
+                                              width: size.width,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.blueAccent)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            18.0),
+                                                    child: Text(
+                                                      "STUDENT INFO IN " +
+                                                          snapshotCourse
+                                                              .data
+                                                              .listOfGroup[
+                                                                  index]
+                                                                  ["groupname"]
+                                                              .toUpperCase(),
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                0, 20, 20, 20),
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 120,
+                                                          child: MaterialButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                List a = snapshotCourse
+                                                                            .data
+                                                                            .listOfGroup[
+                                                                        index][
+                                                                    "listofstudent"];
+                                                                a.add(widget
+                                                                    .user
+                                                                    .toJson());
+
+                                                                provider.addStudentToGroup(
+                                                                    snapshotCourse
+                                                                        .data,
+                                                                    a,
+                                                                    index);
+
+                                                                successJoinGroupAlert(
+                                                                    context);
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Join Group",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
+                                                            ),
+                                                            color: Colors
+                                                                .blue[900],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                0, 20, 20, 20),
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 120,
+                                                          child: MaterialButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                provider.deleteStudentFromGroup(
+                                                                    snapshotCourse
+                                                                        .data,
+                                                                    widget
+                                                                        .user);
+                                                                successLeaveGroupAlert(
+                                                                        context)(
+                                                                    context);
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Leave Group",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
+                                                            ),
+                                                            color: Colors
+                                                                .blue[900],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: SingleChildScrollView(
+                                                child: Container(
+                                                  height: size.height / 2.6,
+                                                  width: size.width / 1.9,
+                                                  color: Colors.transparent,
+                                                  child: snapshotCourse
+                                                              .data
+                                                              .listOfGroup[
+                                                                  index][
+                                                                  "listofstudent"]
+                                                              .length !=
+                                                          0
+                                                      ? ListView.builder(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          itemCount: snapshotCourse
+                                                              .data
+                                                              .listOfGroup[
+                                                                  index][
+                                                                  "listofstudent"]
+                                                              .length,
+                                                          itemBuilder: (context,
+                                                              indexOfStudent) {
+                                                            return Card(
+                                                              child: Container(
+                                                                color: Colors
+                                                                    .teal[200],
+                                                                height: double
+                                                                    .infinity,
+                                                                width: 330,
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceEvenly,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          CircleAvatar(
+                                                                        backgroundImage:
+                                                                            NetworkImage('images/header.jpg'),
+                                                                        radius:
+                                                                            52,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      "NAME : " +
+                                                                          snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                    ),
+                                                                    Text(
+                                                                      "Email : " +
+                                                                          snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
+                                                                    ),
+                                                                    Text(
+                                                                      snapshotCourse
+                                                                          .data
+                                                                          .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            );
+                                                          })
+                                                      : Center(
+                                                          child: Text(
+                                                              "No Students"),
+                                                        ),
                                                 ),
                                               ),
                                             ),
-                                            // Align(
-                                            //   alignment: Alignment.center,
-                                            //   child: SingleChildScrollView(
-                                            //     child: Container(
-                                            //       height: size.height / 2.6,
-                                            //       width: size.width / 1.9,
-                                            //       color: Colors.transparent,
-                                            //       child: ListView.builder(
-                                            //           scrollDirection:
-                                            //               Axis.horizontal,
-                                            //           itemCount: null,
-                                            //           itemBuilder: (context,
-                                            //               indexOfStudent) {
-                                            //             return Card(
-                                            //               child: Container(
-                                            //                 color: Colors
-                                            //                     .teal[200],
-                                            //                 height:
-                                            //                     double.infinity,
-                                            //                 width: 330,
-                                            //                 child: Column(
-                                            //                   mainAxisAlignment:
-                                            //                       MainAxisAlignment
-                                            //                           .spaceEvenly,
-                                            //                   children: [
-                                            //                     Padding(
-                                            //                       padding:
-                                            //                           const EdgeInsets
-                                            //                                   .all(
-                                            //                               8.0),
-                                            //                       child:
-                                            //                           CircleAvatar(
-                                            //                         backgroundImage:
-                                            //                             NetworkImage(
-                                            //                                 'images/header.jpg'),
-                                            //                         radius: 52,
-                                            //                       ),
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "NAME : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .name,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Email : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .email,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Course : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .course,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Telephone No : " +
-                                            //                           snapshotCourse
-                                            //                               .data
-                                            //                               .listOfGroup[
-                                            //                                   index]
-                                            //                               .groupStudent[
-                                            //                                   indexOfStudent]
-                                            //                               .telephone,
-                                            //                     ),
-                                            //                   ],
-                                            //                 ),
-                                            //               ),
-                                            //             );
-                                            //           }),
-                                            //     ),
-                                            //   ),
-                                            // ),
                                           ],
                                         ),
                                       ),
@@ -479,7 +490,63 @@ class _JoinCourseState extends State<JoinCourse> {
         });
   }
 
-  void resetViewPage() {
-    setState(() {});
+  successLeaveCourseAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("Leave course successfully"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  successLeaveGroupAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("Leave Group successfully"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  successJoinGroupAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("Join Group successfully"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }

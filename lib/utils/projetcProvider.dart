@@ -121,9 +121,24 @@ class ProjectProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } else {
-      print('Same student');
       return false;
     }
+  }
+
+  leaveCourses(Courses course, PeerUser user) {
+    List studentList = course.listOfStudent;
+    studentList.removeWhere((element) => element['name'] == user.userName);
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: course.listOfGroup,
+        listOfStudent: studentList);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
   }
 
   ///////////////////////////////////////////////
@@ -309,6 +324,42 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
+        listOfStudent: course.listOfStudent);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+  addStudentToGroup(Courses course, List lg, int index) {
+    List listofstudent = lg;
+    List listofgroup = course.listOfGroup;
+
+    
+    listofgroup[index]["listofstudent"] = listofstudent;
+
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: listofgroup,
+        listOfStudent: course.listOfStudent);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+  deleteStudentFromGroup(Courses course, PeerUser user) {
+    List listofstudent = course.listOfGroup;
+    listofstudent.removeWhere((element) => element['email'] == user.email);
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: listofstudent,
         listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();

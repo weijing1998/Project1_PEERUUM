@@ -6,27 +6,37 @@ import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
-class StudentCoursesPage extends StatefulWidget {
+class StudentAddedCoursesPage extends StatefulWidget {
   final Function toggleJoinCourse;
   final PeerUser user;
+  final List<Courses> courselist;
 
-  const StudentCoursesPage({
+  const StudentAddedCoursesPage({
     Key key,
     @required this.toggleJoinCourse,
-    this.user,
+    @required this.user,
+    @required this.courselist,
   }) : super(key: key);
 
   @override
-  StudentCoursesPageState createState() => StudentCoursesPageState();
+  StudentAddedCoursesPageState createState() => StudentAddedCoursesPageState();
 }
 
-class StudentCoursesPageState extends State<StudentCoursesPage> {
+class StudentAddedCoursesPageState extends State<StudentAddedCoursesPage> {
   Crudmethod crud;
-  Future<List<Map<String, dynamic>>> list;
+  List<Courses> courselists = [];
 
   @override
   void initState() {
     super.initState();
+    for (int i = 0; i < widget.courselist.length; i++) {
+      for (int j = 0; j < widget.courselist[i].listOfStudent.length; j++) {
+        if (widget.courselist[i].listOfStudent[j]["email"] ==
+            widget.user.email) {
+          courselists.add(widget.courselist[i]);
+        }
+      }
+    }
   }
 
   @override
@@ -69,7 +79,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "COURSES PAGE",
+                              "ADDED COURSES PAGE",
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.w700),
                             ),
@@ -91,17 +101,17 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                         stream: provider.courselist,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return snapshot.data.length < 1
+                            return courselists.length == 0
                                 ? Center(
                                     child: Text(
-                                      "No Course Created",
+                                      "No Course Added",
                                       style: TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )
                                 : ListView.builder(
-                                    itemCount: snapshot.data.length,
+                                    itemCount: courselists.length,
                                     itemBuilder: (context, index) {
                                       return Card(
                                         child: Padding(
@@ -126,7 +136,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                           horizontal: 20),
                                                       child: Text(
                                                         " COURSE NAME : " +
-                                                            snapshot.data[index]
+                                                            courselists[index]
                                                                 .courseName
                                                                 .toUpperCase(),
                                                         style: TextStyle(
@@ -171,8 +181,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   ),
                                                                   Text(
                                                                     "COURSE CODE : " +
-                                                                        snapshot
-                                                                            .data[index]
+                                                                        courselists[index]
                                                                             .courseCode,
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -200,8 +209,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   ),
                                                                   Text(
                                                                     "COURSE GROUP : " +
-                                                                        snapshot
-                                                                            .data[index]
+                                                                        courselists[index]
                                                                             .courseGroup,
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -230,8 +238,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   ),
                                                                   Text(
                                                                     "COURSE BATCH : " +
-                                                                        snapshot
-                                                                            .data[index]
+                                                                        courselists[index]
                                                                             .courseBatch,
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -254,84 +261,33 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                           height: 40,
                                                           width:
                                                               size.width / 12,
-                                                          child: snapshot
-                                                                  .data[index]
-                                                                  .listOfStudent
-                                                                  .any((element) =>
-                                                                      element[
-                                                                          'email'] ==
-                                                                      widget
-                                                                          .user
-                                                                          .email)
-                                                              ? MaterialButton(
+                                                          child: MaterialButton(
+                                                            color: Colors
+                                                                .blue[900],
+                                                            onPressed:
+                                                                () async {
+                                                              await provider
+                                                                  .setCoursesId(snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .courseID);
+                                                              widget
+                                                                  .toggleJoinCourse(
+                                                                      false);
+                                                            },
+                                                            child: Text(
+                                                              "View Couses",
+                                                              style: TextStyle(
                                                                   color: Colors
-                                                                          .blue[
-                                                                      900],
-                                                                  onPressed:
-                                                                      null,
-                                                                  child: Text(
-                                                                    "Joined Couses",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .blue,
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                  ),
-                                                                )
-                                                              : MaterialButton(
-                                                                  color: Colors
-                                                                          .blue[
-                                                                      900],
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await provider.setCoursesId(snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .courseID);
-                                                                    showDialog(
-                                                                        context:
-                                                                            context,
-                                                                        builder: (context) => ChangeNotifierProvider(
-                                                                            create: (context) => ProjectProvider(),
-                                                                            child: AlertDialog(
-                                                                              title: new Text("Join Course"),
-                                                                              content: new Text("You are joining " + snapshot.data[index].courseName + ", click ok to join"),
-                                                                              actions: <Widget>[
-                                                                                MaterialButton(
-                                                                                  child: Text('Cancel'),
-                                                                                  onPressed: () {
-                                                                                    setState(() {
-                                                                                      Navigator.of(context).pop();
-                                                                                      
-                                                                                    });
-                                                                                  },
-                                                                                ),
-                                                                                MaterialButton(
-                                                                                  child: Text('Ok'),
-                                                                                  onPressed: () async {
-                                                                                    await provider.addStudentToCourse(snapshot.data[index], widget.user);
-                                                                                    widget.toggleJoinCourse(false);
-                                                                                    Navigator.of(context).pop();
-                                                                                  },
-                                                                                )
-                                                                              ],
-                                                                            )));
-                                                                  },
-                                                                  child: Text(
-                                                                    "Join Couses",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                  ),
-                                                                ),
+                                                                      .white,
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -357,50 +313,6 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
               ],
             ),
           );
-        });
-  }
-
-  successAlert(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("Apply successfully"),
-      content: Text('The form is applied successfully'),
-      actions: [
-        MaterialButton(
-          child: Text('Ok'),
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
-            Navigator.of(context, rootNavigator: true).pop();
-          },
-        )
-      ],
-    );
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return alert;
-        });
-  }
-
-  failAlert(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("Apply Fail"),
-      content: Text('System detect duplicate form apply'),
-      actions: [
-        MaterialButton(
-          child: Text('Ok'),
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
-            Navigator.of(context, rootNavigator: true).pop();
-          },
-        )
-      ],
-    );
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return alert;
         });
   }
 }

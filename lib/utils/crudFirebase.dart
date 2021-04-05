@@ -52,6 +52,8 @@ class Crudmethod {
   Future setCourses(Courses courses) async {
     return db.collection("Courses").doc(courses.courseID).set(courses.toJson());
   }
+ 
+
 
   //delete
   Future deleteCourses(String coursesId) async {
