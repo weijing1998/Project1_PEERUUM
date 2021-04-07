@@ -2626,7 +2626,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 listTextform.forEach((element) {
                                   Map<String, dynamic> map = {
                                     "option": element.option.text ?? "No Value",
-                                    "value": element.value.text ?? "No Value",
+                                    "value":int.parse(element.value.text) ?? "No Value",
                                   };
                                   multiplequestion.add(map);
                                 });
@@ -3320,7 +3320,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                       ChangeNotifierProvider(
                                     create: (context) => ProjectProvider(),
                                     builder: (context, child) => EvaluatePage(
-                                        forms: form, user: widget.user),
+                                        forms: form, user: widget.user,course: widget.course,),
                                   ),
                                 ),
                               );

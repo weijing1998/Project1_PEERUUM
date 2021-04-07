@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/studentSidebar.dart';
@@ -9,16 +10,26 @@ import 'package:provider/provider.dart';
 class EvaluatePage extends StatefulWidget {
   final Forms forms;
   final PeerUser user;
-  EvaluatePage({Key key, @required this.forms, @required this.user})
+  final Courses course;
+  EvaluatePage(
+      {Key key,
+      @required this.forms,
+      @required this.user,
+      @required this.course})
       : super(key: key);
 
   @override
   _EvaluatePageState createState() => _EvaluatePageState();
 }
 
-List answer;
-
 class _EvaluatePageState extends State<EvaluatePage> {
+  List answer;
+  @override
+  void initState() {
+    super.initState();
+    answer = List(widget.forms.listOfRubric.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -237,6 +248,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                   RadioButtonForScale(
                                                       listOfRubric: widget
                                                           .forms.listOfRubric,
+                                                      changelist: changelist,
                                                       index: index),
                                                   Padding(
                                                     padding: const EdgeInsets
@@ -326,6 +338,9 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                       height: size.height / 4,
                                                       width: size.width / 4,
                                                       child: TextFormField(
+                                                        onChanged: (value) {
+                                                          answer[index] = value;
+                                                        },
                                                         maxLength: 400,
                                                         maxLines: 10,
                                                         decoration:
@@ -413,6 +428,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                   listOfRubric:
                                                       widget.forms.listOfRubric,
                                                   index: index,
+                                                  changelist: changelist,
                                                 ),
                                                 SizedBox(
                                                   height: size.height / 10,
@@ -441,6 +457,84 @@ class _EvaluatePageState extends State<EvaluatePage> {
                 MaterialButton(
                   child: Text('Submit'),
                   onPressed: () {
+                    List<Map<String, dynamic>> questionNanswer = [];
+                    bool validator = true;
+                    int totalpoint = 0;
+                    int studentpoint = 0;
+                    int maxofscale = 0;
+                    int maxofmulti = 0;
+                    for (int i = 0; i < widget.forms.listOfRubric.length; i++) {
+                      if (widget.forms.listOfRubric[i]['type'] == "Scale") {
+                        for (int j = 0;
+                            j <
+                                widget.forms.listOfRubric[i]['numberofscale']
+                                    .length;
+                            j++) {
+                          if (widget.forms.listOfRubric[i]['numberofscale'][j]
+                                  ["index"] >
+                              maxofscale) {
+                            maxofscale = widget.forms.listOfRubric[i]
+                                ['numberofscale'][j]["index"];
+                          }
+                        }
+                        totalpoint=totalpoint+maxofscale;
+                      } else if (widget.forms.listOfRubric[i]['type'] ==
+                          "Multiple Choice") {
+                        for (int k = 0;
+                            k <
+                                widget.forms.listOfRubric[i]['multiplequestion']
+                                    .length;
+                            k++) {
+                          if (widget.forms.listOfRubric[i]['multiplequestion']
+                                  [k]["value"] >
+                              maxofmulti) {
+                            maxofmulti = widget.forms.listOfRubric[i]
+                                ['multiplequestion'][k]["value"];
+                          }
+                        }
+                        totalpoint=totalpoint+maxofmulti;
+                      }
+                    }
+
+                    for (int i = 0; i < answer.length; i++) {
+                      if (answer[i] is String) {
+                        Map<String, dynamic> answers = {
+                          'questions': widget.forms.listOfRubric[i]["question"],
+                          'answer': answer[i],
+                          'coursename': widget.course.courseName,
+                          'courseid': widget.course.courseID,
+                          'coursecode': widget.course.courseCode,
+                          'formname': widget.forms.formName,
+                          'formid': widget.forms.formName,
+                          'username': widget.user.userName,
+                          'useremail': widget.user.email,
+                        };
+                        questionNanswer.add(answers);
+                      } else if (answer[i] is int) {
+                        studentpoint = studentpoint + answer[i];
+                        Map<String, dynamic> answers = {
+                          'questions': widget.forms.listOfRubric[i]["question"],
+                          'answer': answer[i],
+                          'coursename': widget.course.courseName,
+                          'courseid': widget.course.courseID,
+                          'coursecode': widget.course.courseCode,
+                          'formname': widget.forms.formName,
+                          'formid': widget.forms.formName,
+                          'username': widget.user.userName,
+                          'useremail': widget.user.email,
+                        };
+                        questionNanswer.add(answers);
+                      } else {
+                        questionNanswer = [];
+                        validator = false;
+                      }
+                    }
+
+                    if (validator == true) {
+                      print(studentpoint);
+                      print(totalpoint);
+                    } else {}
+                    Navigator.of(context, rootNavigator: true).pop();
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                 )
@@ -451,16 +545,22 @@ class _EvaluatePageState extends State<EvaluatePage> {
       ),
     );
   }
+
+  changelist(int index, var value) {
+    answer[index] = value;
+  }
 }
 
 class RadioButtonForScale extends StatefulWidget {
   final List listOfRubric;
   final int index;
+  final Function changelist;
 
   RadioButtonForScale({
     Key key,
     @required this.listOfRubric,
     @required this.index,
+    @required this.changelist,
   }) : super(key: key);
 
   @override
@@ -468,8 +568,9 @@ class RadioButtonForScale extends StatefulWidget {
 }
 
 class _RadioButtonForScaleState extends State<RadioButtonForScale> {
-    var groupvalue;
+  var groupvalue;
   List scale;
+
   @override
   void initState() {
     scale = widget.listOfRubric[widget.index]['numberofscale'];
@@ -496,6 +597,7 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                           onChanged: (value) {
                             setState(() {
                               groupvalue = value;
+                              widget.changelist(widget.index, value);
                             });
                           },
                         ),
@@ -511,18 +613,22 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
 class RadiobuttonForMultiple extends StatefulWidget {
   final List listOfRubric;
   final int index;
+  final Function changelist;
   RadiobuttonForMultiple(
-      {Key key, @required this.listOfRubric, @required this.index})
+      {Key key,
+      @required this.listOfRubric,
+      @required this.index,
+      @required this.changelist})
       : super(key: key);
 
   @override
   @override
   _RadiobuttonForMultipleState createState() => _RadiobuttonForMultipleState();
 }
-  
+
 class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
   List multi;
-var groupvalue;
+  var groupvalue;
   void initState() {
     multi = widget.listOfRubric[widget.index]['multiplequestion'];
     super.initState();
@@ -550,6 +656,7 @@ var groupvalue;
                             onChanged: (value) {
                               setState(() {
                                 groupvalue = value;
+                                widget.changelist(widget.index, value);
                               });
                             },
                           ),
