@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
-import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
+import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -265,10 +265,6 @@ class _JoinCourseState extends State<JoinCourse> {
                                             ),
                                             Container(
                                               width: size.width,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          Colors.blueAccent)),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -307,23 +303,38 @@ class _JoinCourseState extends State<JoinCourse> {
                                                           child: MaterialButton(
                                                             onPressed: () {
                                                               setState(() {
-                                                                List a = snapshotCourse
-                                                                            .data
-                                                                            .listOfGroup[
-                                                                        index][
-                                                                    "listofstudent"];
-                                                                a.add(widget
-                                                                    .user
-                                                                    .toJson());
-
-                                                                provider.addStudentToGroup(
+                                                                List
+                                                                    listofstudent =
                                                                     snapshotCourse
-                                                                        .data,
-                                                                    a,
-                                                                    index);
+                                                                            .data
+                                                                            .listOfGroup[index]
+                                                                        [
+                                                                        "listofstudent"];
 
-                                                                successJoinGroupAlert(
-                                                                    context);
+                                                                if (listofstudent.any(
+                                                                    (element) =>
+                                                                        element[
+                                                                            'email'] ==
+                                                                        widget
+                                                                            .user
+                                                                            .email)) {
+                                                                  joinedGroupAlert(
+                                                                      context);
+                                                                } else {
+                                                                  listofstudent
+                                                                      .add(widget
+                                                                          .user
+                                                                          .toJson());
+
+                                                                  provider.addStudentToGroup(
+                                                                      snapshotCourse
+                                                                          .data,
+                                                                      listofstudent,
+                                                                      index);
+
+                                                                  successJoinGroupAlert(
+                                                                      context);
+                                                                }
                                                               });
                                                             },
                                                             child: Text(
@@ -352,11 +363,26 @@ class _JoinCourseState extends State<JoinCourse> {
                                                           child: MaterialButton(
                                                             onPressed: () {
                                                               setState(() {
+                                                                List
+                                                                    listofstudent =
+                                                                    snapshotCourse
+                                                                            .data
+                                                                            .listOfGroup[index]
+                                                                        [
+                                                                        "listofstudent"];
+
+                                                                listofstudent.removeWhere(
+                                                                    (element) =>
+                                                                        element[
+                                                                            'email'] ==
+                                                                        widget
+                                                                            .user
+                                                                            .email);
                                                                 provider.deleteStudentFromGroup(
                                                                     snapshotCourse
                                                                         .data,
-                                                                    widget
-                                                                        .user);
+                                                                    listofstudent,
+                                                                    index);
                                                                 successLeaveGroupAlert(
                                                                         context)(
                                                                     context);
@@ -407,48 +433,75 @@ class _JoinCourseState extends State<JoinCourse> {
                                                               .length,
                                                           itemBuilder: (context,
                                                               indexOfStudent) {
-                                                            return Card(
-                                                              child: Container(
-                                                                color: Colors
-                                                                    .teal[200],
-                                                                height: double
-                                                                    .infinity,
-                                                                width: 330,
-                                                                child: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceEvenly,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
+                                                            return InkWell(
+                                                              hoverColor:
+                                                                  Colors.grey,
+                                                              splashColor:
+                                                                  Colors.blue,
+                                                              focusColor:
+                                                                  Colors.red,
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) =>
+                                                                            ChangeNotifierProvider(
+                                                                      create: (context) =>
+                                                                          ProjectProvider(),
                                                                       child:
-                                                                          CircleAvatar(
-                                                                        backgroundImage:
-                                                                            NetworkImage('images/header.jpg'),
-                                                                        radius:
-                                                                            52,
+                                                                          StudentChooseForm(
+                                                                        course:
+                                                                            snapshotCourse.data,
+                                                                        user: PeerUser.fromJson(snapshotCourse
+                                                                            .data
+                                                                            .listOfGroup[index]["listofstudent"][indexOfStudent]),
                                                                       ),
                                                                     ),
-                                                                    Text(
-                                                                      "NAME : " +
-                                                                          snapshotCourse
-                                                                              .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
-                                                                    ),
-                                                                    Text(
-                                                                      "Email : " +
-                                                                          snapshotCourse
-                                                                              .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
-                                                                    ),
-                                                                    Text(
-                                                                      snapshotCourse
-                                                                          .data
-                                                                          .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
-                                                                    ),
-                                                                  ],
+                                                                  );
+                                                                });
+                                                              },
+                                                              child: Card(
+                                                                child:
+                                                                    Container(
+                                                                  color: Colors
+                                                                          .teal[
+                                                                      200],
+                                                                  height: double
+                                                                      .infinity,
+                                                                  width: 330,
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(8.0),
+                                                                        child:
+                                                                            CircleAvatar(
+                                                                          backgroundImage:
+                                                                              NetworkImage('images/header.jpg'),
+                                                                          radius:
+                                                                              52,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        "NAME : " +
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                      ),
+                                                                      Text(
+                                                                        "Email : " +
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
+                                                                      ),
+                                                                      Text(
+                                                                        snapshotCourse
+                                                                            .data
+                                                                            .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             );
@@ -533,6 +586,26 @@ class _JoinCourseState extends State<JoinCourse> {
   successJoinGroupAlert(BuildContext context) {
     var alert = AlertDialog(
       content: Text("Join Group successfully"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  joinedGroupAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("You already joined the group"),
       actions: [
         MaterialButton(
           child: Text('Ok'),

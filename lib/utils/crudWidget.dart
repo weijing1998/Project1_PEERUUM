@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pepelist/evaluatePage.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
@@ -2737,10 +2739,11 @@ class ApplyFormDialog extends StatefulWidget {
   _ApplyFormDialogState createState() => _ApplyFormDialogState();
 }
 
+Courses course;
+
 class _ApplyFormDialogState extends State<ApplyFormDialog> {
   var _formskey = GlobalKey<FormState>();
   bool disableDropdown = false;
-  Courses course;
 
   void initState() {
     super.initState();
@@ -2826,7 +2829,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                           Border.all(color: Colors.grey[600])),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton<Courses>(
-                                      value: course ?? widget.snapshot[0],
+                                      value: course,
                                       icon: Icon(Icons.arrow_drop_down),
                                       iconSize: 32,
                                       elevation: 16,
@@ -2876,6 +2879,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
+                              course = null;
                               Navigator.pop(context);
                             },
                           ),
@@ -2901,6 +2905,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                         widget.forms, context)
                                     ? successAlert(context)
                                     : failAlert(context);
+                                course = null;
                               });
                               disableDropdown = true;
                             },
@@ -3126,7 +3131,7 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                         list.removeWhere(
                             (element) => element["formid"] == value);
                         provider.deleteFormFromCourse(widget.course, list);
-                        disableDropdown=true;
+                        disableDropdown = true;
                         Navigator.pop(context);
                       },
                     ),
@@ -3138,5 +3143,201 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
         ),
       )
     ]));
+  }
+}
+
+class StudentChooseForm extends StatefulWidget {
+  final Courses course;
+  final PeerUser user;
+  StudentChooseForm({Key key, @required this.course, @required this.user})
+      : super(key: key);
+
+  @override
+  _StudentChooseFormState createState() => _StudentChooseFormState();
+}
+
+var value;
+
+class _StudentChooseFormState extends State<StudentChooseForm> {
+  @override
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    bool disableDropdown = false;
+
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 1.8,
+            width: size.width / 2.4,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  "CHOOSE FORM TO EVALUATE",
+                  style: TextStyle(
+                    color: Colors.purple[800],
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                disableDropdown
+                    ? DropdownButton(
+                        value: value,
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(color: Colors.red, fontSize: 12),
+                        onChanged: (newValue) {},
+                        items: [],
+                      )
+                    : widget.course.listOfForm.length != 0
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "SELECTED FORM : ",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Container(
+                                    height: 50,
+                                    width: size.width / 5,
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            color: Colors.grey[600])),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        value: value,
+                                        icon: Icon(Icons.arrow_drop_down),
+                                        iconSize: 32,
+                                        elevation: 16,
+                                        style: TextStyle(
+                                            color: Colors.blue, fontSize: 15),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            value = newValue;
+                                          });
+                                        },
+                                        items: widget.course.listOfForm
+                                            .map((form) {
+                                          return DropdownMenuItem(
+                                            child: new Text(
+                                              form["formname"],
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                            value: form,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Text("No Form to choose"),
+
+                //Submit button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Container(
+                        height: 40,
+                        width: 150,
+                        child: MaterialButton(
+                          color: Colors.red[800],
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          onPressed: () {
+                            value = null;
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Container(
+                        height: 40,
+                        width: 150,
+                        child: MaterialButton(
+                          color: Colors.blue[800],
+                          child: Text(
+                            "Evaluate",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              Forms form = Forms.fromJson(value);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ChangeNotifierProvider(
+                                    create: (context) => ProjectProvider(),
+                                    builder: (context, child) => EvaluatePage(
+                                        forms: form, user: widget.user),
+                                  ),
+                                ),
+                              );
+
+                              value = null;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -335,7 +335,6 @@ class ProjectProvider with ChangeNotifier {
 
     
     listofgroup[index]["listofstudent"] = listofstudent;
-
     var newCourse = Courses(
         courseName: course.courseName,
         courseID: course.courseID,
@@ -349,9 +348,10 @@ class ProjectProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  deleteStudentFromGroup(Courses course, PeerUser user) {
-    List listofstudent = course.listOfGroup;
-    listofstudent.removeWhere((element) => element['email'] == user.email);
+  deleteStudentFromGroup(Courses course, List lg , int index) {
+    List listofgroup = course.listOfGroup;
+     List listofstudent = lg;
+   listofgroup[index]["listofstudent"] = listofstudent;
     var newCourse = Courses(
         courseName: course.courseName,
         courseID: course.courseID,
@@ -359,7 +359,7 @@ class ProjectProvider with ChangeNotifier {
         courseCode: course.courseCode,
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
-        listOfGroup: listofstudent,
+        listOfGroup: listofgroup,
         listOfStudent: course.listOfStudent);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
