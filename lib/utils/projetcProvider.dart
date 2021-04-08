@@ -66,7 +66,8 @@ class ProjectProvider with ChangeNotifier {
           courseCode: _courseCode,
           listOfForm: [],
           listOfGroup: [],
-          listOfStudent: []);
+          listOfStudent: [],
+          listOfScore: []);
 
       firestoreservice.setCourses(newCourses);
     }
@@ -81,7 +82,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: _courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: course.listOfGroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourses);
     notifyListeners();
   }
@@ -116,7 +118,8 @@ class ProjectProvider with ChangeNotifier {
           courseGroup: course.courseGroup,
           listOfForm: course.listOfForm,
           listOfGroup: course.listOfGroup,
-          listOfStudent: student);
+          listOfStudent: student,
+          listOfScore: course.listOfScore);
       firestoreservice.setCourses(newCourse);
       notifyListeners();
       return true;
@@ -136,7 +139,27 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: course.listOfGroup,
-        listOfStudent: studentList);
+        listOfStudent: studentList,
+        listOfScore: course.listOfScore);
+    firestoreservice.setCourses(newCourse);
+    notifyListeners();
+  }
+
+  addScoretoList(Courses course, Map<String, dynamic> score) {
+    List scorelist = course.listOfScore;
+
+    scorelist.add(score);
+
+    var newCourse = Courses(
+        courseName: course.courseName,
+        courseID: course.courseID,
+        courseBatch: course.courseBatch,
+        courseCode: course.courseCode,
+        courseGroup: course.courseGroup,
+        listOfForm: course.listOfForm,
+        listOfGroup: course.listOfGroup,
+        listOfStudent: course.listOfStudent,
+        listOfScore: scorelist);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -217,7 +240,8 @@ class ProjectProvider with ChangeNotifier {
           courseGroup: course.courseGroup,
           listOfForm: newlist,
           listOfGroup: course.listOfGroup,
-          listOfStudent: course.listOfStudent);
+          listOfStudent: course.listOfStudent,
+          listOfScore: course.listOfScore);
       firestoreservice.setCourses(newCourse);
       notifyListeners();
       return true;
@@ -236,7 +260,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: list,
         listOfGroup: course.listOfGroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -296,7 +321,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: newlist,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -310,7 +336,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -324,7 +351,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -333,7 +361,6 @@ class ProjectProvider with ChangeNotifier {
     List listofstudent = lg;
     List listofgroup = course.listOfGroup;
 
-    
     listofgroup[index]["listofstudent"] = listofstudent;
     var newCourse = Courses(
         courseName: course.courseName,
@@ -343,15 +370,16 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
 
-  deleteStudentFromGroup(Courses course, List lg , int index) {
+  deleteStudentFromGroup(Courses course, List lg, int index) {
     List listofgroup = course.listOfGroup;
-     List listofstudent = lg;
-   listofgroup[index]["listofstudent"] = listofstudent;
+    List listofstudent = lg;
+    listofgroup[index]["listofstudent"] = listofstudent;
     var newCourse = Courses(
         courseName: course.courseName,
         courseID: course.courseID,
@@ -360,7 +388,8 @@ class ProjectProvider with ChangeNotifier {
         courseGroup: course.courseGroup,
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
-        listOfStudent: course.listOfStudent);
+        listOfStudent: course.listOfStudent,
+        listOfScore: course.listOfScore);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -452,19 +481,6 @@ class ProjectProvider with ChangeNotifier {
     firestoreservice.setForms(newForm);
   }
 
-  editRubricfromForm(Courses course, List listofgroup) {
-    var newCourse = Courses(
-        courseName: course.courseName,
-        courseID: course.courseID,
-        courseBatch: course.courseBatch,
-        courseCode: course.courseCode,
-        courseGroup: course.courseGroup,
-        listOfForm: course.listOfForm,
-        listOfGroup: listofgroup,
-        listOfStudent: course.listOfStudent);
-    firestoreservice.setCourses(newCourse);
-    notifyListeners();
-  }
   ///////////////////////////////////////(Rubric)
 
 }

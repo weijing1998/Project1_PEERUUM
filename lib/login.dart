@@ -269,8 +269,8 @@ class _LoginPageState extends State<LoginPage> {
                                               ),
                                             );
 
-                                            // await signIn(emailController.text,
-                                            //     passwordController.text);
+                                            await signIn(emailController.text,
+                                                passwordController.text);
                                           },
                                         ),
                                       ),

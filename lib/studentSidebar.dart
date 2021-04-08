@@ -29,7 +29,7 @@ class _StudentPageState extends State<StudentPage> {
 
   @override
   Widget build(BuildContext context) {
-      var provider = Provider.of<ProjectProvider>(context);
+    var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -182,25 +182,35 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             StreamBuilder<List<Courses>>(
-                stream:provider.courselist ,
+                stream: provider.courselist,
                 builder: (context, snapshot) {
-                  return SizedBox(
-                    child: atStudentCoursePage
-                        ? StudentCoursesPage(
-                            toggleJoinCourse: toggleJoinCourse,
-                            user: widget.users,
-                          )
-                        : atStudentAddedCoursePage
-                            ? StudentAddedCoursesPage(
-                                toggleJoinCourse:
-                                    toggleJoinCoursefromAddedCourses,
-                                user: widget.users,
-                                courselist: snapshot.data,
-                              )
-                            : JoinCourse(
-                                user: widget.users,
-                              ),
-                  );
+                  if (snapshot.hasData) {
+                    return SizedBox(
+                      child: atStudentCoursePage
+                          ? StudentCoursesPage(
+                              toggleJoinCourse: toggleJoinCourse,
+                              user: widget.users,
+                            )
+                          : atStudentAddedCoursePage
+                              ? StudentAddedCoursesPage(
+                                  toggleJoinCourse:
+                                      toggleJoinCoursefromAddedCourses,
+                                  user: widget.users,
+                                  courselist: snapshot.data,
+                                )
+                              : JoinCourse(
+                                  user: widget.users,
+                                ),
+                    );
+                  } else {
+                    return Container(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3.0,
+                      ),
+                    );
+                  }
                 }),
           ],
         ),

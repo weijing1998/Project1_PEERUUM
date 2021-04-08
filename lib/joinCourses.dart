@@ -442,24 +442,38 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                   Colors.red,
                                                               onTap: () {
                                                                 setState(() {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (context) =>
-                                                                            ChangeNotifierProvider(
-                                                                      create: (context) =>
-                                                                          ProjectProvider(),
-                                                                      child:
-                                                                          StudentChooseForm(
-                                                                        course:
-                                                                            snapshotCourse.data,
-                                                                        user: PeerUser.fromJson(snapshotCourse
-                                                                            .data
-                                                                            .listOfGroup[index]["listofstudent"][indexOfStudent]),
+                                                                  if (snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]
+                                                                          [
+                                                                          "email"] ==
+                                                                      widget
+                                                                          .user
+                                                                          .email) {
+                                                                    selfEvaluateAlert(
+                                                                        context);
+                                                                  } else {
+                                                                    showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) =>
+                                                                              ChangeNotifierProvider(
+                                                                        create: (context) =>
+                                                                            ProjectProvider(),
+                                                                        child:
+                                                                            StudentChooseForm(
+                                                                          currentUser:
+                                                                              widget.user,
+                                                                          course:
+                                                                              snapshotCourse.data,
+                                                                          evaluateUser: PeerUser.fromJson(snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]),
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  );
+                                                                    );
+                                                                  }
                                                                 });
                                                               },
                                                               child: Card(
@@ -606,6 +620,26 @@ class _JoinCourseState extends State<JoinCourse> {
   joinedGroupAlert(BuildContext context) {
     var alert = AlertDialog(
       content: Text("You already joined the group"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  selfEvaluateAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("You cannot evaluate yourself"),
       actions: [
         MaterialButton(
           child: Text('Ok'),

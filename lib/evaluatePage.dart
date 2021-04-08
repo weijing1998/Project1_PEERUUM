@@ -9,13 +9,15 @@ import 'package:provider/provider.dart';
 
 class EvaluatePage extends StatefulWidget {
   final Forms forms;
-  final PeerUser user;
+  final PeerUser evaluateUser;
+  final PeerUser currentUser;
   final Courses course;
   EvaluatePage(
       {Key key,
       @required this.forms,
-      @required this.user,
-      @required this.course})
+      @required this.evaluateUser,
+      @required this.course,
+      @required this.currentUser})
       : super(key: key);
 
   @override
@@ -74,7 +76,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                               ChangeNotifierProvider(
                             create: (context) => ProjectProvider(),
                             builder: (context, child) =>
-                                StudentPage(users: widget.user),
+                                StudentPage(users: widget.evaluateUser),
                           ),
                         ),
                       );
@@ -157,7 +159,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 25, 25, 10),
                             child: Text(
-                              widget.user.userName,
+                              widget.evaluateUser.userName,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w300),
                             ),
@@ -448,96 +450,131 @@ class _EvaluatePageState extends State<EvaluatePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                MaterialButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: MaterialButton(
+                    height: 50,
+                    minWidth: 130,
+                    color: Colors.red[700],
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    hoverColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
                 ),
-                MaterialButton(
-                  child: Text('Submit'),
-                  onPressed: () {
-                    List<Map<String, dynamic>> questionNanswer = [];
-                    bool validator = true;
-                    int totalpoint = 0;
-                    int studentpoint = 0;
-                    int maxofscale = 0;
-                    int maxofmulti = 0;
-                    for (int i = 0; i < widget.forms.listOfRubric.length; i++) {
-                      if (widget.forms.listOfRubric[i]['type'] == "Scale") {
-                        for (int j = 0;
-                            j <
-                                widget.forms.listOfRubric[i]['numberofscale']
-                                    .length;
-                            j++) {
-                          if (widget.forms.listOfRubric[i]['numberofscale'][j]
-                                  ["index"] >
-                              maxofscale) {
-                            maxofscale = widget.forms.listOfRubric[i]
-                                ['numberofscale'][j]["index"];
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: MaterialButton(
+                    height: 50,
+                    minWidth: 130,
+                    color: Colors.blue[700],
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    hoverColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      List<Map<String, dynamic>> questionNanswer = [];
+                      bool validator = true;
+                      int totalpoint = 0;
+                      int studentpoint = 0;
+                      int maxofscale = 0;
+                      int maxofmulti = 0;
+                      for (int i = 0;
+                          i < widget.forms.listOfRubric.length;
+                          i++) {
+                        if (widget.forms.listOfRubric[i]['type'] == "Scale") {
+                          for (int j = 0;
+                              j <
+                                  widget.forms.listOfRubric[i]['numberofscale']
+                                      .length;
+                              j++) {
+                            if (widget.forms.listOfRubric[i]['numberofscale'][j]
+                                    ["index"] >
+                                maxofscale) {
+                              maxofscale = widget.forms.listOfRubric[i]
+                                  ['numberofscale'][j]["index"];
+                            }
                           }
-                        }
-                        totalpoint=totalpoint+maxofscale;
-                      } else if (widget.forms.listOfRubric[i]['type'] ==
-                          "Multiple Choice") {
-                        for (int k = 0;
-                            k <
-                                widget.forms.listOfRubric[i]['multiplequestion']
-                                    .length;
-                            k++) {
-                          if (widget.forms.listOfRubric[i]['multiplequestion']
-                                  [k]["value"] >
-                              maxofmulti) {
-                            maxofmulti = widget.forms.listOfRubric[i]
-                                ['multiplequestion'][k]["value"];
+                          totalpoint = totalpoint + maxofscale;
+                        } else if (widget.forms.listOfRubric[i]['type'] ==
+                            "Multiple Choice") {
+                          for (int k = 0;
+                              k <
+                                  widget
+                                      .forms
+                                      .listOfRubric[i]['multiplequestion']
+                                      .length;
+                              k++) {
+                            if (widget.forms.listOfRubric[i]['multiplequestion']
+                                    [k]["value"] >
+                                maxofmulti) {
+                              maxofmulti = widget.forms.listOfRubric[i]
+                                  ['multiplequestion'][k]["value"];
+                            }
                           }
+                          totalpoint = totalpoint + maxofmulti;
                         }
-                        totalpoint=totalpoint+maxofmulti;
                       }
-                    }
 
-                    for (int i = 0; i < answer.length; i++) {
-                      if (answer[i] is String) {
-                        Map<String, dynamic> answers = {
-                          'questions': widget.forms.listOfRubric[i]["question"],
-                          'answer': answer[i],
+                      for (int i = 0; i < answer.length; i++) {
+                        if (answer[i] is String) {
+                          Map<String, dynamic> answers = {
+                            'questions': widget.forms.listOfRubric[i]
+                                ["question"],
+                            'answer': answer[i],
+                          };
+                          questionNanswer.add(answers);
+                        } else if (answer[i] is int) {
+                          studentpoint = studentpoint + answer[i];
+                          Map<String, dynamic> answers = {
+                            'questions': widget.forms.listOfRubric[i]
+                                ["question"],
+                            'answer': answer[i],
+                          };
+                          questionNanswer.add(answers);
+                        } else {
+                          questionNanswer = [];
+                          validator = false;
+                        }
+                      }
+
+                      if (validator == true) {
+                        Map<String, dynamic> score = {
                           'coursename': widget.course.courseName,
                           'courseid': widget.course.courseID,
                           'coursecode': widget.course.courseCode,
                           'formname': widget.forms.formName,
-                          'formid': widget.forms.formName,
-                          'username': widget.user.userName,
-                          'useremail': widget.user.email,
+                          'formid': widget.forms.formID,
+                          'evaluateusername': widget.evaluateUser.userName,
+                          'evaluateuseremail': widget.evaluateUser.email,
+                          'totalpoint': totalpoint,
+                          'studentpoint': studentpoint,
+                          'questionNanswer': questionNanswer,
+                          'currentuser': widget.currentUser.email,
                         };
-                        questionNanswer.add(answers);
-                      } else if (answer[i] is int) {
-                        studentpoint = studentpoint + answer[i];
-                        Map<String, dynamic> answers = {
-                          'questions': widget.forms.listOfRubric[i]["question"],
-                          'answer': answer[i],
-                          'coursename': widget.course.courseName,
-                          'courseid': widget.course.courseID,
-                          'coursecode': widget.course.courseCode,
-                          'formname': widget.forms.formName,
-                          'formid': widget.forms.formName,
-                          'username': widget.user.userName,
-                          'useremail': widget.user.email,
-                        };
-                        questionNanswer.add(answers);
+
+                        provider.addScoretoList(widget.course, score);
+                        successAlert(context);
                       } else {
-                        questionNanswer = [];
-                        validator = false;
+                        nullAlert(context);
                       }
-                    }
-
-                    if (validator == true) {
-                      print(studentpoint);
-                      print(totalpoint);
-                    } else {}
-                    Navigator.of(context, rootNavigator: true).pop();
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                )
+                    },
+                  ),
+                ),
               ],
             ),
           ]),
@@ -548,6 +585,48 @@ class _EvaluatePageState extends State<EvaluatePage> {
 
   changelist(int index, var value) {
     answer[index] = value;
+  }
+
+  nullAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("You need to fill in all the field"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  successAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("Evaluate successfully"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }
 

@@ -2626,7 +2626,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 listTextform.forEach((element) {
                                   Map<String, dynamic> map = {
                                     "option": element.option.text ?? "No Value",
-                                    "value":int.parse(element.value.text) ?? "No Value",
+                                    "value": int.parse(element.value.text) ??
+                                        "No Value",
                                   };
                                   multiplequestion.add(map);
                                 });
@@ -3148,8 +3149,13 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
 
 class StudentChooseForm extends StatefulWidget {
   final Courses course;
-  final PeerUser user;
-  StudentChooseForm({Key key, @required this.course, @required this.user})
+  final PeerUser evaluateUser;
+  final PeerUser currentUser;
+  StudentChooseForm(
+      {Key key,
+      @required this.course,
+      @required this.evaluateUser,
+      @required this.currentUser})
       : super(key: key);
 
   @override
@@ -3320,7 +3326,11 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                       ChangeNotifierProvider(
                                     create: (context) => ProjectProvider(),
                                     builder: (context, child) => EvaluatePage(
-                                        forms: form, user: widget.user,course: widget.course,),
+                                      forms: form,
+                                      evaluateUser: widget.evaluateUser,
+                                      course: widget.course,
+                                      currentUser: widget.currentUser,
+                                    ),
                                   ),
                                 ),
                               );
