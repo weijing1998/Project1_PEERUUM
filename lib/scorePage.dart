@@ -80,7 +80,7 @@ class ScorePageState extends State<ScorePage> {
                 SizedBox(
                   height: size.height / 20,
                 ),
-                Text("STUDENT PERFORMANCE"),
+                
                 SingleChildScrollView(
                   child: Container(
                       height: size.height / 1.42,

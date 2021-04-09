@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
@@ -183,9 +184,9 @@ class _ViewScoreState extends State<ViewScore> {
                       ),
                     ),
                     //List of Form
+
                     SingleChildScrollView(
                       child: Container(
-                        height: size.height / 1.45,
                         width: size.width / 1.5,
                         color: Colors.grey[300],
                         child: snapshotCourse.data.listOfForm.length != 0
@@ -198,9 +199,40 @@ class _ViewScoreState extends State<ViewScore> {
                                     child: Padding(
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
-                                        height: 600,
                                         width: double.infinity,
                                         color: Colors.brown[200],
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Text(
+                                                snapshotCourse
+                                                        .data.listOfForm[index]
+                                                    ["formname"],
+                                                style: TextStyle(
+                                                  fontSize: 23,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: size.height / 1.7,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.blueAccent)),
+                                              width: double.infinity,
+                                              child: ScoreWidget(
+                                                listofscore: snapshotCourse
+                                                    .data.listOfScore,
+                                                form: Forms.fromJson(
+                                                    snapshotCourse.data
+                                                        .listOfForm[index]),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   );
@@ -228,8 +260,126 @@ class _ViewScoreState extends State<ViewScore> {
           }
         });
   }
+}
 
-  void resetViewPage() {
-    setState(() {});
+class ScoreWidget extends StatefulWidget {
+  final List listofscore;
+  final Forms form;
+  ScoreWidget({Key key, @required this.listofscore, @required this.form})
+      : super(key: key);
+
+  @override
+  _ScoreWidgetState createState() => _ScoreWidgetState();
+}
+
+class _ScoreWidgetState extends State<ScoreWidget> {
+  @override
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return ListView.builder(
+      itemCount: widget.listofscore.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: widget.listofscore[index]["formid"] == widget.form.formID
+              ? Container(
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.red)),
+                  height: size.height / 6,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage('images/header.jpg'),
+                          radius: 30,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Name :" +
+                                    widget.listofscore[index]
+                                        ["evaluateusername"],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Email :" +
+                                    widget.listofscore[index]
+                                        ["evaluateuseremail"],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Group :" +
+                                    widget.listofscore[index]["groupname"],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Rate By :" +
+                                    widget.listofscore[index]["currentuser"],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Student point :" +
+                                    widget.listofscore[index]["studentpoint"]
+                                        .toString(),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                "Total point :" +
+                                    widget.listofscore[index]["totalpoint"]
+                                        .toString(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(calculatepercentage(
+                                  widget.listofscore[index]["studentpoint"],
+                                  widget.listofscore[index]["totalpoint"])
+                              .toString() +
+                          "%"),
+                    ],
+                  ),
+                )
+              : Container(),
+        );
+      },
+    );
+  }
+
+  double calculatepercentage(int studentpoint, int totalpoint) {
+    double percentage = (studentpoint / totalpoint) * 100;
+   String parse= percentage.toStringAsFixed(2);
+   double afterparse=double.parse(parse);
+    return afterparse;
   }
 }
