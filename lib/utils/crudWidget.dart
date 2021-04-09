@@ -9,8 +9,6 @@ import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
-Crudmethod crud = Crudmethod();
-
 //ADD COURSE
 class AddCourseDialog extends StatefulWidget {
   AddCourseDialog({

@@ -4,6 +4,7 @@ import 'package:pepelist/coursespage.dart';
 import 'package:pepelist/formpages.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
+import 'package:pepelist/scorePage.dart';
 import 'package:pepelist/viewcourse.dart';
 import 'package:pepelist/viewform.dart';
 
@@ -23,6 +24,8 @@ class _SidebarState extends State<Sidebar> {
   bool atFormPage = false;
   bool atViewCourse = false;
   bool atViewForm = false;
+  bool atScorePage = false;
+  bool atViewScore = false;
   int courseIndex;
   int formIndex;
   PeerUser peeruser;
@@ -106,118 +109,196 @@ class _SidebarState extends State<Sidebar> {
                       height: 80,
                     ),
                     //Dashboard
-                    MaterialButton(
-                      padding: EdgeInsets.all(16),
-                      color: Colors.transparent,
-                      onPressed: () {
-                        setState(() {
-                          atCoursePage = true;
-                          atViewCourse = false;
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.dashboard,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 26),
-                          Text(
-                            'Courses',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            atCoursePage = true;
+                            atFormPage = false;
+                            atViewCourse = false;
+                            atViewForm = false;
+                            atScorePage = false;
+                            atViewScore = false;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.dashboard,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 26),
+                            Text(
+                              'Courses',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 24),
                     //Form Page
-                    MaterialButton(
-                      padding: EdgeInsets.all(16),
-                      color: Colors.transparent,
-                      onPressed: () {
-                        setState(() {
-                          atCoursePage = false;
-                          atViewCourse = false;
-                          atFormPage = true;
-                          atViewForm = false;
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.dochub,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 26),
-                          Text(
-                            'Form',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            atCoursePage = false;
+                            atViewCourse = false;
+                            atFormPage = true;
+                            atViewForm = false;
+                            atScorePage = false;
+                            atViewScore = false;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.dochub,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 26),
+                            Text(
+                              'Form',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 24),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.exit_to_app,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 26),
-                          Text(
-                            'Sign out',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            atCoursePage = false;
+                            atViewCourse = false;
+                            atFormPage = false;
+                            atViewForm = false;
+                            atScorePage = true;
+                            atViewScore = false;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.sortNumericUpAlt,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 26),
+                            Text(
+                              'Score',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.exit_to_app,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 26),
+                            Text(
+                              'Sign out',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(
-              height: size.height,
-              child: atCoursePage
-                  ? atViewCourse
-                      ? ViewCourse()
-                      : CoursesPage(
-                          toggleViewCourse: toggleViewCourse,
-                          user: widget.users,
-                        )
-                  : atViewForm
-                      ? ViewFormPage()
-                      : FormPage(
-                          toggleFormpage: toggleViewFormpage,
-                        ),
-            ),
+            SizedBox(height: size.height, child: getPage()),
           ],
         ),
       ),
     );
   }
 
+  getPage() {
+    if (atCoursePage == true) {
+      return CoursesPage(
+        toggleViewCourse: toggleViewCourse,
+        user: widget.users,
+      );
+    } else if (atFormPage == true) {
+      return FormPage(toggleFormpage: toggleViewFormpage);
+    } else if (atScorePage == true) {
+      return ScorePage(
+        toggleViewScore: toggleViewScorepage,
+        user: widget.users,
+      );
+    } else if (atViewCourse == true) {
+      return ViewCourse();
+    } else if (atViewForm == true) {
+      return ViewFormPage();
+    } else if (atViewScore == true) {
+      return ScorePage(
+        toggleViewScore: toggleViewScorepage,
+        user: widget.users,
+      );
+    }
+  }
+
   void toggleViewCourse(bool b) {
     setState(() {
       atViewCourse = b;
+      atCoursePage = false;
+      atFormPage = false;
+      atViewForm = false;
+      atScorePage = false;
+      atViewScore = false;
     });
   }
 
   void toggleViewFormpage(bool b) {
     setState(() {
       atViewForm = b;
+      atScorePage = false;
+      atViewScore = false;
+      atViewCourse = false;
+      atCoursePage = false;
+      atFormPage = false;
+    });
+  }
+
+  void toggleViewScorepage(bool b) {
+    setState(() {
+      atViewScore = b;
+      atViewForm = false;
+      atScorePage = false;
+      atViewCourse = false;
+      atCoursePage = false;
+      atFormPage = false;
     });
   }
 }

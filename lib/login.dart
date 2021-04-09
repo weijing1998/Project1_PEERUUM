@@ -256,18 +256,18 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               submitting = true;
                                             });
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    StudentPage(
-                                                  users: PeerUser(
-                                                      userName: 'Student',
-                                                      email: "Student",
-                                                      typeOfUser: "Student"),
-                                                ),
-                                              ),
-                                            );
+                                            // Navigator.pushReplacement(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //         StudentPage(
+                                            //       users: PeerUser(
+                                            //           userName: 'Student',
+                                            //           email: "Student",
+                                            //           typeOfUser: "Student"),
+                                            //     ),
+                                            //   ),
+                                            // );
 
                                             await signIn(emailController.text,
                                                 passwordController.text);

@@ -2,27 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/peerUser.dart';
-import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
-class CoursesPage extends StatefulWidget {
-  final Function toggleViewCourse;
+class ScorePage extends StatefulWidget {
+  final Function toggleViewScore;
   final PeerUser user;
 
-  const CoursesPage({
+  const ScorePage({
     Key key,
-    @required this.toggleViewCourse,
+    @required this.toggleViewScore,
     this.user,
   }) : super(key: key);
 
   @override
-  CoursesPageState createState() => CoursesPageState();
+  ScorePageState createState() => ScorePageState();
 }
 
-class CoursesPageState extends State<CoursesPage> {
-  Crudmethod crud;
+class ScorePageState extends State<ScorePage> {
   Future<List<Map<String, dynamic>>> list;
 
   @override
@@ -330,7 +328,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                           index]
                                                                       .courseID);
                                                               widget
-                                                                  .toggleViewCourse(
+                                                                  .toggleViewScore(
                                                                       true);
                                                             },
                                                             child: Text(
