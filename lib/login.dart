@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pepelist/coursespage.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/register.dart';
@@ -256,21 +257,20 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               submitting = true;
                                             });
-                                            // Navigator.pushReplacement(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //     builder: (context) =>
-                                            //         StudentPage(
-                                            //       users: PeerUser(
-                                            //           userName: 'Student',
-                                            //           email: "Student",
-                                            //           typeOfUser: "Student"),
-                                            //     ),
-                                            //   ),
-                                            // );
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Sidebar(
+                                                  users: PeerUser(
+                                                      userName: 'Student',
+                                                      email: "Student",
+                                                      typeOfUser: "Lecturer"),
+                                                ),
+                                              ),
+                                            );
 
-                                            await signIn(emailController.text,
-                                                passwordController.text);
+                                            // await signIn(emailController.text,
+                                            //     passwordController.text);
                                           },
                                         ),
                                       ),

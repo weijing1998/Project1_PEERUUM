@@ -5,6 +5,7 @@ import 'package:pepelist/formpages.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/scorePage.dart';
+import 'package:pepelist/viewScore.dart';
 import 'package:pepelist/viewcourse.dart';
 import 'package:pepelist/viewform.dart';
 
@@ -262,10 +263,7 @@ class _SidebarState extends State<Sidebar> {
     } else if (atViewForm == true) {
       return ViewFormPage();
     } else if (atViewScore == true) {
-      return ScorePage(
-        toggleViewScore: toggleViewScorepage,
-        user: widget.users,
-      );
+      return ViewScore();
     }
   }
 

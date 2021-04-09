@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/peerUser.dart';
-import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -47,9 +46,6 @@ class ScorePageState extends State<ScorePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("WELCOME, " + widget.user.userName.toUpperCase(),
-                          style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold)),
                       // TODO : REPLACE WITH SEARC BAR
                     ],
                   ),
@@ -61,80 +57,19 @@ class ScorePageState extends State<ScorePage> {
                       padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
                       child: Row(
                         children: [
-                          Image.network(
-                            "images/courses.png",
-                            scale: 9,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.network(
+                              "images/score.png",
+                              scale: 9,
+                            ),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "COURSES PAGE",
+                              "SCORE PAGE",
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: AddCourseDialog(),
-                                          ));
-                                },
-                                child: Text(
-                                  "Add Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: snapshot.hasData
-                                    ? () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: DeleteCourseDialog(
-                                              data: snapshot.data,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    : () {},
-                                child: Text(
-                                  "Delete Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -145,6 +80,7 @@ class ScorePageState extends State<ScorePage> {
                 SizedBox(
                   height: size.height / 20,
                 ),
+                Text("STUDENT PERFORMANCE"),
                 SingleChildScrollView(
                   child: Container(
                       height: size.height / 1.42,
@@ -177,7 +113,7 @@ class ScorePageState extends State<ScorePage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  color: Colors.blue[300],
+                                                  color: Colors.teal[400],
                                                   height: 50,
                                                   width: double.infinity,
                                                   child: Align(
@@ -319,7 +255,7 @@ class ScorePageState extends State<ScorePage> {
                                                               size.width / 12,
                                                           child: MaterialButton(
                                                             color: Colors
-                                                                .blue[900],
+                                                                .teal[800],
                                                             onPressed:
                                                                 () async {
                                                               await provider
@@ -332,7 +268,7 @@ class ScorePageState extends State<ScorePage> {
                                                                       true);
                                                             },
                                                             child: Text(
-                                                              "View Couses",
+                                                              "View Score",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white,

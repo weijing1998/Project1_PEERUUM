@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
+import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
@@ -467,9 +468,13 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                               widget.user,
                                                                           course:
                                                                               snapshotCourse.data,
-                                                                          evaluateUser: PeerUser.fromJson(snapshotCourse
+                                                                          evaluateUser:
+                                                                              PeerUser.fromJson(
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent],
+                                                                          ),
+                                                                          group: Group.fromJson(snapshotCourse
                                                                               .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]),
+                                                                              .listOfGroup[index]),
                                                                         ),
                                                                       ),
                                                                     );

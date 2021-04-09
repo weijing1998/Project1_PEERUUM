@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/studentSidebar.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
@@ -12,12 +13,13 @@ class EvaluatePage extends StatefulWidget {
   final PeerUser evaluateUser;
   final PeerUser currentUser;
   final Courses course;
+  final Group group;
   EvaluatePage(
       {Key key,
       @required this.forms,
       @required this.evaluateUser,
       @required this.course,
-      @required this.currentUser})
+      @required this.currentUser,@required this.group})
       : super(key: key);
 
   @override
@@ -565,6 +567,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                           'studentpoint': studentpoint,
                           'questionNanswer': questionNanswer,
                           'currentuser': widget.currentUser.email,
+                          'groupname' :widget.group.groupName
                         };
 
                         provider.addScoretoList(widget.course, score);

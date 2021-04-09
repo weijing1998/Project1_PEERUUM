@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/evaluatePage.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
@@ -3149,11 +3150,12 @@ class StudentChooseForm extends StatefulWidget {
   final Courses course;
   final PeerUser evaluateUser;
   final PeerUser currentUser;
+  final Group group;
   StudentChooseForm(
       {Key key,
       @required this.course,
       @required this.evaluateUser,
-      @required this.currentUser})
+      @required this.currentUser,@required this.group})
       : super(key: key);
 
   @override
@@ -3328,6 +3330,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                       evaluateUser: widget.evaluateUser,
                                       course: widget.course,
                                       currentUser: widget.currentUser,
+                                      group: widget.group,
                                     ),
                                   ),
                                 ),
