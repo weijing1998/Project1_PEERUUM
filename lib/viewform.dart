@@ -296,11 +296,13 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             FontWeight.w400),
                                                                   ),
                                                                 ),
-                                                                radiobuttonForScale(
-                                                                    context,
-                                                                    snapshot.data
-                                                                            .listOfRubric[
-                                                                        index]),
+                                                                RadioButtonForScale(
+                                                                    listOfRubric:
+                                                                        snapshot
+                                                                            .data
+                                                                            .listOfRubric,
+                                                                    index:
+                                                                        index),
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsets
@@ -580,11 +582,12 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                   ],
                                                                 ),
                                                               ),
-                                                              radiobuttonForMultiple(
-                                                                  context,
-                                                                  snapshot.data
-                                                                          .listOfRubric[
-                                                                      index]),
+                                                              RadiobuttonForMultiple(
+                                                                  listOfRubric:
+                                                                      snapshot
+                                                                          .data
+                                                                          .listOfRubric,
+                                                                  index: index),
                                                               Padding(
                                                                 padding: const EdgeInsets
                                                                         .symmetric(
@@ -650,14 +653,38 @@ class _ViewFormPageState extends State<ViewFormPage> {
           );
         });
   }
+}
 
-  Widget radiobuttonForScale(BuildContext context, listofrubric) {
-    int selectedRadio = 1;
-    List numberofscale = listofrubric["numberofscale"];
+class RadioButtonForScale extends StatefulWidget {
+  final List listOfRubric;
+  final int index;
+
+  RadioButtonForScale({
+    Key key,
+    @required this.listOfRubric,
+    @required this.index,
+  }) : super(key: key);
+
+  @override
+  _RadioButtonForScaleState createState() => _RadioButtonForScaleState();
+}
+
+class _RadioButtonForScaleState extends State<RadioButtonForScale> {
+  var groupvalue;
+  List scale;
+
+  @override
+  void initState() {
+    scale = widget.listOfRubric[widget.index]['numberofscale'];
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: numberofscale
+        children: scale
             .map((e) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -668,10 +695,10 @@ class _ViewFormPageState extends State<ViewFormPage> {
                         scale: 0.8,
                         child: Radio(
                           value: e["index"],
-                          groupValue: selectedRadio,
+                          groupValue: groupvalue,
                           onChanged: (value) {
                             setState(() {
-                              selectedRadio = value;
+                              groupvalue = value;
                             });
                           },
                         ),
@@ -682,14 +709,36 @@ class _ViewFormPageState extends State<ViewFormPage> {
                 ))
             .toList());
   }
+}
 
-  Widget radiobuttonForMultiple(BuildContext context, listofrubric) {
-    String selectedRadio = "1";
-    List numberofscale = listofrubric["multiplequestion"];
+class RadiobuttonForMultiple extends StatefulWidget {
+  final List listOfRubric;
+  final int index;
+  RadiobuttonForMultiple({
+    Key key,
+    @required this.listOfRubric,
+    @required this.index,
+  }) : super(key: key);
+
+  @override
+  @override
+  _RadiobuttonForMultipleState createState() => _RadiobuttonForMultipleState();
+}
+
+class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
+  List multi;
+  var groupvalue;
+  void initState() {
+    multi = widget.listOfRubric[widget.index]['multiplequestion'];
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: numberofscale
+        children: multi
             .map((e) => Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Row(
@@ -702,10 +751,10 @@ class _ViewFormPageState extends State<ViewFormPage> {
                           scale: 0.8,
                           child: Radio(
                             value: e['value'],
-                            groupValue: selectedRadio,
+                            groupValue: groupvalue,
                             onChanged: (value) {
                               setState(() {
-                                selectedRadio = value;
+                                groupvalue = value;
                               });
                             },
                           ),

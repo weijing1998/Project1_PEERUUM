@@ -1564,9 +1564,9 @@ class _AddFormDialogState extends State<AddFormDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Text(
-                            "Form Code : ",
+                            "FORM CODE : ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
