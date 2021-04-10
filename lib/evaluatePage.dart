@@ -19,7 +19,8 @@ class EvaluatePage extends StatefulWidget {
       @required this.forms,
       @required this.evaluateUser,
       @required this.course,
-      @required this.currentUser,@required this.group})
+      @required this.currentUser,
+      @required this.group})
       : super(key: key);
 
   @override
@@ -542,12 +543,6 @@ class _EvaluatePageState extends State<EvaluatePage> {
                           questionNanswer.add(answers);
                         } else if (answer[i] is int) {
                           studentpoint = studentpoint + answer[i];
-                          Map<String, dynamic> answers = {
-                            'questions': widget.forms.listOfRubric[i]
-                                ["question"],
-                            'answer': answer[i],
-                          };
-                          questionNanswer.add(answers);
                         } else {
                           questionNanswer = [];
                           validator = false;
@@ -567,7 +562,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                           'studentpoint': studentpoint,
                           'questionNanswer': questionNanswer,
                           'currentuser': widget.currentUser.email,
-                          'groupname' :widget.group.groupName
+                          'groupname': widget.group.groupName
                         };
 
                         provider.addScoretoList(widget.course, score);

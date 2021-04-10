@@ -257,20 +257,20 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               submitting = true;
                                             });
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Sidebar(
-                                                  users: PeerUser(
-                                                      userName: 'Student',
-                                                      email: "Student",
-                                                      typeOfUser: "Lecturer"),
-                                                ),
-                                              ),
-                                            );
+                                            // Navigator.pushReplacement(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) => Sidebar(
+                                            //       users: PeerUser(
+                                            //           userName: 'Student',
+                                            //           email: "Student",
+                                            //           typeOfUser: "Lecturer"),
+                                            //     ),
+                                            //   ),
+                                            // );
 
-                                            // await signIn(emailController.text,
-                                            //     passwordController.text);
+                                            await signIn(emailController.text,
+                                                passwordController.text);
                                           },
                                         ),
                                       ),

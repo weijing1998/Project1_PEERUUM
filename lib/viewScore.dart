@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
-import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -189,7 +188,8 @@ class _ViewScoreState extends State<ViewScore> {
                       child: Container(
                         width: size.width / 1.5,
                         color: Colors.grey[300],
-                        child: snapshotCourse.data.listOfForm.length != 0
+                        child: snapshotCourse.data.listOfForm.length != 0 &&
+                                snapshotCourse.data.listOfScore.length != 0
                             ? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount:
@@ -200,28 +200,32 @@ class _ViewScoreState extends State<ViewScore> {
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
                                         width: double.infinity,
-                                        color: Colors.brown[200],
+                                        color: Colors.teal[200],
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(15.0),
-                                              child: Text(
-                                                snapshotCourse
-                                                        .data.listOfForm[index]
-                                                    ["formname"],
-                                                style: TextStyle(
-                                                  fontSize: 23,
-                                                  fontWeight: FontWeight.w800,
+                                            Container(
+                                              color: Colors.teal[600],
+                                              width: double.infinity,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child: Text(
+                                                  "Form Name : " +
+                                                      snapshotCourse.data
+                                                              .listOfForm[index]
+                                                          ["formname"],
+                                                  style: TextStyle(
+                                                      fontSize: 23,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      color: Colors.white),
                                                 ),
                                               ),
                                             ),
                                             Container(
                                               height: size.height / 1.7,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          Colors.blueAccent)),
                                               width: double.infinity,
                                               child: ScoreWidget(
                                                 listofscore: snapshotCourse
@@ -238,7 +242,18 @@ class _ViewScoreState extends State<ViewScore> {
                                   );
                                 },
                               )
-                            : Text("No Form Applied"),
+                            : Center(
+                                child: Container(
+                                    height: size.height / 5,
+                                    width: size.width / 3,
+                                    child: Center(
+                                      child: Text(
+                                        "No Form Applied or No Student Submit Any Evaluation",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ))),
                       ),
                     ),
 
@@ -284,17 +299,19 @@ class _ScoreWidgetState extends State<ScoreWidget> {
           padding: const EdgeInsets.all(12.0),
           child: widget.listofscore[index]["formid"] == widget.form.formID
               ? Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.red)),
+                  color: Colors.white54,
                   height: size.height / 6,
                   width: double.infinity,
                   child: Row(
                     children: [
+                      SizedBox(
+                        width: size.width / 25,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: CircleAvatar(
                           backgroundImage: NetworkImage('images/header.jpg'),
-                          radius: 30,
+                          radius: 45,
                         ),
                       ),
                       Padding(
@@ -305,33 +322,29 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "Name :" +
                                     widget.listofscore[index]
                                         ["evaluateusername"],
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "Email :" +
                                     widget.listofscore[index]
                                         ["evaluateuseremail"],
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "Group :" +
                                     widget.listofscore[index]["groupname"],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Text(
-                                "Rate By :" +
-                                    widget.listofscore[index]["currentuser"],
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ],
@@ -344,29 +357,90 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "Student point :" +
                                     widget.listofscore[index]["studentpoint"]
                                         .toString(),
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "Total point :" +
                                     widget.listofscore[index]["totalpoint"]
                                         .toString(),
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                "Rate By :" +
+                                    widget.listofscore[index]["currentuser"],
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Text(calculatepercentage(
-                                  widget.listofscore[index]["studentpoint"],
-                                  widget.listofscore[index]["totalpoint"])
-                              .toString() +
-                          "%"),
+                      SizedBox(
+                        width: size.width / 18,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            calculatepercentage(
+                                        widget.listofscore[index]
+                                            ["studentpoint"],
+                                        widget.listofscore[index]["totalpoint"])
+                                    .toString() +
+                                "%",
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.blue,
+                              fontFamily: "Dela Gothic One",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: size.width / 13,
+                      ),
+                      widget.listofscore[index]["questionNanswer"].length != 0
+                          ? Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    studentComment(
+                                        context,
+                                        widget.listofscore[index]
+                                            ['questionNanswer']);
+                                  });
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.comment,
+                                      size: 27,
+                                      color: Colors.blue,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Comment',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.blue),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 )
@@ -378,8 +452,70 @@ class _ScoreWidgetState extends State<ScoreWidget> {
 
   double calculatepercentage(int studentpoint, int totalpoint) {
     double percentage = (studentpoint / totalpoint) * 100;
-   String parse= percentage.toStringAsFixed(2);
-   double afterparse=double.parse(parse);
+    String parse = percentage.toStringAsFixed(2);
+    double afterparse = double.parse(parse);
     return afterparse;
+  }
+
+  studentComment(BuildContext context, List questionNanswer) {
+    Size size = MediaQuery.of(context).size;
+    var alert = AlertDialog(
+      title: Text("Student Comment"),
+      content: Container(
+        width: size.width / 3,
+        height: size.height / 3,
+        child: ListView.builder(
+            itemCount: questionNanswer.length,
+            itemBuilder: (context, index) {
+              return Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        child: Text("Question " +
+                            (index + 1).toString() +
+                            " : " +
+                            questionNanswer[index]["questions"]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        child:
+                            Text("Answer: " + questionNanswer[index]["answer"]),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Container(
+            width: size.width / 17,
+            height: size.height / 20,
+            color: Colors.teal,
+            child: MaterialButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            ),
+          ),
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }

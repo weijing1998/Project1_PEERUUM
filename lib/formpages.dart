@@ -345,16 +345,20 @@ class _FormPageState extends State<FormPage> {
                                                                 ),
                                                               )
                                                             : Center(
-                                                                child: Container(
-                                                                    height:
-                                                                        size.height /
-                                                                            20,
-                                                                    width:
-                                                                        size.width /
+                                                                child:
+                                                                    Container(
+                                                                        height:
+                                                                            size.height /
+                                                                                20,
+                                                                        width: size.width /
                                                                             40,
-                                                                    child:
-                                                                        CircularProgressIndicator(
-
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              CircularProgressIndicator(
+                                                                            strokeWidth:
+                                                                                3,
+                                                                          ),
                                                                         )),
                                                               );
                                                       }),
@@ -372,8 +376,10 @@ class _FormPageState extends State<FormPage> {
                             child: SizedBox(
                                 height: 30,
                                 width: 30,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ),
                                 )),
                           ),
                   ),
