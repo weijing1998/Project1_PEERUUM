@@ -576,6 +576,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -596,6 +597,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -616,6 +618,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -636,6 +639,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -656,6 +660,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

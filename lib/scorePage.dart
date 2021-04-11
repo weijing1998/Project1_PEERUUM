@@ -80,7 +80,6 @@ class ScorePageState extends State<ScorePage> {
                 SizedBox(
                   height: size.height / 20,
                 ),
-                
                 SingleChildScrollView(
                   child: Container(
                       height: size.height / 1.42,
@@ -244,42 +243,74 @@ class ScorePageState extends State<ScorePage> {
                                                           ],
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 25),
-                                                        child: Container(
-                                                          height: 40,
-                                                          width:
-                                                              size.width / 12,
-                                                          child: MaterialButton(
-                                                            color: Colors
-                                                                .teal[800],
-                                                            onPressed:
-                                                                () async {
-                                                              await provider
-                                                                  .setCoursesId(snapshot
-                                                                      .data[
-                                                                          index]
-                                                                      .courseID);
-                                                              widget
-                                                                  .toggleViewScore(
-                                                                      true);
-                                                            },
-                                                            child: Text(
-                                                              "View Score",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                      Container(
+                                                        height: 40.0,
+                                                        margin:
+                                                            EdgeInsets.all(15),
+                                                        child: MaterialButton(
+                                                          onPressed: () async {
+                                                            await provider
+                                                                .setCoursesId(
+                                                                    snapshot
+                                                                        .data[
+                                                                            index]
+                                                                        .courseID);
+                                                            widget
+                                                                .toggleViewScore(
+                                                                    true);
+                                                          },
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          80.0)),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  0.0),
+                                                          child: Ink(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                      colors: [
+                                                                        Colors.teal[
+                                                                            400],
+                                                                        Colors.teal[
+                                                                            800]
+                                                                      ],
+                                                                      begin: Alignment
+                                                                          .centerLeft,
+                                                                      end: Alignment
+                                                                          .centerRight,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0)),
+                                                            child: Container(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                      maxWidth:
+                                                                          150.0,
+                                                                      minHeight:
+                                                                          40.0),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                "View Score",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),

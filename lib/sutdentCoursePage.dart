@@ -291,6 +291,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                             index]
                                                                         .courseID);
                                                                     showDialog(
+                                                                      barrierDismissible: false,
                                                                         context:
                                                                             context,
                                                                         builder: (context) => ChangeNotifierProvider(
@@ -376,6 +377,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -398,6 +400,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

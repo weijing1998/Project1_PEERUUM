@@ -6,7 +6,6 @@ import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
-import 'package:pepelist/utils/crudFirebase.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -2764,6 +2763,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
             child: InkResponse(
               onTap: () {
                 Navigator.of(context).pop();
+                course=null;
               },
               child: CircleAvatar(
                 radius: 15,
@@ -2939,6 +2939,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -2961,6 +2962,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

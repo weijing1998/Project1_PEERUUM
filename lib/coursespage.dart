@@ -82,59 +82,93 @@ class CoursesPageState extends State<CoursesPage> {
                       padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: AddCourseDialog(),
-                                          ));
-                                },
-                                child: Text(
-                                  "Add Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.all(15),
+                            child: MaterialButton(
+                              onPressed: () {
+                                showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) =>
+                                        ChangeNotifierProvider(
+                                          create: (context) =>
+                                              ProjectProvider(),
+                                          child: AddCourseDialog(),
+                                        ));
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0)),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.blue[400],
+                                        Colors.blue[800]
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: 150.0, minHeight: 40.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Add Course",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              width: 150,
-                              child: MaterialButton(
-                                color: Colors.blue[900],
-                                focusColor: Colors.lightBlue,
-                                textColor: Colors.white,
-                                onPressed: snapshot.hasData
-                                    ? () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: DeleteCourseDialog(
-                                              data: snapshot.data,
-                                            ),
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.all(15),
+                            child: MaterialButton(
+                              onPressed: snapshot.hasData
+                                  ? () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) =>
+                                            ChangeNotifierProvider(
+                                          create: (context) =>
+                                              ProjectProvider(),
+                                          child: DeleteCourseDialog(
+                                            data: snapshot.data,
                                           ),
-                                        );
-                                      }
-                                    : () {},
-                                child: Text(
-                                  "Delete Courses",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                        ),
+                                      );
+                                    }
+                                  : () {},
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0)),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.blue[400],
+                                        Colors.blue[800]
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: 150.0, minHeight: 40.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Delete Course",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
                                 ),
                               ),
                             ),
@@ -310,42 +344,74 @@ class CoursesPageState extends State<CoursesPage> {
                                                           ],
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 25),
-                                                        child: Container(
-                                                          height: 40,
-                                                          width:
-                                                              size.width / 12,
-                                                          child: MaterialButton(
-                                                            color: Colors
-                                                                .blue[900],
-                                                            onPressed:
-                                                                () async {
-                                                              await provider
-                                                                  .setCoursesId(snapshot
-                                                                      .data[
-                                                                          index]
-                                                                      .courseID);
-                                                              widget
-                                                                  .toggleViewCourse(
-                                                                      true);
-                                                            },
-                                                            child: Text(
-                                                              "View Couses",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                      Container(
+                                                        height: 40.0,
+                                                        margin:
+                                                            EdgeInsets.all(15),
+                                                        child: MaterialButton(
+                                                          onPressed: () async {
+                                                            await provider
+                                                                .setCoursesId(
+                                                                    snapshot
+                                                                        .data[
+                                                                            index]
+                                                                        .courseID);
+                                                            widget
+                                                                .toggleViewCourse(
+                                                                    true);
+                                                          },
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          80.0)),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  0.0),
+                                                          child: Ink(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                      colors: [
+                                                                        Colors.blue[
+                                                                            400],
+                                                                        Colors.blue[
+                                                                            800]
+                                                                      ],
+                                                                      begin: Alignment
+                                                                          .centerLeft,
+                                                                      end: Alignment
+                                                                          .centerRight,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0)),
+                                                            child: Container(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                      maxWidth:
+                                                                          150.0,
+                                                                      minHeight:
+                                                                          40.0),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                "View Course",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),

@@ -57,6 +57,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                     onPressed: () {
                                       setState(() {
                                         showDialog(
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (context) =>
                                               ChangeNotifierProvider(
@@ -93,6 +94,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                           onPressed: () {
                                             setState(() {
                                               showDialog(
+                                                barrierDismissible: false,
                                                 context: context,
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(
@@ -281,6 +283,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                   child: MaterialButton(
                                     onPressed: () {
                                       showDialog(
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (context) =>
                                               ChangeNotifierProvider(
@@ -315,6 +318,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                             0
                                         ? () {
                                             showDialog(
+                                                barrierDismissible: false,
                                                 context: context,
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(
@@ -351,6 +355,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                             0
                                         ? () {
                                             showDialog(
+                                                barrierDismissible: false,
                                                 context: context,
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(

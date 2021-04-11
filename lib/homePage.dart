@@ -26,23 +26,24 @@ class _HomePageState extends State<HomePage> {
     return ChangeNotifierProvider(
       create: (context) => ProjectProvider(),
       child: MaterialApp(
+          theme: ThemeData(fontFamily: "Inconsolata"),
           home: Scaffold(
-        backgroundColor: Colors.grey[100],
-        body: Stack(
-          children: [
-            Container(
-              child: SingleChildScrollView(
-                controller: controllers,
-                child: Column(
-                  children: <Widget>[
-                    Body(controller: controllers),
-                  ],
+            backgroundColor: Colors.grey[100],
+            body: Stack(
+              children: [
+                Container(
+                  child: SingleChildScrollView(
+                    controller: controllers,
+                    child: Column(
+                      children: <Widget>[
+                        Body(controller: controllers),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      )),
+          )),
     );
   }
 }
@@ -54,7 +55,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-     
+
     return Column(
       children: [
         Container(
@@ -116,11 +117,11 @@ class Body extends StatelessWidget {
                                 child: MaterialButton(
                                   hoverColor: Colors.blue[900],
                                   onPressed: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => RegisterPage()),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => RegisterPage()),
+                                    );
                                   },
                                   child: Text(
                                     "Lets Get Started",

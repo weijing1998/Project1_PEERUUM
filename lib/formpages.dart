@@ -57,19 +57,17 @@ class _FormPageState extends State<FormPage> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: Container(
-                            height: 45,
-                            width: 150,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 70, 0),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.all(15),
                             child: MaterialButton(
-                              color: Colors.purple[800],
-                              focusColor: Colors.purple[700],
-                              textColor: Colors.white,
                               onPressed: () {
                                 showDialog(
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (context) =>
                                         ChangeNotifierProvider(
@@ -78,25 +76,42 @@ class _FormPageState extends State<FormPage> {
                                           child: AddFormDialog(),
                                         ));
                               },
-                              child: Text(
-                                "Add Forms",
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0)),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.purple[400],
+                                        Colors.purple[800]
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: 150.0, minHeight: 40.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Add Form",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 85, 0),
-                          child: Container(
-                            height: 45,
-                            width: 150,
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.all(15),
                             child: MaterialButton(
-                              color: Colors.purple[800],
-                              focusColor: Colors.purple[700],
-                              textColor: Colors.white,
                               onPressed: snapshot.hasData
                                   ? () {
                                       showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (context) =>
                                             ChangeNotifierProvider(
@@ -109,14 +124,36 @@ class _FormPageState extends State<FormPage> {
                                       );
                                     }
                                   : () {},
-                              child: Text(
-                                "Delete Forms",
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0)),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.purple[400],
+                                        Colors.purple[800]
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: 150.0, minHeight: 40.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Delete Form",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -259,33 +296,63 @@ class _FormPageState extends State<FormPage> {
                                                       ],
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 15),
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: size.width / 12,
-                                                      child: MaterialButton(
-                                                        color:
-                                                            Colors.purple[800],
-                                                        onPressed: () {
-                                                          provider.setFormId(
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .formID);
-                                                          widget.toggleFormpage(
-                                                              true);
-                                                        },
-                                                        child: Text(
-                                                          "View Form",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
+                                                  Container(
+                                                    height: 40.0,
+                                                    margin: EdgeInsets.all(15),
+                                                    child: MaterialButton(
+                                                      onPressed: () {
+                                                        provider.setFormId(
+                                                            snapshot.data[index]
+                                                                .formID);
+                                                        widget.toggleFormpage(
+                                                            true);
+                                                      },
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          80.0)),
+                                                      padding:
+                                                          EdgeInsets.all(0.0),
+                                                      child: Ink(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  colors: [
+                                                                    Colors.purple[
+                                                                        400],
+                                                                    Colors.purple[
+                                                                        800]
+                                                                  ],
+                                                                  begin: Alignment
+                                                                      .centerLeft,
+                                                                  end: Alignment
+                                                                      .centerRight,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            30.0)),
+                                                        child: Container(
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  maxWidth:
+                                                                      150.0,
+                                                                  minHeight:
+                                                                      40.0),
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Text(
+                                                            "View Form",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -297,49 +364,76 @@ class _FormPageState extends State<FormPage> {
                                                           snapshotcourses) {
                                                         return snapshotcourses
                                                                 .hasData
-                                                            ? Padding(
-                                                                padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        15),
+                                                            ? Container(
+                                                                height: 40.0,
+                                                                margin:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            15),
                                                                 child:
-                                                                    Container(
-                                                                  height: 40,
-                                                                  width:
-                                                                      size.width /
-                                                                          12,
-                                                                  child:
-                                                                      MaterialButton(
-                                                                    color: Colors
-                                                                            .purple[
-                                                                        800],
-                                                                    onPressed:
-                                                                        () {
-                                                                      provider.setFormId(snapshot
-                                                                          .data[
-                                                                              index]
-                                                                          .formID);
-                                                                      showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder: (context) =>
-                                                                              ChangeNotifierProvider(
-                                                                                create: (context) => ProjectProvider(),
-                                                                                child: ApplyFormDialog(
-                                                                                  forms: snapshot.data[index],
-                                                                                  snapshot: snapshotcourses.data,
-                                                                                ),
-                                                                              ));
-                                                                    },
-                                                                    child: Text(
-                                                                      "Apply Form",
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w600),
+                                                                    MaterialButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    provider.setFormId(snapshot
+                                                                        .data[
+                                                                            index]
+                                                                        .formID);
+                                                                    showDialog(
+                                                                        barrierDismissible:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder: (context) =>
+                                                                            ChangeNotifierProvider(
+                                                                              create: (context) => ProjectProvider(),
+                                                                              child: ApplyFormDialog(
+                                                                                forms: snapshot.data[index],
+                                                                                snapshot: snapshotcourses.data,
+                                                                              ),
+                                                                            ));
+                                                                  },
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              80.0)),
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              0.0),
+                                                                  child: Ink(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            gradient:
+                                                                                LinearGradient(
+                                                                              colors: [
+                                                                                Colors.purple[400],
+                                                                                Colors.purple[800]
+                                                                              ],
+                                                                              begin: Alignment.centerLeft,
+                                                                              end: Alignment.centerRight,
+                                                                            ),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(30.0)),
+                                                                    child:
+                                                                        Container(
+                                                                      constraints: BoxConstraints(
+                                                                          maxWidth:
+                                                                              150.0,
+                                                                          minHeight:
+                                                                              40.0),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "Apply Form",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 12),
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),

@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/login.dart';
 import 'package:pepelist/utils/constants.dart';
@@ -27,7 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseStore = FirebaseFirestore.instance;
-  final picker = ImagePicker();
   final highlightcolor = Colors.grey;
 
   Crudmethod crud = new Crudmethod();
@@ -458,6 +456,7 @@ class _RegisterPageState extends State<RegisterPage> {
   showAlertDialogEmail(BuildContext _context) {
     // set up the button
     return showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -477,6 +476,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   showAlertDialogPass(BuildContext _context) {
     return showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -496,6 +496,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   showAlertDialogSuccess(BuildContext _context) {
     return showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(

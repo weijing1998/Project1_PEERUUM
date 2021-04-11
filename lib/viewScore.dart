@@ -513,6 +513,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
     );
 
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

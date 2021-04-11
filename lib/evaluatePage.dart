@@ -32,6 +32,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
   @override
   void initState() {
     super.initState();
+    // ignore: deprecated_member_use
     answer = List(widget.forms.listOfRubric.length);
   }
 
@@ -599,6 +600,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -621,6 +623,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
     );
 
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

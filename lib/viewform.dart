@@ -63,6 +63,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   onPressed: () {
                                     setState(() {
                                       showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (context) =>
                                             ChangeNotifierProvider(
@@ -167,6 +168,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                           onPressed: () {
                                             setState(() {
                                               showDialog(
+                                                barrierDismissible: false,
                                                 context: context,
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(
