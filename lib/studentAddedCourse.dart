@@ -266,9 +266,8 @@ class StudentAddedCoursesPageState extends State<StudentAddedCoursesPage> {
                                                                 .blue[900],
                                                             onPressed:
                                                                 () async {
-                                                              await provider
-                                                                  .setCoursesId(snapshot
-                                                                      .data[
+                                                              await provider.setCoursesId(
+                                                                  courselists[
                                                                           index]
                                                                       .courseID);
                                                               widget

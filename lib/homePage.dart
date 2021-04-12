@@ -497,7 +497,7 @@ class Body extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(220, 4, 4, 4),
                     child: Text(
-                      "Copyright © 2021, PEPECHU. All rights reserved.",
+                      "Copyright © 2021, PEERUUM. All rights reserved.",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,

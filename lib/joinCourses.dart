@@ -455,6 +455,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         context);
                                                                   } else {
                                                                     showDialog(
+                                                                      barrierDismissible: false,
                                                                       context:
                                                                           context,
                                                                       builder:

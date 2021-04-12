@@ -2364,6 +2364,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                             onChanged:
                                                                 (newValue) {
                                                               setState(() {
+                                                                mapScalenumber=[];
                                                                 selectedScaleNumber =
                                                                     newValue;
                                                                 for (int i = 1;
@@ -3183,6 +3184,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
             top: -10.0,
             child: InkResponse(
               onTap: () {
+                value=null;
                 Navigator.of(context).pop();
               },
               child: CircleAvatar(

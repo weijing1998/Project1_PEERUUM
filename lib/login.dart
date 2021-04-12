@@ -414,7 +414,7 @@ class _LoginPageState extends State<LoginPage> {
   showAlertDialogEmail(BuildContext _context) {
     // set up the button
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -435,7 +435,7 @@ class _LoginPageState extends State<LoginPage> {
   showAlertDialogPass(BuildContext _context) {
     // set up the button
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -456,7 +456,7 @@ class _LoginPageState extends State<LoginPage> {
   showAlertDialogType(BuildContext _context) {
     // set up the button
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(

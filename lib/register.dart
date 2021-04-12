@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController typeOfUserController = TextEditingController();
+    TextEditingController matricController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseStore = FirebaseFirestore.instance;
@@ -167,6 +168,20 @@ class _RegisterPageState extends State<RegisterPage> {
                                               validator: (value) {
                                                 if (value.isEmpty) {
                                                   return 'Invalid Email';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(height: 4),
+                                             TextFormField(
+                                              controller: matricController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Matric Number',
+                                              ),
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return 'Empty Matric';
                                                 } else {
                                                   return null;
                                                 }
@@ -427,7 +442,8 @@ class _RegisterPageState extends State<RegisterPage> {
         "email": emailController.text,
         "typeOfUser": typeOfUser,
         "name": nameController.text,
-        "userid": firebaseAuth.currentUser.uid
+        "userid": firebaseAuth.currentUser.uid,
+        'matric' : matricController.text,
       };
       await crud.addUser(data);
       setState(() {
