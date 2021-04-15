@@ -508,9 +508,14 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        "NAME : " +
+                                                                        "Name : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
                                                                       ),
+                                                                       Text(
+                                                                        "Matric : " +
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['matric'],
+                                                                      ),
+
                                                                       Text(
                                                                         "Email : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]["email"],

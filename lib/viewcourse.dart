@@ -494,10 +494,16 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      "NAME : " +
+                                                                      "Name : " +
                                                                           snapshotCourse
                                                                               .data
                                                                               .listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                    ),
+                                                                    Text(
+                                                                      "Matric : " +
+                                                                          snapshotCourse
+                                                                              .data
+                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["matric"],
                                                                     ),
                                                                     Text(
                                                                       "Email : " +

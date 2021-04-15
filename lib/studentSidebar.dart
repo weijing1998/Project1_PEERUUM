@@ -89,6 +89,14 @@ class _StudentPageState extends State<StudentPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
+                            widget.users.matric,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
                             widget.users.email,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white),

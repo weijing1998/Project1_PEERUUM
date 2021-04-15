@@ -342,6 +342,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
+                                "Email :" +
+                                    widget.listofscore[index]
+                                        ["evaluateusermatric"],
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
                                 "Group :" +
                                     widget.listofscore[index]["groupname"],
                                 style: TextStyle(fontWeight: FontWeight.w500),

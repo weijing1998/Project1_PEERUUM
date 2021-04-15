@@ -495,11 +495,12 @@ class _EvaluatePageState extends State<EvaluatePage> {
                       bool validator = true;
                       int totalpoint = 0;
                       int studentpoint = 0;
-                      int maxofscale = 0;
-                      int maxofmulti = 0;
+
                       for (int i = 0;
                           i < widget.forms.listOfRubric.length;
                           i++) {
+                        int maxofscale = 0;
+                        int maxofmulti = 0;
                         if (widget.forms.listOfRubric[i]['type'] == "Scale") {
                           for (int j = 0;
                               j <
@@ -547,6 +548,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                         } else {
                           questionNanswer = [];
                           validator = false;
+                          break;
                         }
                       }
 
@@ -559,12 +561,15 @@ class _EvaluatePageState extends State<EvaluatePage> {
                           'formid': widget.forms.formID,
                           'evaluateusername': widget.evaluateUser.userName,
                           'evaluateuseremail': widget.evaluateUser.email,
+                          'evaluateusermatric': widget.evaluateUser.matric,
                           'totalpoint': totalpoint,
                           'studentpoint': studentpoint,
                           'questionNanswer': questionNanswer,
                           'currentuser': widget.currentUser.email,
                           'groupname': widget.group.groupName
                         };
+                        print(totalpoint);
+                        print(studentpoint);
 
                         provider.addScoretoList(widget.course, score);
                         successAlert(context);
@@ -600,7 +605,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -623,7 +628,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
