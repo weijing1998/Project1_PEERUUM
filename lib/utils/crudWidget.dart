@@ -1837,8 +1837,15 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
-                              provider.deleteForm(value);
-                              Navigator.pop(context);
+                              setState(() {
+                                if (value ==
+                                    "7aef73b0-9dfa-11eb-a860-13f136a35425") {
+                                  successAlert(context);
+                                } else {
+                                  provider.deleteForm(value);
+                                  Navigator.pop(context);
+                                }
+                              });
                             },
                           ),
                         ),
@@ -1852,6 +1859,29 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
         ],
       ),
     );
+  }
+
+  successAlert(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Delete unccessfully"),
+      content: Text('You cannot delete default form'),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }
 
@@ -2364,7 +2394,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                             onChanged:
                                                                 (newValue) {
                                                               setState(() {
-                                                                mapScalenumber=[];
+                                                                mapScalenumber =
+                                                                    [];
                                                                 selectedScaleNumber =
                                                                     newValue;
                                                                 for (int i = 1;
@@ -2764,7 +2795,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
             child: InkResponse(
               onTap: () {
                 Navigator.of(context).pop();
-                course=null;
+                course = null;
               },
               child: CircleAvatar(
                 radius: 15,
@@ -2940,7 +2971,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -2963,7 +2994,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -3131,10 +3162,13 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                             fontWeight: FontWeight.w700),
                       ),
                       onPressed: () {
-                        list.removeWhere(
-                            (element) => element["formid"] == value);
-                        provider.deleteFormFromCourse(widget.course, list);
-                        disableDropdown = true;
+                        setState(() {
+                          list.removeWhere(
+                              (element) => element["formid"] == value);
+                          provider.deleteFormFromCourse(widget.course, list);
+                          disableDropdown = true;
+                        });
+
                         Navigator.pop(context);
                       },
                     ),
@@ -3158,7 +3192,8 @@ class StudentChooseForm extends StatefulWidget {
       {Key key,
       @required this.course,
       @required this.evaluateUser,
-      @required this.currentUser,@required this.group})
+      @required this.currentUser,
+      @required this.group})
       : super(key: key);
 
   @override
@@ -3184,7 +3219,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
             top: -10.0,
             child: InkResponse(
               onTap: () {
-                value=null;
+                value = null;
                 Navigator.of(context).pop();
               },
               child: CircleAvatar(

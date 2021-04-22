@@ -259,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                                             Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => StudentPage(
+                                                builder: (context) => Sidebar(
                                                   users: PeerUser(
                                                       userName: 'Student',
                                                       email: "Student",
