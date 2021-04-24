@@ -207,6 +207,17 @@ class ProjectProvider with ChangeNotifier {
     }
   }
 
+  copyForm(Forms form) {
+    var newForm = Forms(
+      formName: _formName,
+      formID: uuid.v1(),
+      formCode: _formCode,
+      listOfRubric: form.listOfRubric,
+    );
+
+    firestoreservice.setForms(newForm);
+  }
+
   editForm(Forms form) {
     var newForm = Forms(
       formName: _formName,

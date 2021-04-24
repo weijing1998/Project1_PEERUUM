@@ -5,6 +5,7 @@ import 'package:pepelist/formpages.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/scorePage.dart';
+import 'package:pepelist/userPage.dart';
 import 'package:pepelist/viewScore.dart';
 import 'package:pepelist/viewcourse.dart';
 import 'package:pepelist/viewform.dart';
@@ -27,6 +28,7 @@ class _SidebarState extends State<Sidebar> {
   bool atViewForm = false;
   bool atScorePage = false;
   bool atViewScore = false;
+  bool atUserPage = false;
   int courseIndex;
   int formIndex;
   PeerUser peeruser;
@@ -70,20 +72,19 @@ class _SidebarState extends State<Sidebar> {
                                 vertical: 10, horizontal: 20),
                             child: Image.network(
                               'images/logowhite.png',
-                              scale: 1.9,
+                              scale: 2.5,
                             ),
                           ),
-                          SizedBox(width: 2),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                     CircleAvatar(
                       backgroundImage: NetworkImage('images/header.jpg'),
-                      radius: 70,
+                      radius: 60,
                     ),
                     SizedBox(
-                      height: 20,
+                      height: size.height / 25,
                     ),
                     Column(
                       children: [
@@ -107,7 +108,7 @@ class _SidebarState extends State<Sidebar> {
                     ),
 
                     SizedBox(
-                      height: 80,
+                      height: size.height / 25,
                     ),
                     //Dashboard
                     Padding(
@@ -128,7 +129,7 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               Icons.dashboard,
-                              size: 40,
+                              size: 30,
                               color: Colors.white,
                             ),
                             SizedBox(width: 26),
@@ -161,7 +162,7 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               FontAwesomeIcons.dochub,
-                              size: 40,
+                              size: 30,
                               color: Colors.white,
                             ),
                             SizedBox(width: 26),
@@ -193,7 +194,7 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               FontAwesomeIcons.sortNumericUpAlt,
-                              size: 40,
+                              size: 30,
                               color: Colors.white,
                             ),
                             SizedBox(width: 26),
@@ -211,6 +212,39 @@ class _SidebarState extends State<Sidebar> {
                       padding: const EdgeInsets.all(10.0),
                       child: TextButton(
                         onPressed: () {
+                          setState(() {
+                            atCoursePage = false;
+                            atViewCourse = false;
+                            atFormPage = false;
+                            atViewForm = false;
+                            atScorePage = false;
+                            atViewScore = false;
+                            atUserPage = true;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.user,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 26),
+                            Text(
+                              'User',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height / 15),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -221,7 +255,7 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               Icons.exit_to_app,
-                              size: 40,
+                              size: 30,
                               color: Colors.white,
                             ),
                             SizedBox(width: 26),
@@ -264,6 +298,10 @@ class _SidebarState extends State<Sidebar> {
       return ViewFormPage();
     } else if (atViewScore == true) {
       return ViewScore();
+    } else if (atUserPage == true) {
+      return UserPage(
+        user: widget.users,
+      );
     }
   }
 

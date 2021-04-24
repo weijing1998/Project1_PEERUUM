@@ -264,15 +264,16 @@ class StudentAddedCoursesPageState extends State<StudentAddedCoursesPage> {
                                                           child: MaterialButton(
                                                             color: Colors
                                                                 .blue[900],
-                                                            onPressed:
-                                                                () async {
-                                                              await provider.setCoursesId(
-                                                                  courselists[
-                                                                          index]
-                                                                      .courseID);
-                                                              widget
-                                                                  .toggleJoinCourse(
-                                                                      false);
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                provider.setCoursesId(
+                                                                    courselists[
+                                                                            index]
+                                                                        .courseID);
+                                                                widget
+                                                                    .toggleJoinCourse(
+                                                                        true);
+                                                              });
                                                             },
                                                             child: Text(
                                                               "View Couses",

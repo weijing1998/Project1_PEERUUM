@@ -190,25 +190,55 @@ class _FormPageState extends State<FormPage> {
                                             //Form Name
                                             Container(
                                               color: Colors.purple[300],
-                                              height: 50,
                                               width: double.infinity,
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 20),
-                                                  child: Text(
-                                                    " FORMS NAME : " +
-                                                        snapshot.data[index]
-                                                            .formName
-                                                            .toUpperCase(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 20),
+                                              height: 50,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 20),
+                                                    child: Text(
+                                                      " FORMS NAME : " +
+                                                          snapshot.data[index]
+                                                              .formName
+                                                              .toUpperCase(),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 20),
+                                                    ),
                                                   ),
-                                                ),
+                                                  Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20),
+                                                      child: IconButton(
+                                                        onPressed: () {
+                                                          showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder: (context) =>
+                                                                ChangeNotifierProvider(
+                                                              create: (context) =>
+                                                                  ProjectProvider(),
+                                                              child: CopyFormDialog(
+                                                                  forms: snapshot
+                                                                          .data[
+                                                                      index]),
+                                                            ),
+                                                          );
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.copy,
+                                                          color: Colors.black,
+                                                        ),
+                                                      )),
+                                                ],
                                               ),
                                             ),
                                             Container(

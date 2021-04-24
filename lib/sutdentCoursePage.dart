@@ -291,7 +291,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                             index]
                                                                         .courseID);
                                                                     showDialog(
-                                                                      barrierDismissible: false,
+                                                                        barrierDismissible:
+                                                                            false,
                                                                         context:
                                                                             context,
                                                                         builder: (context) => ChangeNotifierProvider(
@@ -305,16 +306,17 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                                   onPressed: () {
                                                                                     setState(() {
                                                                                       Navigator.of(context).pop();
-                                                                                      
                                                                                     });
                                                                                   },
                                                                                 ),
                                                                                 MaterialButton(
                                                                                   child: Text('Ok'),
-                                                                                  onPressed: () async {
-                                                                                    await provider.addStudentToCourse(snapshot.data[index], widget.user);
-                                                                                    widget.toggleJoinCourse(false);
-                                                                                    Navigator.of(context).pop();
+                                                                                  onPressed: () {
+                                                                                    setState(() {
+                                                                                      provider.addStudentToCourse(snapshot.data[index], widget.user);
+                                                                                      widget.toggleJoinCourse(true);
+                                                                                      Navigator.of(context).pop();
+                                                                                    });
                                                                                   },
                                                                                 )
                                                                               ],
@@ -377,7 +379,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -400,7 +402,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

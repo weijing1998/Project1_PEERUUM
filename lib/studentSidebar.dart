@@ -6,6 +6,7 @@ import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/studentAddedCourse.dart';
 import 'package:pepelist/sutdentCoursePage.dart';
+import 'package:pepelist/userPage.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,7 @@ class _StudentPageState extends State<StudentPage> {
   bool atStudentCoursePage = true;
   bool atJoinCourse = false;
   bool atStudentAddedCoursePage = false;
+  bool atUserpage = false;
 
   @override
   void initState() {
@@ -61,7 +63,7 @@ class _StudentPageState extends State<StudentPage> {
                                 vertical: 10, horizontal: 20),
                             child: Image.network(
                               'images/logowhite.png',
-                              scale: 1.9,
+                              scale: 2.2,
                             ),
                           ),
                           SizedBox(width: 2),
@@ -106,16 +108,16 @@ class _StudentPageState extends State<StudentPage> {
                     ),
 
                     SizedBox(
-                      height: 80,
+                      height: size.height / 14,
                     ),
                     //Dashboard
-                    MaterialButton(
-                      padding: EdgeInsets.all(16),
-                      color: Colors.transparent,
+                    TextButton(
                       onPressed: () {
                         setState(() {
                           atStudentCoursePage = true;
                           atStudentAddedCoursePage = false;
+                          atJoinCourse = false;
+                          atUserpage = false;
                         });
                       },
                       child: Row(
@@ -123,7 +125,7 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             Icons.dashboard,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
                           SizedBox(width: 26),
@@ -134,15 +136,15 @@ class _StudentPageState extends State<StudentPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 30),
                     //Form Page
-                    MaterialButton(
-                      padding: EdgeInsets.all(16),
-                      color: Colors.transparent,
+                    TextButton(
                       onPressed: () {
                         setState(() {
                           atStudentAddedCoursePage = true;
                           atStudentCoursePage = false;
+                          atJoinCourse = false;
+                          atUserpage = false;
                         });
                       },
                       child: Row(
@@ -150,7 +152,7 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             FontAwesomeIcons.dochub,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
                           SizedBox(width: 26),
@@ -161,7 +163,33 @@ class _StudentPageState extends State<StudentPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: size.height / 10),
+                    SizedBox(height: 30),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          atStudentAddedCoursePage = false;
+                          atStudentCoursePage = false;
+                          atJoinCourse = false;
+                          atUserpage = true;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.user,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 30),
+                          Text(
+                            'User Page',
+                            style: TextStyle(fontSize: 17, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: size.height / 6),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -194,21 +222,7 @@ class _StudentPageState extends State<StudentPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SizedBox(
-                      child: atStudentCoursePage
-                          ? StudentCoursesPage(
-                              toggleJoinCourse: toggleJoinCourse,
-                              user: widget.users,
-                            )
-                          : atStudentAddedCoursePage
-                              ? StudentAddedCoursesPage(
-                                  toggleJoinCourse:
-                                      toggleJoinCoursefromAddedCourses,
-                                  user: widget.users,
-                                  courselist: snapshot.data,
-                                )
-                              : JoinCourse(
-                                  user: widget.users,
-                                ),
+                      child: getPage(snapshot.data),
                     );
                   } else {
                     return Container(
@@ -226,15 +240,42 @@ class _StudentPageState extends State<StudentPage> {
     );
   }
 
+  getPage(List<Courses> data) {
+    if (atStudentCoursePage == true) {
+      return StudentCoursesPage(
+        toggleJoinCourse: toggleJoinCourse,
+        user: widget.users,
+      );
+    } else if (atStudentAddedCoursePage == true) {
+      return StudentAddedCoursesPage(
+        toggleJoinCourse: toggleJoinCoursefromAddedCourses,
+        user: widget.users,
+        courselist: data,
+      );
+    } else if (atJoinCourse == true) {
+      return JoinCourse(
+        user: widget.users,
+      );
+    } else if (atUserpage == true) {
+      return UserPage(user: widget.users);
+    }
+  }
+
   void toggleJoinCourse(bool b) {
     setState(() {
-      atStudentCoursePage = b;
+      atStudentCoursePage = false;
+      atJoinCourse = b;
+      atUserpage = false;
+      atStudentAddedCoursePage = false;
     });
   }
 
   void toggleJoinCoursefromAddedCourses(bool b) {
     setState(() {
-      atStudentAddedCoursePage = b;
+      atStudentAddedCoursePage = false;
+      atJoinCourse = b;
+      atStudentCoursePage = false;
+      atUserpage = false;
     });
   }
 }

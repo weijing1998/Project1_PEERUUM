@@ -346,6 +346,9 @@ class _ViewScoreState extends State<ViewScore> {
                                     ))),
                       ),
                     ),
+                    SizedBox(
+                      height: 50,
+                    )
                   ],
                 ),
               ),
@@ -427,7 +430,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
-                                "Email :" +
+                                "Matric No :" +
                                     widget.listofscore[index]
                                         ["evaluateusermatric"],
                                 style: TextStyle(fontWeight: FontWeight.w500),
@@ -639,13 +642,13 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
     }
 
     for (int i = 0; i < sameForm.length; i++) {
-      int totalpoint = 0;
+      int totalstudentpoint = 0;
       int divide = 0;
 
       for (int j = 0; j < sameForm.length; j++) {
         if (sameForm[i]["evaluateuseremail"] ==
             sameForm[j]["evaluateuseremail"]) {
-          totalpoint = totalpoint + sameForm[j]["studentpoint"];
+          totalstudentpoint = totalstudentpoint + sameForm[j]["studentpoint"];
           divide = divide + 1;
         }
       }
@@ -654,7 +657,9 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
         "email": sameForm[i]["evaluateuseremail"],
         "name": sameForm[i]["evaluateusername"],
         "matric": sameForm[i]["evaluateusermatric"],
-        "totalscore": totalpoint / divide,
+        "totalstudentpoint": totalstudentpoint / divide,
+        "totalpoint": sameForm[i]["totalpoint"],
+        "group": sameForm[i]["groupname"]
       };
       totalscorewithduplicate.add(map);
     }
@@ -701,31 +706,28 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            "Name :" +
-                                widget.listofscore[index]["evaluateusername"],
+                            "Name :" + totalscore[index]["name"],
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            "Email :" +
-                                widget.listofscore[index]["evaluateuseremail"],
+                            "Email :" + totalscore[index]["email"],
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            "Email :" +
-                                widget.listofscore[index]["evaluateusermatric"],
+                            "Matric :" + totalscore[index]["matric"],
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            "Group :" + widget.listofscore[index]["groupname"],
+                            "Group :" + totalscore[index]["group"],
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -741,8 +743,8 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            "Student point :" +
-                                widget.listofscore[index]["studentpoint"]
+                            "Total Student point :" +
+                                totalscore[index]["totalstudentpoint"]
                                     .toString(),
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
@@ -751,16 +753,7 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
                             "Total point :" +
-                                widget.listofscore[index]["totalpoint"]
-                                    .toString(),
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Rate By :" +
-                                widget.listofscore[index]["currentuser"],
+                                totalscore[index]["totalpoint"].toString(),
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -775,8 +768,8 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                     child: Center(
                       child: Text(
                         calculatepercentage(
-                                    widget.listofscore[index]["studentpoint"],
-                                    widget.listofscore[index]["totalpoint"])
+                                    totalscore[index]["totalstudentpoint"],
+                                    totalscore[index]["totalpoint"])
                                 .toString() +
                             "%",
                         style: TextStyle(
@@ -798,7 +791,7 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
     );
   }
 
-  double calculatepercentage(int studentpoint, int totalpoint) {
+  double calculatepercentage(double studentpoint, int totalpoint) {
     double percentage = (studentpoint / totalpoint) * 100;
     String parse = percentage.toStringAsFixed(2);
     double afterparse = double.parse(parse);
