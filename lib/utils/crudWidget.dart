@@ -404,7 +404,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "SELECTED GROUP : ",
+                                "SELECTED COURSE : ",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),

@@ -217,6 +217,10 @@ class _FormPageState extends State<FormPage> {
                                                               .symmetric(
                                                           horizontal: 20),
                                                       child: IconButton(
+                                                        tooltip: "Copy Form",
+                                                        focusColor: Colors.grey,
+                                                        hoverColor:
+                                                            Colors.grey[300],
                                                         onPressed: () {
                                                           showDialog(
                                                             barrierDismissible:
