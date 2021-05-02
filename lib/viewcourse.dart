@@ -35,7 +35,7 @@ class _ViewCourseState extends State<ViewCourse> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(150, 20, 0, 20),
+                          padding: const EdgeInsets.fromLTRB(160, 20, 0, 20),
                           child: Text(
                             "COURSE DETAIL",
                             style: TextStyle(
@@ -48,73 +48,105 @@ class _ViewCourseState extends State<ViewCourse> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 20, 20, 20),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
-                                  child: MaterialButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (context) =>
-                                              ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: EditCourseDialog(
-                                              courses: snapshotCourse.data,
-                                              resetViewPage: resetViewPage,
-                                            ),
+                                padding: const EdgeInsets.all(10.0),
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) =>
+                                            ChangeNotifierProvider(
+                                          create: (context) =>
+                                              ProjectProvider(),
+                                          child: EditCourseDialog(
+                                            courses: snapshotCourse.data,
+                                            resetViewPage: resetViewPage,
                                           ),
-                                        );
-                                      });
-                                    },
-                                    child: Text(
-                                      "Edit Course",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
+                                        ),
+                                      );
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(80.0)),
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.blue[400],
+                                            Colors.blue[800]
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                          maxWidth: 130.0, minHeight: 40.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Edit Course",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
                                     ),
-                                    color: Colors.blue[900],
                                   ),
                                 ),
                               ),
                               snapshotCourse.data.listOfForm.length == 0
                                   ? Container()
                                   : Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 20, 20, 20),
-                                      child: Container(
-                                        height: 40,
-                                        width: 120,
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (context) =>
-                                                    ChangeNotifierProvider(
-                                                  create: (context) =>
-                                                      ProjectProvider(),
-                                                  child: DeleteFormFromCourse(
-                                                    course: snapshotCourse.data,
-                                                  ),
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider(
+                                                create: (context) =>
+                                                    ProjectProvider(),
+                                                child: DeleteFormFromCourse(
+                                                  course: snapshotCourse.data,
                                                 ),
-                                              );
-                                            });
-                                          },
-                                          child: Text(
-                                            "Delete Form",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700),
+                                              ),
+                                            );
+                                          });
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(80.0)),
+                                        padding: EdgeInsets.all(0.0),
+                                        child: Ink(
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.blue[400],
+                                                  Colors.blue[800]
+                                                ],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0)),
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                                maxWidth: 130.0,
+                                                minHeight: 40.0),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Delete Form",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            ),
                                           ),
-                                          color: Colors.blue[900],
                                         ),
                                       ),
                                     ),
@@ -251,35 +283,34 @@ class _ViewCourseState extends State<ViewCourse> {
                     ),
 
                     //Group detail
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: size.width / 14,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 25),
-                            child: Text(
-                              "GROUP DETAIL",
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: size.width / 14,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 25),
+                              child: Text(
+                                "GROUP DETAIL",
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: size.width / 3.2,
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              //ADD Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
+                          SizedBox(
+                            width: size.width / 3.2,
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                //ADD Group Button
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
                                   child: MaterialButton(
                                     onPressed: () {
                                       showDialog(
@@ -294,24 +325,41 @@ class _ViewCourseState extends State<ViewCourse> {
                                                 ),
                                               ));
                                     },
-                                    child: Text(
-                                      "Add Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(80.0)),
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.blue[400],
+                                              Colors.blue[800]
+                                            ],
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: 130.0, minHeight: 40.0),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Add Group",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                        ),
+                                      ),
                                     ),
-                                    color: Colors.blue[900],
                                   ),
                                 ),
-                              ),
 
-                              // Edit Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
+                                // Edit Group Button
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
                                   child: MaterialButton(
                                     onPressed: snapshotCourse
                                                 .data.listOfGroup.length !=
@@ -331,24 +379,40 @@ class _ViewCourseState extends State<ViewCourse> {
                                                     ));
                                           }
                                         : () {},
-                                    child: Text(
-                                      "Edit Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(80.0)),
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.blue[400],
+                                              Colors.blue[800]
+                                            ],
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: 130.0, minHeight: 40.0),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Edit Group",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                        ),
+                                      ),
                                     ),
-                                    // color: Colors.blue[900],
-                                    color: Colors.blue[900],
                                   ),
                                 ),
-                              ),
-                              //Delete Group Button
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 120,
+                                //Delete Group Button
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
                                   child: MaterialButton(
                                     onPressed: snapshotCourse
                                                 .data.listOfGroup.length !=
@@ -368,21 +432,42 @@ class _ViewCourseState extends State<ViewCourse> {
                                                     ));
                                           }
                                         : () {},
-                                    child: Text(
-                                      "Delete Group",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(80.0)),
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.blue[400],
+                                              Colors.blue[800]
+                                            ],
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: 130.0, minHeight: 40.0),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Delete Group",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                        ),
+                                      ),
                                     ),
-                                    color: Colors.blue[900],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
 
                     SingleChildScrollView(

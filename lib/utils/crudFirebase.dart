@@ -23,6 +23,10 @@ class Crudmethod {
       print(e);
     });
   }
+Future setUser(PeerUser user) async {
+    return db.collection("User").doc(user.userid).set(user.toJson());
+  }
+  
 
   //Get User
   Stream<List<PeerUser>> getUser() {

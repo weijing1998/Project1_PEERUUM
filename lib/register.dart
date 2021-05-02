@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/homePage.dart';
 import 'package:pepelist/login.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/constants.dart';
 import 'package:pepelist/utils/crudFirebase.dart';
 
@@ -23,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController typeOfUserController = TextEditingController();
-    TextEditingController matricController = TextEditingController();
+  TextEditingController matricController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseStore = FirebaseFirestore.instance;
@@ -174,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                               },
                                             ),
                                             SizedBox(height: 4),
-                                             TextFormField(
+                                            TextFormField(
                                               controller: matricController,
                                               decoration: InputDecoration(
                                                 hintText: 'Matric Number',
@@ -436,16 +437,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
   signup(String email, String password, String name) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-      Map<String, dynamic> data = {
-        "email": emailController.text,
-        "typeOfUser": typeOfUser,
-        "name": nameController.text,
-        "userid": firebaseAuth.currentUser.uid,
-        'matric' : matricController.text,
-      };
-      await crud.addUser(data);
+      UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+
+      PeerUser datas = PeerUser(
+          email: emailController.text,
+          matric: matricController.text,
+          typeOfUser: typeOfUser,
+          userName: nameController.text,
+          userid: firebaseAuth.currentUser.uid);
+          
+      await crud.setUser(datas);
+
+      await userCredential.user.sendEmailVerification();
+
       setState(() {
         submitting = false;
       });
@@ -472,7 +478,7 @@ class _RegisterPageState extends State<RegisterPage> {
   showAlertDialogEmail(BuildContext _context) {
     // set up the button
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -492,7 +498,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   showAlertDialogPass(BuildContext _context) {
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -512,12 +518,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   showAlertDialogSuccess(BuildContext _context) {
     return showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text("Register Succesful"),
-            content: Text("Welcome to Peer UUM"),
+            content: Text(
+                "The email verification has been sent, Welcome to Peer UUM"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

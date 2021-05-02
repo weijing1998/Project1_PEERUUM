@@ -493,5 +493,9 @@ class ProjectProvider with ChangeNotifier {
   }
 
   ///////////////////////////////////////(Rubric)
+  ///////////////////////////////////////(User)
 
+  editUserName(PeerUser user, String name) {}
+  editUserPassword(PeerUser user, String password) {}
+  editUserMatric(PeerUser user, String matric) {}
 }

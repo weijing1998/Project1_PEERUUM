@@ -558,38 +558,43 @@ class _ScoreWidgetState extends State<ScoreWidget> {
     Size size = MediaQuery.of(context).size;
     var alert = AlertDialog(
       title: Text("Student Comment"),
-      content: Container(
-        width: size.width / 3,
-        height: size.height / 3,
-        child: ListView.builder(
-            itemCount: questionNanswer.length,
-            itemBuilder: (context, index) {
-              return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        child: Text("Question " +
-                            (index + 1).toString() +
-                            " : " +
-                            questionNanswer[index]["questions"]),
-                      ),
+      content: SingleChildScrollView(
+              child: Container(
+          width: size.width / 3,
+          height: size.height / 3,
+          child: ListView.builder(
+              itemCount: questionNanswer.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            child: Text("Question " +
+                                (index + 1).toString() +
+                                " : " +
+                                questionNanswer[index]["questions"]),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            child:
+                                Text("Answer: " + questionNanswer[index]["answer"]),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        child:
-                            Text("Answer: " + questionNanswer[index]["answer"]),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                );
+              }),
+        ),
       ),
       actions: [
         Padding(

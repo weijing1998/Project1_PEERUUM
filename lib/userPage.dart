@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/peerUser.dart';
+import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +63,17 @@ class _UserPageState extends State<UserPage> {
                                 fontSize: 17, fontWeight: FontWeight.w500),
                           ),
                         ),
+                        widget.user.typeOfUser == "Student"
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                   widget.user.matric,
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              )
+                            : SizedBox(),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -105,7 +117,19 @@ class _UserPageState extends State<UserPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 2),
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                            create: (context) =>
+                                                ProjectProvider(),
+                                            child: EditUserName(
+                                              user: widget.user,
+                                            ),
+                                          ));
+                                },
                                 icon: Icon(
                                   Icons.edit,
                                   color: Colors.blue,
@@ -160,7 +184,19 @@ class _UserPageState extends State<UserPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 2),
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                            create: (context) =>
+                                                ProjectProvider(),
+                                            child: EditUserPassword(
+                                              user: widget.user,
+                                            ),
+                                          ));
+                                },
                                 icon: Icon(
                                   Icons.edit,
                                   color: Colors.blue,
@@ -218,7 +254,19 @@ class _UserPageState extends State<UserPage> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 2),
                                     child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) =>
+                                                ChangeNotifierProvider(
+                                                  create: (context) =>
+                                                      ProjectProvider(),
+                                                  child: EditUserMatric(
+                                                    user: widget.user,
+                                                  ),
+                                                ));
+                                      },
                                       icon: Icon(
                                         Icons.edit,
                                         color: Colors.blue,

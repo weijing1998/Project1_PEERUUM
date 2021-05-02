@@ -1780,7 +1780,7 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
@@ -3601,6 +3601,559 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                   ],
                 )
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EditUserName extends StatefulWidget {
+  final PeerUser user;
+  EditUserName({Key key, @required this.user}) : super(key: key);
+
+  @override
+  _EditUserNameState createState() => _EditUserNameState();
+}
+
+class _EditUserNameState extends State<EditUserName> {
+  TextEditingController userName = TextEditingController();
+  String initcn;
+  @override
+  Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
+    Size size = MediaQuery.of(context).size;
+    var _formskey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 2.5,
+            width: size.width / 2,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "EDIT NAME",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 12,
+                  ),
+                  //Add course name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "USER NAME : ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 4,
+                            child: TextFormField(
+                              controller: userName,
+                              initialValue: initcn,
+                              onChanged: (userName) => initcn = userName,
+                              decoration: new InputDecoration(
+                                labelText: "User Name",
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Icon(Icons.book),
+                                ),
+                                fillColor: Colors.white,
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "User Name cannot be empty";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Add Course ID
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () async {
+                              if (_formskey.currentState.validate()) {
+                                projectProvider.editUserName(
+                                    widget.user, initcn);
+                                Navigator.pop(context);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EditUserPassword extends StatefulWidget {
+  final PeerUser user;
+  EditUserPassword({Key key, @required this.user}) : super(key: key);
+
+  @override
+  _EditUserPasswordState createState() => _EditUserPasswordState();
+}
+
+class _EditUserPasswordState extends State<EditUserPassword> {
+  TextEditingController userPassword = TextEditingController();
+  TextEditingController confirmUserPassword = TextEditingController();
+  String temp;
+  String temp1;
+  @override
+  Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
+    Size size = MediaQuery.of(context).size;
+    var _formskey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 2.3,
+            width: size.width / 2,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "EDIT PASSWORD",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 12,
+                  ),
+                  //Add course name
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(55, 0, 0, 0),
+                              child: Text(
+                                "USER PASSWORD : ",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                width: size.width / 4,
+                                child: TextFormField(
+                                  controller: userPassword,
+                                  initialValue: temp,
+                                  onChanged: (userPassword) =>
+                                      temp = userPassword,
+                                  decoration: new InputDecoration(
+                                    labelText: "User Password",
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Icon(Icons.book),
+                                    ),
+                                    fillColor: Colors.white,
+                                    border: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(5.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                  ),
+                                  validator: (val) {
+                                    if (val.isEmpty) {
+                                      return "User Password cannot be empty";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "CONFIRM USER PASSWORD : ",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                width: size.width / 4,
+                                child: TextFormField(
+                                  controller: confirmUserPassword,
+                                  initialValue: temp1,
+                                  onChanged: (userPassword) =>
+                                      temp1 = userPassword,
+                                  decoration: new InputDecoration(
+                                    labelText: "Confirm User Password",
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Icon(Icons.book),
+                                    ),
+                                    fillColor: Colors.white,
+                                    border: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(5.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                  ),
+                                  validator: (val) {
+                                    if (val.isEmpty ||
+                                        val != userPassword.text) {
+                                      return "Wrong password";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  //Add Course ID
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () async {
+                              if (_formskey.currentState.validate()) {
+                                projectProvider.editUserPassword(widget.user, temp);
+                                Navigator.pop(context);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EditUserMatric extends StatefulWidget {
+  final PeerUser user;
+  EditUserMatric({Key key, @required this.user}) : super(key: key);
+
+  @override
+  _EditUserMatricState createState() => _EditUserMatricState();
+}
+
+class _EditUserMatricState extends State<EditUserMatric> {
+  TextEditingController userMatric = TextEditingController();
+  String initcn;
+  @override
+  Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
+    Size size = MediaQuery.of(context).size;
+    var _formskey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 2.5,
+            width: size.width / 2,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "EDIT MATRIC",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 12,
+                  ),
+                  //Add course name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "USER MATRIC : ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 4,
+                            child: TextFormField(
+                              controller: userMatric,
+                              initialValue: initcn,
+                              onChanged: (userMatric) => initcn = userMatric,
+                              decoration: new InputDecoration(
+                                labelText: "User Matric",
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Icon(Icons.book),
+                                ),
+                                fillColor: Colors.white,
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "User Matric cannot be empty";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Add Course ID
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () async {
+                              if (_formskey.currentState.validate()) {
+                                projectProvider.editUserMatric(
+                                    widget.user, initcn);
+                                Navigator.pop(context);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ],

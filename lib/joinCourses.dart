@@ -443,42 +443,68 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                   Colors.red,
                                                               onTap: () {
                                                                 setState(() {
-                                                                  if (snapshotCourse
+                                                                  bool
+                                                                      checkjoinedgroup =
+                                                                      false;
+
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          snapshotCourse
                                                                               .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]
-                                                                          [
-                                                                          "email"] ==
-                                                                      widget
-                                                                          .user
-                                                                          .email) {
-                                                                    selfEvaluateAlert(
-                                                                        context);
-                                                                  } else {
-                                                                    showDialog(
-                                                                      barrierDismissible: false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) =>
-                                                                              ChangeNotifierProvider(
-                                                                        create: (context) =>
-                                                                            ProjectProvider(),
-                                                                        child:
-                                                                            StudentChooseForm(
-                                                                          currentUser:
-                                                                              widget.user,
-                                                                          course:
-                                                                              snapshotCourse.data,
-                                                                          evaluateUser:
-                                                                              PeerUser.fromJson(
-                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent],
+                                                                              .listOfGroup[index]["listofstudent"]
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (snapshotCourse.data.listOfGroup[index]["listofstudent"][i]
+                                                                            [
+                                                                            "email"] ==
+                                                                        widget
+                                                                            .user
+                                                                            .email) {
+                                                                      checkjoinedgroup =
+                                                                          true;
+                                                                    }
+                                                                  }
+
+                                                                  if (checkjoinedgroup ==
+                                                                      true) {
+                                                                    if (snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]
+                                                                            [
+                                                                            "email"] ==
+                                                                        widget
+                                                                            .user
+                                                                            .email) {
+                                                                      selfEvaluateAlert(
+                                                                          context);
+                                                                    } else {
+                                                                      showDialog(
+                                                                        barrierDismissible:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) =>
+                                                                                ChangeNotifierProvider(
+                                                                          create: (context) =>
+                                                                              ProjectProvider(),
+                                                                          child:
+                                                                              StudentChooseForm(
+                                                                            currentUser:
+                                                                                widget.user,
+                                                                            course:
+                                                                                snapshotCourse.data,
+                                                                            evaluateUser:
+                                                                                PeerUser.fromJson(
+                                                                              snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent],
+                                                                            ),
+                                                                            group:
+                                                                                Group.fromJson(snapshotCourse.data.listOfGroup[index]),
                                                                           ),
-                                                                          group: Group.fromJson(snapshotCourse
-                                                                              .data
-                                                                              .listOfGroup[index]),
                                                                         ),
-                                                                      ),
-                                                                    );
+                                                                      );
+                                                                    }
+                                                                  } else {
+                                                                    joinGroupAlert(context);
                                                                   }
                                                                 });
                                                               },
@@ -511,11 +537,10 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         "Name : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
                                                                       ),
-                                                                       Text(
+                                                                      Text(
                                                                         "Matric : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['matric'],
                                                                       ),
-
                                                                       Text(
                                                                         "Email : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
@@ -582,7 +607,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -603,7 +628,28 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  joinGroupAlert(BuildContext context) {
+    var alert = AlertDialog(
+      content: Text("You need to join the group to start the evaluation"),
+      actions: [
+        MaterialButton(
+          child: Text('Ok'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -624,7 +670,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -645,7 +691,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;
@@ -666,7 +712,7 @@ class _JoinCourseState extends State<JoinCourse> {
     );
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return alert;

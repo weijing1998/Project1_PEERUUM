@@ -4,8 +4,15 @@ class PeerUser {
   String password;
   String typeOfUser;
   String matric;
+  String userid;
 
-  PeerUser({this.userName, this.email, this.password, this.typeOfUser,this.matric});
+  PeerUser(
+      {this.userName,
+      this.email,
+      this.password,
+      this.typeOfUser,
+      this.matric,
+      this.userid});
 
   factory PeerUser.fromJson(Map<String, dynamic> json) {
     return PeerUser(
@@ -13,6 +20,7 @@ class PeerUser {
       email: json["email"],
       typeOfUser: json["typeOfUser"],
       matric: json['matric'],
+      userid: json['userid']
     );
   }
 
@@ -22,6 +30,7 @@ class PeerUser {
       "typeOfUser": typeOfUser,
       "name": userName,
       'matric': matric,
+      'userid' : userid
     };
   }
 }

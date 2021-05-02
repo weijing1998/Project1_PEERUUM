@@ -259,7 +259,8 @@ class _LoginPageState extends State<LoginPage> {
                                             Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => Sidebar(
+                                                builder: (context) =>
+                                                    Sidebar(
                                                   users: PeerUser(
                                                       userName: 'Student2',
                                                       email: "Student2",
@@ -361,37 +362,46 @@ class _LoginPageState extends State<LoginPage> {
 
   signIn(String email, String password) async {
     PeerUser user;
-    try {
-      await firebaseAuth.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
 
-      await firebaseStore.get().then((value) => value.docs.forEach((element) {
-            if (element.data()["email"] == emailController.text &&
-                element.data()["typeOfUser"] == typeOfUser) {
-              identify = true;
-              user = PeerUser.fromJson(element.data());
-            }
-          }));
-      if (identify == true && typeOfUser == "Lecturer") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Sidebar(
-                    users: user,
-                  )),
-        );
-      } else if (identify == true && typeOfUser == "Student") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StudentPage(users: user),
-          ),
-        );
+    try {
+      UserCredential userCredential =
+          await firebaseAuth.signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+
+      if (userCredential.user.emailVerified == true) {
+        await firebaseStore.get().then((value) => value.docs.forEach((element) {
+              if (element.data()["email"] == emailController.text &&
+                  element.data()["typeOfUser"] == typeOfUser) {
+                identify = true;
+                user = PeerUser.fromJson(element.data());
+              }
+            }));
+        if (identify == true && typeOfUser == "Lecturer") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Sidebar(
+                      users: user,
+                    )),
+          );
+        } else if (identify == true && typeOfUser == "Student") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StudentPage(users: user),
+            ),
+          );
+        } else {
+          setState(() {
+            submitting = false;
+          });
+          showAlertDialogType(context);
+        }
       } else {
-        setState(() {
+        showAlertDialogVerify(context);
+         setState(() {
           submitting = false;
         });
-        showAlertDialogType(context);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -421,6 +431,27 @@ class _LoginPageState extends State<LoginPage> {
           return AlertDialog(
             title: Text("Sign In Unsuccesful"),
             content: Text("This email is not registered."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
+  }
+
+  showAlertDialogVerify(BuildContext _context) {
+    // set up the button
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Sign In Unsuccesful"),
+            content: Text("This email is not verify yet."),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
