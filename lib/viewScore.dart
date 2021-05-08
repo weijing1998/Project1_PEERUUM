@@ -52,10 +52,14 @@ class _ViewScoreState extends State<ViewScore> {
                     Container(
                       height: size.height / 3,
                       width: size.width / 1.5,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.blueAccent, width: 2),
-                          color: Colors.grey[300]),
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.green[400].withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ], color: Colors.grey[200]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -65,7 +69,7 @@ class _ViewScoreState extends State<ViewScore> {
                             child: Text(
                               "COURSE NAME : " + snapshotCourse.data.courseName,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -73,7 +77,7 @@ class _ViewScoreState extends State<ViewScore> {
                             child: Text(
                               "COURSE CODE : " + snapshotCourse.data.courseCode,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -82,7 +86,7 @@ class _ViewScoreState extends State<ViewScore> {
                               "COURSE GROUP : " +
                                   snapshotCourse.data.courseGroup,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -91,7 +95,7 @@ class _ViewScoreState extends State<ViewScore> {
                               "COURSE BATCH : " +
                                   snapshotCourse.data.courseBatch,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -102,14 +106,24 @@ class _ViewScoreState extends State<ViewScore> {
                                   "FORM STATUS : ",
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 snapshotCourse.data.listOfForm.length == 0
                                     ? Container(
                                         height: size.height / 20,
                                         width: size.width / 15,
                                         decoration: BoxDecoration(
-                                            color: Colors.red[700],
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topRight,
+                                              end: Alignment.bottomLeft,
+                                              stops: [0.1, 0.5, 0.7, 0.9],
+                                              colors: [
+                                                Colors.red[600],
+                                                Colors.red[500],
+                                                Colors.red[400],
+                                                Colors.red[300],
+                                              ],
+                                            ),
                                             border: Border.all(
                                                 width: 3,
                                                 color: Colors.grey[600])),
@@ -139,8 +153,25 @@ class _ViewScoreState extends State<ViewScore> {
                                                     height: size.height / 20,
                                                     width: size.width / 15,
                                                     decoration: BoxDecoration(
-                                                        color:
+                                                        gradient:
+                                                            LinearGradient(
+                                                          begin: Alignment
+                                                              .topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
+                                                          stops: [
+                                                            0.1,
+                                                            0.5,
+                                                            0.7,
+                                                            0.9
+                                                          ],
+                                                          colors: [
+                                                            Colors.green[600],
+                                                            Colors.green[500],
                                                             Colors.green[400],
+                                                            Colors.green[300],
+                                                          ],
+                                                        ),
                                                         border: Border.all(
                                                             width: 3,
                                                             color: Colors
@@ -188,6 +219,7 @@ class _ViewScoreState extends State<ViewScore> {
 
                     SingleChildScrollView(
                       child: Container(
+                        height: size.height / 1.35,
                         width: size.width / 1.5,
                         color: Colors.grey[300],
                         child: snapshotCourse.data.listOfForm.length != 0 &&
@@ -202,13 +234,23 @@ class _ViewScoreState extends State<ViewScore> {
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
                                         width: double.infinity,
-                                        color: Colors.teal[200],
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              Colors.teal[300],
+                                              Colors.blue[300],
+                                            ],
+                                          ),
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              color: Colors.teal[600],
+                                              color:
+                                                  Colors.black.withOpacity(0.3),
                                               width: double.infinity,
                                               child: Padding(
                                                 padding:
@@ -276,6 +318,7 @@ class _ViewScoreState extends State<ViewScore> {
 
                     SingleChildScrollView(
                       child: Container(
+                        height: size.height / 1.35,
                         width: size.width / 1.5,
                         color: Colors.grey[300],
                         child: snapshotCourse.data.listOfForm.length != 0 &&
@@ -290,13 +333,23 @@ class _ViewScoreState extends State<ViewScore> {
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
                                         width: double.infinity,
-                                        color: Colors.teal[200],
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              Colors.yellow[100],
+                                              Colors.teal[300],
+                                            ],
+                                          ),
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              color: Colors.teal[600],
+                                              color:
+                                                  Colors.black.withOpacity(0.3),
                                               width: double.infinity,
                                               child: Padding(
                                                 padding:
@@ -387,7 +440,10 @@ class _ScoreWidgetState extends State<ScoreWidget> {
           padding: const EdgeInsets.all(12.0),
           child: widget.listofscore[index]["formid"] == widget.form.formID
               ? Container(
-                  color: Colors.white54,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   height: size.height / 6,
                   width: double.infinity,
                   child: Row(
@@ -395,149 +451,176 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                       SizedBox(
                         width: size.width / 25,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage('images/header.jpg'),
-                          radius: 45,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Name :" +
-                                    widget.listofscore[index]
-                                        ["evaluateusername"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                      Container(
+                          width: size.width / 2.2,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage('images/header.jpg'),
+                                  radius: 45,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Email :" +
-                                    widget.listofscore[index]
-                                        ["evaluateuseremail"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 10),
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Name :" +
+                                              widget.listofscore[index]
+                                                  ["evaluateusername"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Email :" +
+                                              widget.listofscore[index]
+                                                  ["evaluateuseremail"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Matric No :" +
+                                              widget.listofscore[index]
+                                                  ["evaluateusermatric"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Group :" +
+                                              widget.listofscore[index]
+                                                  ["groupname"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Matric No :" +
-                                    widget.listofscore[index]
-                                        ["evaluateusermatric"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Group :" +
-                                    widget.listofscore[index]["groupname"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Student point :" +
-                                    widget.listofscore[index]["studentpoint"]
-                                        .toString(),
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Total point :" +
-                                    widget.listofscore[index]["totalpoint"]
-                                        .toString(),
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Rate By :" +
-                                    widget.listofscore[index]["currentuser"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: size.width / 18,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Text(
-                            calculatepercentage(
-                                        widget.listofscore[index]
-                                            ["studentpoint"],
-                                        widget.listofscore[index]["totalpoint"])
-                                    .toString() +
-                                "%",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.blue,
-                              fontFamily: "Dela Gothic One",
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: size.width / 13,
-                      ),
-                      widget.listofscore[index]["questionNanswer"].length != 0
-                          ? Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    studentComment(
-                                        context,
-                                        widget.listofscore[index]
-                                            ['questionNanswer']);
-                                  });
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(
-                                      Icons.comment,
-                                      size: 27,
-                                      color: Colors.blue,
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "Student point :" +
+                                            widget.listofscore[index]
+                                                    ["studentpoint"]
+                                                .toStringAsFixed(2),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      'Comment',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.blue),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "Total point :" +
+                                            widget.listofscore[index]
+                                                    ["totalpoint"]
+                                                .toStringAsFixed(2),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "Rate By :" +
+                                            widget.listofscore[index]
+                                                ["currentuser"],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            )
-                          : Container(),
+                            ],
+                          ),
+                        ),
+                      
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                calculatepercentage(
+                                            widget.listofscore[index]
+                                                ["studentpoint"],
+                                            widget.listofscore[index]
+                                                ["totalpoint"])
+                                        .toStringAsFixed(2) +
+                                    "%",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.blue,
+                                  fontFamily: "Dela Gothic One",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          widget.listofscore[index]["questionNanswer"].length !=
+                                  0
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 20),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        studentComment(
+                                            context,
+                                            widget.listofscore[index]
+                                                ['questionNanswer']);
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.comment,
+                                          size: 27,
+                                          color: Colors.blue,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Comment',
+                                          style: TextStyle(
+                                              fontSize: 18, color: Colors.blue),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ],
                   ),
                 )
@@ -559,7 +642,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
     var alert = AlertDialog(
       title: Text("Student Comment"),
       content: SingleChildScrollView(
-              child: Container(
+        child: Container(
           width: size.width / 3,
           height: size.height / 3,
           child: ListView.builder(
@@ -568,8 +651,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -585,8 +668,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Container(
-                            child:
-                                Text("Answer: " + questionNanswer[index]["answer"]),
+                            child: Text(
+                                "Answer: " + questionNanswer[index]["answer"]),
                           ),
                         ),
                       ],
@@ -694,79 +777,84 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                   SizedBox(
                     width: size.width / 25,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage('images/header.jpg'),
-                      radius: 45,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Container(
+                    width: size.width / 2.3,
+                    child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Name :" + totalscore[index]["name"],
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                          padding: const EdgeInsets.all(15.0),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage('images/header.jpg'),
+                            radius: 45,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Email :" + totalscore[index]["email"],
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Name :" + totalscore[index]["name"],
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Email :" + totalscore[index]["email"],
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Matric :" + totalscore[index]["matric"],
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Group :" + totalscore[index]["group"],
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Matric :" + totalscore[index]["matric"],
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Group :" + totalscore[index]["group"],
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Total Student point :" +
+                                      totalscore[index]["totalstudentpoint"]
+                                          .toStringAsFixed(2),
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Total point :" +
+                                      totalscore[index]["totalpoint"]
+                                          .toStringAsFixed(2),
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Total Student point :" +
-                                totalscore[index]["totalstudentpoint"]
-                                    .toString(),
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Total point :" +
-                                totalscore[index]["totalpoint"].toString(),
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: size.width / 18,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -775,7 +863,7 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         calculatepercentage(
                                     totalscore[index]["totalstudentpoint"],
                                     totalscore[index]["totalpoint"])
-                                .toString() +
+                                .toStringAsFixed(2) +
                             "%",
                         style: TextStyle(
                           fontSize: 25,
@@ -785,9 +873,6 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: size.width / 13,
                   ),
                 ],
               ),

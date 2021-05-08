@@ -10,6 +10,7 @@ import 'package:pepelist/sidebar.dart';
 import 'package:pepelist/studentSidebar.dart';
 
 import 'package:pepelist/utils/constants.dart';
+import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -256,28 +257,28 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               submitting = true;
                                             });
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Sidebar(
-                                                  users: PeerUser(
-                                                      userName: 'Student2',
-                                                      email: "Student2",
-                                                      typeOfUser: "Student",
-                                                      matric: '261482'),
-                                                ),
-                                              ),
-                                            );
+                                            // Navigator.pushReplacement(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //         Sidebar(
+                                            //       users: PeerUser(
+                                            //           userName: 'asd',
+                                            //           email: "asd",
+                                            //           typeOfUser: "Student",
+                                            //           matric: '261505'),
+                                            //     ),
+                                            //   ),
+                                            // );
 
-                                            // await signIn(emailController.text,
-                                            //     passwordController.text);
+                                            await signIn(emailController.text,
+                                                passwordController.text);
                                           },
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 80, 0, 0),
+                                            0, 50, 0, 0),
                                         child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Row(
@@ -303,6 +304,37 @@ class _LoginPageState extends State<LoginPage> {
                                                       },
                                                       child: Text(
                                                         "Sign Up",
+                                                        style: TextStyle(
+                                                            color: Colors.blue),
+                                                      )),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
+                                        child: Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 30,
+                                                ),
+                                                Container(
+                                                  height: 20,
+                                                  width: 150,
+                                                  child: MaterialButton(
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) =>
+                                                                ChangeUserPassword());
+                                                      },
+                                                      child: Text(
+                                                        "Forgot Password?",
                                                         style: TextStyle(
                                                             color: Colors.blue),
                                                       )),
@@ -399,7 +431,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } else {
         showAlertDialogVerify(context);
-         setState(() {
+        setState(() {
           submitting = false;
         });
       }

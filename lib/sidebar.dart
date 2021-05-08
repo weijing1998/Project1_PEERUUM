@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/coursespage.dart';
@@ -20,7 +21,7 @@ class Sidebar extends StatefulWidget {
   @override
   _SidebarState createState() => _SidebarState();
 }
-
+ final firebaseAuth = FirebaseAuth.instance;
 class _SidebarState extends State<Sidebar> {
   bool atCoursePage = true;
   bool atFormPage = false;
@@ -245,6 +246,7 @@ class _SidebarState extends State<Sidebar> {
                       padding: const EdgeInsets.all(10.0),
                       child: TextButton(
                         onPressed: () {
+                          firebaseAuth.signOut();
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

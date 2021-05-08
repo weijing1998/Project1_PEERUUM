@@ -53,36 +53,51 @@ class _ViewFormPageState extends State<ViewFormPage> {
                             ),
 
                             //Edit Form Button
+
                             Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(0, 20, 180, 20),
-                              child: Container(
-                                height: 40,
-                                width: 120,
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) =>
-                                            ChangeNotifierProvider(
-                                          create: (context) =>
-                                              ProjectProvider(),
-                                          child: EditFormDialog(
-                                              forms: snapshot.data),
-                                        ),
-                                      );
-                                    });
-                                  },
-                                  child: Text(
-                                    "Edit Form",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
+                                  const EdgeInsets.symmetric(horizontal: 160),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                        create: (context) => ProjectProvider(),
+                                        child: EditFormDialog(
+                                            forms: snapshot.data),
+                                      ),
+                                    );
+                                  });
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(80.0)),
+                                padding: EdgeInsets.all(0.0),
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.purple[400],
+                                          Colors.purple[800]
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                        maxWidth: 130.0, minHeight: 40.0),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Edit Form",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
                                   ),
-                                  color: Colors.purple[800],
                                 ),
                               ),
                             ),
@@ -92,10 +107,15 @@ class _ViewFormPageState extends State<ViewFormPage> {
                         Container(
                           height: size.height / 3,
                           width: size.width / 1.5,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.purpleAccent, width: 2),
-                              color: Colors.grey[300]),
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.purple[200].withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ], color: Colors.grey[200]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,7 +126,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   "FORM NAME : " + snapshot.data.formName,
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Padding(
@@ -115,7 +135,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   "FORM CODE : " + snapshot.data.formCode,
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Padding(
@@ -126,7 +146,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                           .toString(),
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ],
@@ -159,35 +179,54 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                 child: Row(
                                   children: [
                                     //ADD Rubric Button
+
                                     Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 120,
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (context) =>
-                                                    ChangeNotifierProvider(
-                                                  create: (context) =>
-                                                      ProjectProvider(),
-                                                  child: AddRubricDialog(
-                                                      forms: snapshot.data),
-                                                ),
-                                              );
-                                            });
-                                          },
-                                          child: Text(
-                                            "Add Rubric",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700),
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider(
+                                                create: (context) =>
+                                                    ProjectProvider(),
+                                                child: AddRubricDialog(
+                                                    forms: snapshot.data),
+                                              ),
+                                            );
+                                          });
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(80.0)),
+                                        padding: EdgeInsets.all(0.0),
+                                        child: Ink(
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.purple[400],
+                                                  Colors.purple[800]
+                                                ],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0)),
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                                maxWidth: 130.0,
+                                                minHeight: 40.0),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Add Rubric",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            ),
                                           ),
-                                          color: Colors.purple[800],
                                         ),
                                       ),
                                     ),
@@ -293,7 +332,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         ['bad'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            20,
+                                                                            15,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -320,7 +359,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         'good'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            20,
+                                                                            15,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -762,7 +801,11 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                           ),
                         ),
                       ),
-                      Text(e["option"].toString()),
+                      Flexible(
+                        child: Text(
+                          e["option"].toString(),
+                        ),
+                      ),
                     ],
                   ),
                 ))

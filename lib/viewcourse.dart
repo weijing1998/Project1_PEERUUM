@@ -157,125 +157,164 @@ class _ViewCourseState extends State<ViewCourse> {
                       ],
                     ),
                     //Course detail
-                    Container(
-                      height: size.height / 3,
-                      width: size.width / 1.5,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.blueAccent, width: 2),
-                          color: Colors.grey[300]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "COURSE NAME : " + snapshotCourse.data.courseName,
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
-                            ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        height: size.height / 3,
+                        width: size.width / 1.5,
+                        decoration: BoxDecoration(boxShadow: [
+                          BoxShadow(
+                            color: Colors.blue[200].withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "COURSE CODE : " + snapshotCourse.data.courseCode,
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                        ], color: Colors.grey[200]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "COURSE NAME : " +
+                                    snapshotCourse.data.courseName,
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "COURSE GROUP : " +
-                                  snapshotCourse.data.courseGroup,
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "COURSE CODE : " +
+                                    snapshotCourse.data.courseCode,
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "COURSE BATCH : " +
-                                  snapshotCourse.data.courseBatch,
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "COURSE GROUP : " +
+                                    snapshotCourse.data.courseGroup,
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "FORM STATUS : ",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                snapshotCourse.data.listOfForm.length == 0
-                                    ? Container(
-                                        height: size.height / 20,
-                                        width: size.width / 15,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red[700],
-                                            border: Border.all(
-                                                width: 3,
-                                                color: Colors.grey[600])),
-                                        child: Align(
-                                          child: Text(
-                                            "No Form Apply",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w200),
-                                          ),
-                                        ),
-                                        alignment: Alignment.center,
-                                      )
-                                    : SingleChildScrollView(
-                                        child: Container(
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "COURSE BATCH : " +
+                                    snapshotCourse.data.courseBatch,
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "FORM STATUS : ",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  snapshotCourse.data.listOfForm.length == 0
+                                      ? Container(
                                           height: size.height / 20,
-                                          width: size.width / 2,
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: snapshotCourse
-                                                  .data.listOfForm.length,
-                                              itemBuilder: (BuildContext ctxt,
-                                                  int index) {
-                                                return Card(
-                                                  child: Container(
-                                                    height: size.height / 20,
-                                                    width: size.width / 15,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.green[400],
-                                                        border: Border.all(
-                                                            width: 3,
-                                                            color: Colors
-                                                                .grey[600])),
-                                                    child: Align(
-                                                      child: Text(
-                                                        snapshotCourse.data
-                                                                .listOfForm[
-                                                            index]["formname"],
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w200),
+                                          width: size.width / 15,
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft,
+                                                stops: [0.1, 0.5, 0.7, 0.9],
+                                                colors: [
+                                                  Colors.red[600],
+                                                  Colors.red[500],
+                                                  Colors.red[400],
+                                                  Colors.red[300],
+                                                ],
+                                              ),
+                                              border: Border.all(
+                                                  width: 1.5,
+                                                  color: Colors.grey[600])),
+                                          child: Align(
+                                            child: Text(
+                                              "No Form Apply",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w200),
+                                            ),
+                                          ),
+                                          alignment: Alignment.center,
+                                        )
+                                      : SingleChildScrollView(
+                                          child: Container(
+                                            height: size.height / 20,
+                                            width: size.width / 2,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount: snapshotCourse
+                                                    .data.listOfForm.length,
+                                                itemBuilder: (BuildContext ctxt,
+                                                    int index) {
+                                                  return Card(
+                                                    child: Container(
+                                                      height: size.height / 20,
+                                                      width: size.width / 15,
+                                                      decoration: BoxDecoration(
+                                                          gradient:
+                                                              LinearGradient(
+                                                            begin: Alignment
+                                                                .topRight,
+                                                            end: Alignment
+                                                                .bottomLeft,
+                                                            stops: [
+                                                              0.1,
+                                                              0.5,
+                                                              0.7,
+                                                              0.9
+                                                            ],
+                                                            colors: [
+                                                              Colors.green[600],
+                                                              Colors.green[500],
+                                                              Colors.green[400],
+                                                              Colors.green[300],
+                                                            ],
+                                                          ),
+                                                          border: Border.all(
+                                                              width: 1.5,
+                                                              color: Colors
+                                                                  .grey[600])),
+                                                      child: Align(
+                                                        child: Text(
+                                                          snapshotCourse.data
+                                                                  .listOfForm[
+                                                              index]["formname"],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w200),
+                                                        ),
                                                       ),
+                                                      alignment:
+                                                          Alignment.center,
                                                     ),
-                                                    alignment: Alignment.center,
-                                                  ),
-                                                );
-                                              }),
-                                        ),
-                                      )
-                              ],
+                                                  );
+                                                }),
+                                          ),
+                                        )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -485,47 +524,66 @@ class _ViewCourseState extends State<ViewCourse> {
                                     child: Padding(
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.blue[50],
+                                              Colors.blue[100],
+                                              Colors.blue[200],
+                                              Colors.blue[400]
+                                            ],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          ),
+                                        ),
                                         height: 600,
                                         width: double.infinity,
-                                        color: Colors.blueGrey[500],
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              height: 60,
-                                              width: double.infinity,
-                                              color: Colors.blueGrey[800],
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  snapshotCourse
-                                                      .data
-                                                      .listOfGroup[index]
-                                                          ["groupname"]
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 8),
+                                              child: Container(
+                                                height: 60,
+                                                width: double.infinity,
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Group Name: " +
+                                                        snapshotCourse
+                                                            .data
+                                                            .listOfGroup[index]
+                                                                ["groupname"]
+                                                            .toUpperCase(),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(18.0),
+                                                  const EdgeInsets.fromLTRB(
+                                                      18, 0, 18, 18),
                                               child: Text(
-                                                "STUDENT INFO IN " +
+                                                "Student information in " +
                                                     snapshotCourse
                                                         .data
                                                         .listOfGroup[index]
                                                             ["groupname"]
                                                         .toUpperCase(),
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: FontWeight.w300,
                                                 ),
                                               ),
                                             ),
@@ -556,8 +614,40 @@ class _ViewCourseState extends State<ViewCourse> {
                                                               indexOfStudent) {
                                                             return Card(
                                                               child: Container(
-                                                                color: Colors
-                                                                    .teal[200],
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      100],
+                                                                  borderRadius: BorderRadius.only(
+                                                                      topLeft:
+                                                                          Radius.circular(
+                                                                              10),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              10),
+                                                                      bottomLeft:
+                                                                          Radius.circular(
+                                                                              10),
+                                                                      bottomRight:
+                                                                          Radius.circular(
+                                                                              10)),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.2),
+                                                                      spreadRadius:
+                                                                          3,
+                                                                      blurRadius:
+                                                                          7,
+                                                                      offset: Offset(
+                                                                          0,
+                                                                          1), // changes position of shadow
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                                 height: double
                                                                     .infinity,
                                                                 width: 330,
@@ -613,6 +703,33 @@ class _ViewCourseState extends State<ViewCourse> {
                                                 ),
                                               ),
                                             ),
+                                            snapshotCourse
+                                                        .data
+                                                        .listOfGroup[index]
+                                                            ["listofstudent"]
+                                                        .length >
+                                                    3
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                            "Swipe Left to see more "),
+                                                        Icon(
+                                                          Icons.arrow_right_alt,
+                                                          color:
+                                                              Colors.grey[600],
+                                                          size: 32,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : SizedBox()
                                           ],
                                         ),
                                       ),

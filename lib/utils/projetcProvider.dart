@@ -495,7 +495,25 @@ class ProjectProvider with ChangeNotifier {
   ///////////////////////////////////////(Rubric)
   ///////////////////////////////////////(User)
 
-  editUserName(PeerUser user, String name) {}
-  editUserPassword(PeerUser user, String password) {}
-  editUserMatric(PeerUser user, String matric) {}
+  editUserName(PeerUser user, String name) {
+    var newUser = PeerUser(
+      email: user.email,
+      matric: user.matric,
+      typeOfUser: user.typeOfUser,
+      userid: user.userid,
+      userName: name,
+    );
+    firestoreservice.setUser(newUser);
+  }
+
+  editUserMatric(PeerUser user, String matric) {
+    var newUser = PeerUser(
+      email: user.email,
+      matric: matric,
+      typeOfUser: user.typeOfUser,
+      userid: user.userid,
+      userName: user.userName,
+    );
+    firestoreservice.setUser(newUser);
+  }
 }

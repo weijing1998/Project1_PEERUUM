@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -3756,7 +3757,7 @@ class _EditUserNameState extends State<EditUserName> {
                               if (_formskey.currentState.validate()) {
                                 projectProvider.editUserName(
                                     widget.user, initcn);
-                                Navigator.pop(context);
+                                showAlertDialogType(context);
                               }
                             },
                           ),
@@ -3772,228 +3773,27 @@ class _EditUserNameState extends State<EditUserName> {
       ),
     );
   }
-}
 
-class EditUserPassword extends StatefulWidget {
-  final PeerUser user;
-  EditUserPassword({Key key, @required this.user}) : super(key: key);
-
-  @override
-  _EditUserPasswordState createState() => _EditUserPasswordState();
-}
-
-class _EditUserPasswordState extends State<EditUserPassword> {
-  TextEditingController userPassword = TextEditingController();
-  TextEditingController confirmUserPassword = TextEditingController();
-  String temp;
-  String temp1;
-  @override
-  Widget build(BuildContext context) {
-    final projectProvider = Provider.of<ProjectProvider>(context);
-    Size size = MediaQuery.of(context).size;
-    var _formskey = GlobalKey<FormState>();
-    return AlertDialog(
-      content: Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          Positioned(
-            right: -10.0,
-            top: -10.0,
-            child: InkResponse(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: CircleAvatar(
-                radius: 15,
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 25,
-                ),
-                backgroundColor: Colors.red,
+  showAlertDialogType(BuildContext _context) {
+    // set up the button
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit User Name Successfully"),
+            content: Text("Relog to see the result"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
               ),
-            ),
-          ),
-          Container(
-            height: size.height / 2.3,
-            width: size.width / 2,
-            child: Form(
-              key: _formskey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "EDIT PASSWORD",
-                    style: TextStyle(
-                      color: Colors.blue[800],
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height / 12,
-                  ),
-                  //Add course name
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(55, 0, 0, 0),
-                              child: Text(
-                                "USER PASSWORD : ",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                width: size.width / 4,
-                                child: TextFormField(
-                                  controller: userPassword,
-                                  initialValue: temp,
-                                  onChanged: (userPassword) =>
-                                      temp = userPassword,
-                                  decoration: new InputDecoration(
-                                    labelText: "User Password",
-                                    suffixIcon: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: Icon(Icons.book),
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: new OutlineInputBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(5.0),
-                                      borderSide: new BorderSide(),
-                                    ),
-                                  ),
-                                  validator: (val) {
-                                    if (val.isEmpty) {
-                                      return "User Password cannot be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "CONFIRM USER PASSWORD : ",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                width: size.width / 4,
-                                child: TextFormField(
-                                  controller: confirmUserPassword,
-                                  initialValue: temp1,
-                                  onChanged: (userPassword) =>
-                                      temp1 = userPassword,
-                                  decoration: new InputDecoration(
-                                    labelText: "Confirm User Password",
-                                    suffixIcon: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: Icon(Icons.book),
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: new OutlineInputBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(5.0),
-                                      borderSide: new BorderSide(),
-                                    ),
-                                  ),
-                                  validator: (val) {
-                                    if (val.isEmpty ||
-                                        val != userPassword.text) {
-                                      return "Wrong password";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  //Add Course ID
-
-                  //Submit button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          child: MaterialButton(
-                            color: Colors.red[800],
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          child: MaterialButton(
-                            color: Colors.blue[800],
-                            child: Text(
-                              "Submit",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () async {
-                              if (_formskey.currentState.validate()) {
-                                projectProvider.editUserPassword(widget.user, temp);
-                                Navigator.pop(context);
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            ],
+          );
+        });
   }
 }
 
@@ -4144,7 +3944,7 @@ class _EditUserMatricState extends State<EditUserMatric> {
                               if (_formskey.currentState.validate()) {
                                 projectProvider.editUserMatric(
                                     widget.user, initcn);
-                                Navigator.pop(context);
+                                showAlertDialogType(context);
                               }
                             },
                           ),
@@ -4159,5 +3959,215 @@ class _EditUserMatricState extends State<EditUserMatric> {
         ],
       ),
     );
+  }
+
+  showAlertDialogType(BuildContext _context) {
+    // set up the button
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Matric Successfully"),
+            content: Text("Relog to see the result"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
+  }
+}
+
+class ChangeUserPassword extends StatefulWidget {
+  ChangeUserPassword({Key key}) : super(key: key);
+
+  @override
+  _ChangeUserPasswordState createState() => _ChangeUserPasswordState();
+}
+
+TextEditingController userMatric = TextEditingController();
+String initcn;
+final firebaseAuth = FirebaseAuth.instance;
+
+class _ChangeUserPasswordState extends State<ChangeUserPassword> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    var _formskey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Positioned(
+            right: -10.0,
+            top: -10.0,
+            child: InkResponse(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+          Container(
+            height: size.height / 2.5,
+            width: size.width / 2,
+            child: Form(
+              key: _formskey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "EDIT PASSWORD",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height / 12,
+                  ),
+                  //Add course name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "USER EMAIL : ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: size.width / 4,
+                            child: TextFormField(
+                              controller: userMatric,
+                              initialValue: initcn,
+                              onChanged: (userMatric) => initcn = userMatric,
+                              decoration: new InputDecoration(
+                                labelText: "User Email ",
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Icon(Icons.book),
+                                ),
+                                fillColor: Colors.white,
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "User email cannot be empty";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Add Course ID
+
+                  //Submit button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.red[800],
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          child: MaterialButton(
+                            color: Colors.blue[800],
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            onPressed: () async {
+                              if (_formskey.currentState.validate()) {
+                                firebaseAuth.sendPasswordResetEmail(
+                                    email: initcn);
+                                showAlertDialogType(context);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showAlertDialogType(BuildContext _context) {
+    // set up the button
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Password Successfully"),
+            content:
+                Text("Edit password email has been sent to your email address"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 }

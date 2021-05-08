@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudWidget.dart';
@@ -6,11 +7,14 @@ import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
   final PeerUser user;
+
   UserPage({Key key, @required this.user}) : super(key: key);
 
   @override
   _UserPageState createState() => _UserPageState();
 }
+
+final firebaseAuth = FirebaseAuth.instance;
 
 class _UserPageState extends State<UserPage> {
   @override
@@ -67,7 +71,7 @@ class _UserPageState extends State<UserPage> {
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                   widget.user.matric,
+                                  widget.user.matric,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500),
@@ -185,17 +189,9 @@ class _UserPageState extends State<UserPage> {
                                   const EdgeInsets.symmetric(horizontal: 2),
                               child: IconButton(
                                 onPressed: () {
-                                  showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                            create: (context) =>
-                                                ProjectProvider(),
-                                            child: EditUserPassword(
-                                              user: widget.user,
-                                            ),
-                                          ));
+                                  firebaseAuth.sendPasswordResetEmail(
+                                      email: widget.user.email);
+                                  showAlertDialogType(context);
                                 },
                                 icon: Icon(
                                   Icons.edit,
@@ -297,6 +293,28 @@ class _UserPageState extends State<UserPage> {
         ),
       ),
     );
+  }
+
+  showAlertDialogType(BuildContext _context) {
+    // set up the button
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Password Successfully"),
+            content: Text(
+                "Reset password email has been sent to your email address"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 }
 
