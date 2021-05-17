@@ -261,7 +261,7 @@ class _LoginPageState extends State<LoginPage> {
                                             //   context,
                                             //   MaterialPageRoute(
                                             //     builder: (context) =>
-                                            //         Sidebar(
+                                            //         StudentPage(
                                             //       users: PeerUser(
                                             //           userName: 'asd',
                                             //           email: "asd",

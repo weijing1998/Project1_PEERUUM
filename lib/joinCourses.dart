@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
@@ -48,26 +49,41 @@ class _JoinCourseState extends State<JoinCourse> {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 220, 20),
-                          child: Container(
-                            height: 40,
-                            width: 120,
-                            child: MaterialButton(
-                              onPressed: () {
-                                setState(() {
-                                  provider.leaveCourses(
-                                      snapshotCourse.data, widget.user);
-                                  successLeaveCourseAlert(context);
-                                });
-                              },
-                              child: Text(
-                                "Leave Course",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 150, vertical: 20),
+                          child: MaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                provider.leaveCourses(
+                                    snapshotCourse.data, widget.user);
+                                successLeaveCourseAlert(context);
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.blue[200],
+                                      Colors.blue[600]
+                                    ],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 130.0, minHeight: 40.0),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Leave Course",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
                               ),
-                              color: Colors.blue[900],
                             ),
                           ),
                         ),
@@ -79,10 +95,14 @@ class _JoinCourseState extends State<JoinCourse> {
                     Container(
                       height: size.height / 3,
                       width: size.width / 1.5,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.blueAccent, width: 2),
-                          color: Colors.grey[300]),
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue[300].withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ], color: Colors.grey[200]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -92,7 +112,7 @@ class _JoinCourseState extends State<JoinCourse> {
                             child: Text(
                               "COURSE NAME : " + snapshotCourse.data.courseName,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -100,7 +120,7 @@ class _JoinCourseState extends State<JoinCourse> {
                             child: Text(
                               "COURSE CODE : " + snapshotCourse.data.courseCode,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -109,7 +129,7 @@ class _JoinCourseState extends State<JoinCourse> {
                               "COURSE GROUP : " +
                                   snapshotCourse.data.courseGroup,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -118,7 +138,7 @@ class _JoinCourseState extends State<JoinCourse> {
                               "COURSE BATCH : " +
                                   snapshotCourse.data.courseBatch,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -129,7 +149,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                   "FORM STATUS : ",
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 snapshotCourse.data.listOfForm.length == 0
                                     ? Container(
@@ -239,7 +259,16 @@ class _JoinCourseState extends State<JoinCourse> {
                                       child: Container(
                                         height: 600,
                                         width: double.infinity,
-                                        color: Colors.blueGrey[500],
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              Colors.yellow[100],
+                                              Colors.blue[200],
+                                            ],
+                                          ),
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -247,20 +276,28 @@ class _JoinCourseState extends State<JoinCourse> {
                                             Container(
                                               height: 60,
                                               width: double.infinity,
-                                              color: Colors.blueGrey[800],
+                                              //important
+                                              color:
+                                                  Colors.black.withOpacity(0.5),
                                               child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  snapshotCourse
-                                                      .data
-                                                      .listOfGroup[index]
-                                                          ["groupname"]
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20),
+                                                  child: Text(
+                                                    "Group Name : " +
+                                                        snapshotCourse
+                                                            .data
+                                                            .listOfGroup[index]
+                                                                ["groupname"]
+                                                            .toUpperCase(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -296,114 +333,184 @@ class _JoinCourseState extends State<JoinCourse> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .fromLTRB(
-                                                                0, 20, 20, 20),
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                List
-                                                                    listofstudent =
-                                                                    snapshotCourse
-                                                                            .data
-                                                                            .listOfGroup[index]
-                                                                        [
-                                                                        "listofstudent"];
+                                                                    .symmetric(
+                                                                horizontal: 20,
+                                                                vertical: 20),
+                                                        child: MaterialButton(
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              List
+                                                                  listofstudent =
+                                                                  snapshotCourse
+                                                                          .data
+                                                                          .listOfGroup[index]
+                                                                      [
+                                                                      "listofstudent"];
 
-                                                                if (listofstudent.any(
-                                                                    (element) =>
-                                                                        element[
-                                                                            'email'] ==
-                                                                        widget
-                                                                            .user
-                                                                            .email)) {
-                                                                  joinedGroupAlert(
-                                                                      context);
-                                                                } else {
-                                                                  listofstudent
-                                                                      .add(widget
+                                                              if (listofstudent
+                                                                  .any((element) =>
+                                                                      element[
+                                                                          'email'] ==
+                                                                      widget
                                                                           .user
-                                                                          .toJson());
+                                                                          .email)) {
+                                                                joinedGroupAlert(
+                                                                    context);
+                                                              } else {
+                                                                listofstudent
+                                                                    .add(widget
+                                                                        .user
+                                                                        .toJson());
 
-                                                                  provider.addStudentToGroup(
-                                                                      snapshotCourse
-                                                                          .data,
-                                                                      listofstudent,
-                                                                      index);
+                                                                provider.addStudentToGroup(
+                                                                    snapshotCourse
+                                                                        .data,
+                                                                    listofstudent,
+                                                                    index);
 
-                                                                  successJoinGroupAlert(
-                                                                      context);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Text(
-                                                              "Join Group",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
+                                                                successJoinGroupAlert(
+                                                                    context);
+                                                              }
+                                                            });
+                                                          },
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          80.0)),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  0.0),
+                                                          child: Ink(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                      colors: [
+                                                                        Colors.blue[
+                                                                            200],
+                                                                        Colors.blue[
+                                                                            600]
+                                                                      ],
+                                                                      begin: Alignment
+                                                                          .centerLeft,
+                                                                      end: Alignment
+                                                                          .centerRight,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0)),
+                                                            child: Container(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                      maxWidth:
+                                                                          130.0,
+                                                                      minHeight:
+                                                                          40.0),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                "Join Group",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
                                                             ),
-                                                            color: Colors
-                                                                .blue[900],
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .fromLTRB(
-                                                                0, 20, 20, 20),
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                List
-                                                                    listofstudent =
-                                                                    snapshotCourse
-                                                                            .data
-                                                                            .listOfGroup[index]
-                                                                        [
-                                                                        "listofstudent"];
+                                                                    .symmetric(
+                                                                horizontal: 20,
+                                                                vertical: 20),
+                                                        child: MaterialButton(
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              List
+                                                                  listofstudent =
+                                                                  snapshotCourse
+                                                                          .data
+                                                                          .listOfGroup[index]
+                                                                      [
+                                                                      "listofstudent"];
 
-                                                                listofstudent.removeWhere(
-                                                                    (element) =>
-                                                                        element[
-                                                                            'email'] ==
-                                                                        widget
-                                                                            .user
-                                                                            .email);
-                                                                provider.deleteStudentFromGroup(
-                                                                    snapshotCourse
-                                                                        .data,
-                                                                    listofstudent,
-                                                                    index);
-                                                                successLeaveGroupAlert(
-                                                                        context)(
-                                                                    context);
-                                                              });
-                                                            },
-                                                            child: Text(
-                                                              "Leave Group",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
+                                                              listofstudent.removeWhere(
+                                                                  (element) =>
+                                                                      element[
+                                                                          'email'] ==
+                                                                      widget
+                                                                          .user
+                                                                          .email);
+                                                              provider.deleteStudentFromGroup(
+                                                                  snapshotCourse
+                                                                      .data,
+                                                                  listofstudent,
+                                                                  index);
+                                                              successLeaveGroupAlert(
+                                                                      context)(
+                                                                  context);
+                                                            });
+                                                          },
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          80.0)),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  0.0),
+                                                          child: Ink(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                      colors: [
+                                                                        Colors.blue[
+                                                                            200],
+                                                                        Colors.blue[
+                                                                            600]
+                                                                      ],
+                                                                      begin: Alignment
+                                                                          .centerLeft,
+                                                                      end: Alignment
+                                                                          .centerRight,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0)),
+                                                            child: Container(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                      maxWidth:
+                                                                          130.0,
+                                                                      minHeight:
+                                                                          40.0),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                "Leave Group",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
                                                             ),
-                                                            color: Colors
-                                                                .blue[900],
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ],
@@ -504,16 +611,16 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                       );
                                                                     }
                                                                   } else {
-                                                                    joinGroupAlert(context);
+                                                                    joinGroupAlert(
+                                                                        context);
                                                                   }
                                                                 });
                                                               },
                                                               child: Card(
+                                                                color: Colors
+                                                                    .transparent,
                                                                 child:
                                                                     Container(
-                                                                  color: Colors
-                                                                          .teal[
-                                                                      200],
                                                                   height: double
                                                                       .infinity,
                                                                   width: 330,
@@ -563,6 +670,37 @@ class _JoinCourseState extends State<JoinCourse> {
                                                 ),
                                               ),
                                             ),
+                                            snapshotCourse
+                                                        .data
+                                                        .listOfGroup[index]
+                                                            ["listofstudent"]
+                                                        .length >
+                                                    0
+                                                ? Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          FontAwesomeIcons
+                                                              .arrowCircleLeft,
+                                                          size: 18,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Text(
+                                                            "Swipe left to see more"),
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Container(),
                                           ],
                                         ),
                                       ),

@@ -264,9 +264,6 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                           .user
                                                                           .email)
                                                               ? MaterialButton(
-                                                                  color: Colors
-                                                                          .blue[
-                                                                      900],
                                                                   onPressed:
                                                                       null,
                                                                   child: Text(
@@ -281,9 +278,10 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   ),
                                                                 )
                                                               : MaterialButton(
-                                                                  color: Colors
-                                                                          .blue[
-                                                                      900],
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              80.0)),
                                                                   onPressed:
                                                                       () async {
                                                                     await provider.setCoursesId(snapshot
@@ -322,15 +320,41 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                               ],
                                                                             )));
                                                                   },
-                                                                  child: Text(
-                                                                    "Join Couses",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
+                                                                  child: Ink(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            gradient:
+                                                                                LinearGradient(
+                                                                              colors: [
+                                                                                Colors.blue[400],
+                                                                                Colors.blue[600]
+                                                                              ],
+                                                                              begin: Alignment.centerLeft,
+                                                                              end: Alignment.centerRight,
+                                                                            ),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(30.0)),
+                                                                    child:
+                                                                        Container(
+                                                                      constraints: BoxConstraints(
+                                                                          maxWidth:
+                                                                              130.0,
+                                                                          minHeight:
+                                                                              40.0),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "Join Course",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 12),
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                         ),

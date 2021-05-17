@@ -262,8 +262,11 @@ class StudentAddedCoursesPageState extends State<StudentAddedCoursesPage> {
                                                           width:
                                                               size.width / 12,
                                                           child: MaterialButton(
-                                                            color: Colors
-                                                                .blue[900],
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            80.0)),
                                                             onPressed: () {
                                                               setState(() {
                                                                 provider.setCoursesId(
@@ -275,15 +278,47 @@ class StudentAddedCoursesPageState extends State<StudentAddedCoursesPage> {
                                                                         true);
                                                               });
                                                             },
-                                                            child: Text(
-                                                              "View Couses",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                            child: Ink(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      gradient:
+                                                                          LinearGradient(
+                                                                        colors: [
+                                                                          Colors
+                                                                              .blue[200],
+                                                                          Colors
+                                                                              .blue[600]
+                                                                        ],
+                                                                        begin: Alignment
+                                                                            .centerLeft,
+                                                                        end: Alignment
+                                                                            .centerRight,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              30.0)),
+                                                              child: Container(
+                                                                constraints:
+                                                                    BoxConstraints(
+                                                                        maxWidth:
+                                                                            130.0,
+                                                                        minHeight:
+                                                                            40.0),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Text(
+                                                                  "View Course",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),

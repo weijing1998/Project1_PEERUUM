@@ -4074,13 +4074,7 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                                   borderSide: new BorderSide(),
                                 ),
                               ),
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return "User email cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
+                              validator: validateEmail,
                             ),
                           ),
                         ),
@@ -4169,5 +4163,17 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
             ],
           );
         });
+  }
+
+  String validateEmail(String value) {
+    Pattern pattern =
+        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?)*$";
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value) || value == null)
+      return 'Enter a valid email address';
+    else
+      return null;
   }
 }
