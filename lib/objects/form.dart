@@ -5,12 +5,14 @@ class Forms {
   String formID;
   String formCode;
   List listOfRubric;
+  String formowner;
 
   Forms({
     this.formName,
-   @required this.formID,
+    @required this.formID,
     this.formCode,
     this.listOfRubric,
+    @required this.formowner,
   });
 
   factory Forms.fromJson(Map<String, dynamic> json) {
@@ -18,7 +20,8 @@ class Forms {
         formCode: json["formcode"],
         formID: json['formid'],
         formName: json['formname'],
-        listOfRubric: json['listofrubric']);
+        listOfRubric: json['listofrubric'],
+        formowner: json["formowner"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +30,7 @@ class Forms {
       "formid": formID,
       "formname": formName,
       "listofrubric": listOfRubric,
+      "formowner": formowner
     };
   }
 }

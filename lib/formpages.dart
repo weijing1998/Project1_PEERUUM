@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
+import 'package:pepelist/objects/peerUser.dart';
 import 'package:pepelist/utils/crudWidget.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
 class FormPage extends StatefulWidget {
+  final PeerUser user;
   final Function toggleFormpage;
 
   const FormPage({
     Key key,
     @required this.toggleFormpage,
+    @required this.user,
   }) : super(key: key);
 
   @override
@@ -73,7 +76,9 @@ class _FormPageState extends State<FormPage> {
                                         ChangeNotifierProvider(
                                           create: (context) =>
                                               ProjectProvider(),
-                                          child: AddFormDialog(),
+                                          child: AddFormDialog(
+                                            user: widget.user,
+                                          ),
                                         ));
                               },
                               shape: RoundedRectangleBorder(
@@ -110,18 +115,21 @@ class _FormPageState extends State<FormPage> {
                             child: MaterialButton(
                               onPressed: snapshot.hasData
                                   ? () {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) =>
-                                            ChangeNotifierProvider(
-                                          create: (context) =>
-                                              ProjectProvider(),
-                                          child: DeleteFormDialog(
-                                            forms: snapshot.data,
+                                      setState(() {
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) =>
+                                              ChangeNotifierProvider(
+                                            create: (context) =>
+                                                ProjectProvider(),
+                                            child: DeleteFormDialog(
+                                              user: widget.user,
+                                              forms: snapshot.data,
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      });
                                     }
                                   : () {},
                               shape: RoundedRectangleBorder(
@@ -177,327 +185,321 @@ class _FormPageState extends State<FormPage> {
                             : ListView.builder(
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (context, index) {
-                                  return Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Container(
-                                        height: 200,
-                                        width: 200,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            //Form Name
-                                            Container(
-                                              color: Colors.purple[300],
-                                              width: double.infinity,
-                                              height: 50,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                  return snapshot.data[index].formowner ==
+                                              widget.user.userid ||
+                                          snapshot.data[index].formowner ==
+                                              "default"
+                                      ? Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              height: 200,
+                                              width: 200,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20),
-                                                    child: Text(
-                                                      " FORMS NAME : " +
-                                                          snapshot.data[index]
-                                                              .formName
-                                                              .toUpperCase(),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 20),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 20),
-                                                      child: IconButton(
-                                                        tooltip: "Copy Form",
-                                                        focusColor: Colors.grey,
-                                                        hoverColor:
-                                                            Colors.grey[300],
-                                                        onPressed: () {
-                                                          showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder: (context) =>
-                                                                ChangeNotifierProvider(
-                                                              create: (context) =>
-                                                                  ProjectProvider(),
-                                                              child: CopyFormDialog(
-                                                                  forms: snapshot
-                                                                          .data[
-                                                                      index]),
-                                                            ),
-                                                          );
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.copy,
-                                                          color: Colors.black,
-                                                        ),
-                                                      )),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              height: 150,
-                                              width: double.infinity,
-                                              color: Colors.blueGrey[50],
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
+                                                  //Form Name
                                                   Container(
-                                                    width: size.width / 1.9,
+                                                    color: Colors.purple[300],
+                                                    width: double.infinity,
+                                                    height: 50,
                                                     child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            //Form ID
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      10.0),
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .article,
-                                                                    size: 25,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                    "FORM CODE : " +
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .formCode
-                                                                            .toUpperCase(),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      10.0),
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .article,
-                                                                    size: 25,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                    "NUMBER OF QUESTION: " +
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .listOfRubric
-                                                                            .length
-                                                                            .toString(),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      20),
+                                                          child: Text(
+                                                            " FORMS NAME : " +
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .formName
+                                                                    .toUpperCase(),
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 20),
+                                                          ),
                                                         ),
+                                                        Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        20),
+                                                            child: IconButton(
+                                                              tooltip:
+                                                                  "Copy Form",
+                                                              focusColor:
+                                                                  Colors.grey,
+                                                              hoverColor: Colors
+                                                                  .grey[300],
+                                                              onPressed: () {
+                                                                showDialog(
+                                                                  barrierDismissible:
+                                                                      false,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) =>
+                                                                          ChangeNotifierProvider(
+                                                                    create: (context) =>
+                                                                        ProjectProvider(),
+                                                                    child: CopyFormDialog(
+                                                                        user: widget
+                                                                            .user,
+                                                                        forms: snapshot
+                                                                            .data[index]),
+                                                                  ),
+                                                                );
+                                                              },
+                                                              icon: Icon(
+                                                                Icons.copy,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            )),
                                                       ],
                                                     ),
                                                   ),
                                                   Container(
-                                                    height: 40.0,
-                                                    margin: EdgeInsets.all(15),
-                                                    child: MaterialButton(
-                                                      onPressed: () {
-                                                        provider.setFormId(
-                                                            snapshot.data[index]
-                                                                .formID);
-                                                        widget.toggleFormpage(
-                                                            true);
-                                                      },
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          80.0)),
-                                                      padding:
-                                                          EdgeInsets.all(0.0),
-                                                      child: Ink(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                  colors: [
-                                                                    Colors.purple[
-                                                                        400],
-                                                                    Colors.purple[
-                                                                        800]
-                                                                  ],
-                                                                  begin: Alignment
-                                                                      .centerLeft,
-                                                                  end: Alignment
-                                                                      .centerRight,
-                                                                ),
+                                                    height: 150,
+                                                    width: double.infinity,
+                                                    color: Colors.blueGrey[50],
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          width:
+                                                              size.width / 1.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  //Form ID
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .article,
+                                                                          size:
+                                                                              25,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              20,
+                                                                        ),
+                                                                        Text(
+                                                                          "FORM CODE : " +
+                                                                              snapshot.data[index].formCode.toUpperCase(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .article,
+                                                                          size:
+                                                                              25,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              20,
+                                                                        ),
+                                                                        Text(
+                                                                          "NUMBER OF QUESTION: " +
+                                                                              snapshot.data[index].listOfRubric.length.toString(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 40.0,
+                                                          margin:
+                                                              EdgeInsets.all(
+                                                                  15),
+                                                          child: MaterialButton(
+                                                            onPressed: () {
+                                                              provider.setFormId(
+                                                                  snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .formID);
+                                                              widget
+                                                                  .toggleFormpage(
+                                                                      true);
+                                                            },
+                                                            shape: RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            30.0)),
-                                                        child: Container(
-                                                          constraints:
-                                                              BoxConstraints(
-                                                                  maxWidth:
-                                                                      150.0,
-                                                                  minHeight:
-                                                                      40.0),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                            "View Form",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 12),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  StreamBuilder<List<Courses>>(
-                                                      stream:
-                                                          provider.courselist,
-                                                      builder: (context,
-                                                          snapshotcourses) {
-                                                        return snapshotcourses
-                                                                .hasData
-                                                            ? Container(
-                                                                height: 40.0,
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            15),
-                                                                child:
-                                                                    MaterialButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    provider.setFormId(snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .formID);
-                                                                    showDialog(
-                                                                        barrierDismissible:
-                                                                            false,
-                                                                        context:
-                                                                            context,
-                                                                        builder: (context) =>
-                                                                            ChangeNotifierProvider(
-                                                                              create: (context) => ProjectProvider(),
-                                                                              child: ApplyFormDialog(
-                                                                                forms: snapshot.data[index],
-                                                                                snapshot: snapshotcourses.data,
-                                                                              ),
-                                                                            ));
-                                                                  },
-                                                                  shape: RoundedRectangleBorder(
+                                                                            80.0)),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    0.0),
+                                                            child: Ink(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      gradient:
+                                                                          LinearGradient(
+                                                                        colors: [
+                                                                          Colors
+                                                                              .purple[400],
+                                                                          Colors
+                                                                              .purple[800]
+                                                                        ],
+                                                                        begin: Alignment
+                                                                            .centerLeft,
+                                                                        end: Alignment
+                                                                            .centerRight,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              80.0)),
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0.0),
-                                                                  child: Ink(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                            gradient:
-                                                                                LinearGradient(
-                                                                              colors: [
-                                                                                Colors.purple[400],
-                                                                                Colors.purple[800]
-                                                                              ],
-                                                                              begin: Alignment.centerLeft,
-                                                                              end: Alignment.centerRight,
-                                                                            ),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(30.0)),
-                                                                    child:
-                                                                        Container(
-                                                                      constraints: BoxConstraints(
-                                                                          maxWidth:
-                                                                              150.0,
-                                                                          minHeight:
-                                                                              40.0),
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      child:
-                                                                          Text(
-                                                                        "Apply Form",
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                    ),
-                                                                  ),
+                                                                              30.0)),
+                                                              child: Container(
+                                                                constraints:
+                                                                    BoxConstraints(
+                                                                        maxWidth:
+                                                                            150.0,
+                                                                        minHeight:
+                                                                            40.0),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Text(
+                                                                  "View Form",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
                                                                 ),
-                                                              )
-                                                            : Center(
-                                                                child:
-                                                                    Container(
-                                                                        height:
-                                                                            size.height /
-                                                                                20,
-                                                                        width: size.width /
-                                                                            40,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        StreamBuilder<
+                                                                List<Courses>>(
+                                                            stream: provider
+                                                                .courselist,
+                                                            builder: (context,
+                                                                snapshotcourses) {
+                                                              return snapshotcourses
+                                                                      .hasData
+                                                                  ? Container(
+                                                                      height:
+                                                                          40.0,
+                                                                      margin: EdgeInsets
+                                                                          .all(
+                                                                              15),
+                                                                      child:
+                                                                          MaterialButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          provider.setFormId(snapshot
+                                                                              .data[index]
+                                                                              .formID);
+                                                                          showDialog(
+                                                                              barrierDismissible: false,
+                                                                              context: context,
+                                                                              builder: (context) => ChangeNotifierProvider(
+                                                                                    create: (context) => ProjectProvider(),
+                                                                                    child: ApplyFormDialog(
+                                                                                      forms: snapshot.data[index],
+                                                                                      snapshot: snapshotcourses.data,
+                                                                                    ),
+                                                                                  ));
+                                                                        },
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(80.0)),
+                                                                        padding:
+                                                                            EdgeInsets.all(0.0),
                                                                         child:
-                                                                            Center(
+                                                                            Ink(
+                                                                          decoration: BoxDecoration(
+                                                                              gradient: LinearGradient(
+                                                                                colors: [
+                                                                                  Colors.purple[400],
+                                                                                  Colors.purple[800]
+                                                                                ],
+                                                                                begin: Alignment.centerLeft,
+                                                                                end: Alignment.centerRight,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(30.0)),
                                                                           child:
-                                                                              CircularProgressIndicator(
-                                                                            strokeWidth:
-                                                                                3,
+                                                                              Container(
+                                                                            constraints:
+                                                                                BoxConstraints(maxWidth: 150.0, minHeight: 40.0),
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                Text(
+                                                                              "Apply Form",
+                                                                              textAlign: TextAlign.center,
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
                                                                           ),
-                                                                        )),
-                                                              );
-                                                      }),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : Center(
+                                                                      child: Container(
+                                                                          height: size.height / 20,
+                                                                          width: size.width / 40,
+                                                                          child: Center(
+                                                                            child:
+                                                                                CircularProgressIndicator(
+                                                                              strokeWidth: 3,
+                                                                            ),
+                                                                          )),
+                                                                    );
+                                                            }),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                          ),
+                                        )
+                                      : SizedBox();
                                 },
                               )
                         : Center(

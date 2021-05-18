@@ -55,7 +55,7 @@ class ProjectProvider with ChangeNotifier {
     _course = course;
   }
 
-  saveCourses() {
+  saveCourses(PeerUser user) {
     if (_courseId == null) {
       //Add
       var newCourses = Courses(
@@ -67,13 +67,16 @@ class ProjectProvider with ChangeNotifier {
           listOfForm: [],
           listOfGroup: [],
           listOfStudent: [],
-          listOfScore: []);
+          listOfScore: [],
+          ownerid: user.userid);
 
       firestoreservice.setCourses(newCourses);
     }
   }
 
-  editCourses(Courses course) {
+  editCourses(
+    Courses course,
+  ) {
     var newCourses = Courses(
         courseID: course.courseID,
         courseName: _courseName,
@@ -83,7 +86,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: course.listOfGroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourses);
     notifyListeners();
   }
@@ -119,7 +123,8 @@ class ProjectProvider with ChangeNotifier {
           listOfForm: course.listOfForm,
           listOfGroup: course.listOfGroup,
           listOfStudent: student,
-          listOfScore: course.listOfScore);
+          listOfScore: course.listOfScore,
+          ownerid: course.ownerid);
       firestoreservice.setCourses(newCourse);
       notifyListeners();
       return true;
@@ -140,7 +145,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: course.listOfGroup,
         listOfStudent: studentList,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -159,7 +165,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: course.listOfGroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: scorelist);
+        listOfScore: scorelist,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -194,36 +201,38 @@ class ProjectProvider with ChangeNotifier {
     _formCode = formCode;
   }
 
-  saveForm() {
+  saveForm(PeerUser user) {
     if (_formId == null) {
       var newForm = Forms(
         formName: _formName,
         formID: uuid.v1(),
         formCode: _formCode,
         listOfRubric: _listOfRubric,
+        formowner: user.userid,
       );
 
       firestoreservice.setForms(newForm);
     }
   }
 
-  copyForm(Forms form) {
+  copyForm(Forms form,PeerUser user) {
     var newForm = Forms(
-      formName: _formName,
-      formID: uuid.v1(),
-      formCode: _formCode,
-      listOfRubric: form.listOfRubric,
-    );
+        formName: _formName,
+        formID: uuid.v1(),
+        formCode: _formCode,
+        listOfRubric: form.listOfRubric,
+        formowner: user.userid);
 
     firestoreservice.setForms(newForm);
   }
 
-  editForm(Forms form) {
+  editForm(Forms form,) {
     var newForm = Forms(
       formName: _formName,
       formID: form.formID,
       formCode: _formCode,
       listOfRubric: form.listOfRubric,
+      formowner: form.formowner,
     );
     firestoreservice.setForms(newForm);
     notifyListeners();
@@ -252,7 +261,8 @@ class ProjectProvider with ChangeNotifier {
           listOfForm: newlist,
           listOfGroup: course.listOfGroup,
           listOfStudent: course.listOfStudent,
-          listOfScore: course.listOfScore);
+          listOfScore: course.listOfScore,
+          ownerid: course.ownerid);
       firestoreservice.setCourses(newCourse);
       notifyListeners();
       return true;
@@ -272,7 +282,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: list,
         listOfGroup: course.listOfGroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -333,7 +344,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: newlist,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -348,7 +360,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -363,7 +376,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -382,7 +396,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -400,7 +415,8 @@ class ProjectProvider with ChangeNotifier {
         listOfForm: course.listOfForm,
         listOfGroup: listofgroup,
         listOfStudent: course.listOfStudent,
-        listOfScore: course.listOfScore);
+        listOfScore: course.listOfScore,
+        ownerid: course.ownerid);
     firestoreservice.setCourses(newCourse);
     notifyListeners();
   }
@@ -477,6 +493,7 @@ class ProjectProvider with ChangeNotifier {
       formCode: form.formCode,
       formName: form.formName,
       listOfRubric: newlist,
+      formowner: form.formowner,
     );
     firestoreservice.setForms(newForm);
     notifyListeners();
@@ -488,6 +505,7 @@ class ProjectProvider with ChangeNotifier {
       formCode: forms.formCode,
       formName: forms.formName,
       listOfRubric: listofRubric,
+      formowner: forms.formowner
     );
     firestoreservice.setForms(newForm);
   }

@@ -12,9 +12,8 @@ import 'package:provider/provider.dart';
 
 //ADD COURSE
 class AddCourseDialog extends StatefulWidget {
-  AddCourseDialog({
-    Key key,
-  }) : super(key: key);
+  final PeerUser user;
+  AddCourseDialog({Key key, @required this.user}) : super(key: key);
 
   @override
   _AddCourseDialogState createState() => _AddCourseDialogState();
@@ -304,7 +303,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             ),
                             onPressed: () async {
                               if (_formskey.currentState.validate()) {
-                                projectProvider.saveCourses();
+                                projectProvider.saveCourses(widget.user);
                                 Navigator.pop(context);
                               }
                             },
@@ -326,7 +325,9 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
 //DELETE COURSE
 class DeleteCourseDialog extends StatefulWidget {
   final List<Courses> data;
-  DeleteCourseDialog({Key key, @required this.data}) : super(key: key);
+  final PeerUser user;
+  DeleteCourseDialog({Key key, @required this.data, @required this.user})
+      : super(key: key);
 
   @override
   _DeleteCourseDialogState createState() => _DeleteCourseDialogState();
@@ -336,6 +337,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
   @override
   void initState() {
     list = widget.data;
+    list.removeWhere((element) => element.ownerid != widget.user.userid);
 
     super.initState();
   }
@@ -636,7 +638,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           child: Text(
                             "COURSE CODE : ",
                             style: TextStyle(
@@ -881,7 +883,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
             ),
           ),
           Container(
-            height: size.height / 1.5,
+            height: size.height / 2,
             width: size.width / 2,
             child: Form(
               key: _formskey,
@@ -1257,7 +1259,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
             ),
           ),
           Container(
-            height: size.height / 1.5,
+            height: size.height / 1.8,
             width: size.width / 2,
             child: Form(
               key: _formskey,
@@ -1454,7 +1456,8 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
 
 //Add form dialog
 class AddFormDialog extends StatefulWidget {
-  AddFormDialog({Key key}) : super(key: key);
+  final PeerUser user;
+  AddFormDialog({Key key, @required this.user}) : super(key: key);
 
   @override
   _AddFormDialogState createState() => _AddFormDialogState();
@@ -1564,7 +1567,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
@@ -1649,7 +1652,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  projectProvider.saveForm();
+                                  projectProvider.saveForm(widget.user);
                                   Navigator.pop(context);
                                 });
                               }
@@ -1671,7 +1674,9 @@ class _AddFormDialogState extends State<AddFormDialog> {
 
 class CopyFormDialog extends StatefulWidget {
   final Forms forms;
-  CopyFormDialog({Key key, @required this.forms}) : super(key: key);
+  final PeerUser user;
+  CopyFormDialog({Key key, @required this.forms, @required this.user})
+      : super(key: key);
 
   @override
   _CopyFormDialogState createState() => _CopyFormDialogState();
@@ -1866,7 +1871,8 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                             onPressed: () {
                               if (_formskey.currentState.validate()) {
                                 setState(() {
-                                  projectProvider.copyForm(widget.forms);
+                                  projectProvider.copyForm(
+                                      widget.forms, widget.user);
                                   Navigator.pop(context);
                                 });
                               }
@@ -1888,9 +1894,11 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
 
 class DeleteFormDialog extends StatefulWidget {
   final List<Forms> forms;
+  final PeerUser user;
   DeleteFormDialog({
     Key key,
     @required this.forms,
+    @required this.user,
   }) : super(key: key);
 
   @override
@@ -1901,6 +1909,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
   @override
   void initState() {
     forms = widget.forms;
+    forms.removeWhere((element) => element.formowner != widget.user.userid);
     super.initState();
   }
 
@@ -2057,8 +2066,8 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                             onPressed: () {
                               setState(() {
                                 if (value ==
-                                    "7aef73b0-9dfa-11eb-a860-13f136a35425") {
-                                  successAlert(context);
+                                    "95dda0f0-b73d-11eb-bd67-8f40fbcbf0d9") {
+                                  defaultform(context);
                                 } else {
                                   provider.deleteForm(value);
                                   Navigator.pop(context);
@@ -2079,7 +2088,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
     );
   }
 
-  successAlert(BuildContext context) {
+  defaultform(BuildContext context) {
     var alert = AlertDialog(
       title: Text("Delete unccessfully"),
       content: Text('You cannot delete default form'),
@@ -2155,7 +2164,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                   Text(
                     "EDIT FORM",
                     style: TextStyle(
-                      color: Colors.blue[800],
+                      color: Colors.purple[800],
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                     ),
@@ -2217,7 +2226,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
@@ -2291,7 +2300,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                           height: 40,
                           width: 150,
                           child: MaterialButton(
-                            color: Colors.blue[800],
+                            color: Colors.purple[800],
                             child: Text(
                               "Submit",
                               style: TextStyle(
@@ -2458,7 +2467,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
 
                   //Rubric Style
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
+                    padding: const EdgeInsets.fromLTRB(27, 10, 0, 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -2529,12 +2538,14 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Container(
+                                  
                                   height: size.height / 4,
                                   width: size.width / 2,
                                   decoration: BoxDecoration(
+                                    
                                       color: Colors.transparent,
                                       border: Border.all(
-                                          color: Colors.blueAccent, width: 1)),
+                                          color: Colors.purple, width: 1)),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -2779,7 +2790,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                       Container(
                                         decoration: BoxDecoration(
                                             border: Border.all(
-                                                color: Colors.blueAccent)),
+                                                color: Colors.purple)),
                                         height: size.height / 5,
                                         width: size.width / 2,
                                         child: ListView.builder(
@@ -2800,7 +2811,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                 height: size.height / 20,
                                                 width: size.width / 20,
                                                 child: IconButton(
-                                                  color: Colors.blue,
+                                                  color: Colors.purple,
                                                   onPressed: addTextForm,
                                                   icon: Icon(
                                                     FontAwesomeIcons.plus,
@@ -2815,7 +2826,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                 height: size.height / 20,
                                                 width: size.width / 20,
                                                 child: IconButton(
-                                                  color: Colors.blue,
+                                                  color: Colors.purple,
                                                   onPressed:
                                                       listTextform.length == 0
                                                           ? () {}
@@ -3038,7 +3049,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                   Text(
                     "APPLY FORM",
                     style: TextStyle(
-                      color: Colors.blue[800],
+                      color: Colors.purple[800],
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                     ),
@@ -3141,7 +3152,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                           height: 40,
                           width: 150,
                           child: MaterialButton(
-                            color: Colors.blue[800],
+                            color: Colors.purple[800],
                             child: Text(
                               "Submit",
                               style: TextStyle(

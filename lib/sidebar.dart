@@ -288,7 +288,7 @@ class _SidebarState extends State<Sidebar> {
         user: widget.users,
       );
     } else if (atFormPage == true) {
-      return FormPage(toggleFormpage: toggleViewFormpage);
+      return FormPage(toggleFormpage: toggleViewFormpage,user: widget.users,);
     } else if (atScorePage == true) {
       return ScorePage(
         toggleViewScore: toggleViewScorepage,

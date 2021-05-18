@@ -180,56 +180,63 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                   children: [
                                     //ADD Rubric Button
 
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: MaterialButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            showDialog(
-                                              barrierDismissible: false,
-                                              context: context,
-                                              builder: (context) =>
-                                                  ChangeNotifierProvider(
-                                                create: (context) =>
-                                                    ProjectProvider(),
-                                                child: AddRubricDialog(
-                                                    forms: snapshot.data),
+                                    snapshot.data.formID ==
+                                            "95dda0f0-b73d-11eb-bd67-8f40fbcbf0d9"
+                                        ? SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        ChangeNotifierProvider(
+                                                      create: (context) =>
+                                                          ProjectProvider(),
+                                                      child: AddRubricDialog(
+                                                          forms: snapshot.data),
+                                                    ),
+                                                  );
+                                                });
+                                              },
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          80.0)),
+                                              padding: EdgeInsets.all(0.0),
+                                              child: Ink(
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.purple[400],
+                                                        Colors.purple[800]
+                                                      ],
+                                                      begin:
+                                                          Alignment.centerLeft,
+                                                      end:
+                                                          Alignment.centerRight,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0)),
+                                                child: Container(
+                                                  constraints: BoxConstraints(
+                                                      maxWidth: 130.0,
+                                                      minHeight: 40.0),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "Add Rubric",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12),
+                                                  ),
+                                                ),
                                               ),
-                                            );
-                                          });
-                                        },
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(80.0)),
-                                        padding: EdgeInsets.all(0.0),
-                                        child: Ink(
-                                          decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.purple[400],
-                                                  Colors.purple[800]
-                                                ],
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0)),
-                                          child: Container(
-                                            constraints: BoxConstraints(
-                                                maxWidth: 130.0,
-                                                minHeight: 40.0),
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "Add Rubric",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -367,47 +374,46 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                               ],
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        50,
-                                                                    vertical:
-                                                                        30),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .bottomRight,
-                                                              child: IconButton(
-                                                                  hoverColor:
-                                                                      Colors
-                                                                          .purple,
-                                                                  tooltip:
-                                                                      "Delete Rubric",
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .delete,
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        600],
-                                                                    size: 38,
+                                                          snapshot.data
+                                                                      .formID ==
+                                                                  "95dda0f0-b73d-11eb-bd67-8f40fbcbf0d9"
+                                                              ? SizedBox(
+                                                                  height: 30,
+                                                                )
+                                                              : Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          50,
+                                                                      vertical:
+                                                                          30),
+                                                                  child: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .bottomRight,
+                                                                    child: IconButton(
+                                                                        hoverColor: Colors.purple,
+                                                                        tooltip: "Delete Rubric",
+                                                                        icon: Icon(
+                                                                          Icons
+                                                                              .delete,
+                                                                          color:
+                                                                              Colors.grey[600],
+                                                                          size:
+                                                                              38,
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          listofrubric = snapshot
+                                                                              .data
+                                                                              .listOfRubric;
+                                                                          listofrubric
+                                                                              .removeAt(index);
+                                                                          provider.deleteRubricfromForm(
+                                                                              snapshot.data,
+                                                                              listofrubric);
+                                                                        }),
                                                                   ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    listofrubric =
-                                                                        snapshot
-                                                                            .data
-                                                                            .listOfRubric;
-                                                                    listofrubric
-                                                                        .removeAt(
-                                                                            index);
-                                                                    provider.deleteRubricfromForm(
-                                                                        snapshot
-                                                                            .data,
-                                                                        listofrubric);
-                                                                  }),
-                                                            ),
-                                                          ),
+                                                                ),
                                                         ],
                                                       ),
                                                     ],
@@ -526,40 +532,39 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                 ),
                                                               ),
 
-                                                              Padding(
-                                                                padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        50,
-                                                                    vertical:
-                                                                        30),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .bottomRight,
-                                                                  child: IconButton(
-                                                                      hoverColor: Colors.purple,
-                                                                      tooltip: "Delete Rubric",
-                                                                      icon: Icon(
-                                                                        Icons
-                                                                            .delete,
-                                                                        color: Colors
-                                                                            .grey[600],
-                                                                        size:
-                                                                            38,
+                                                              snapshot.data
+                                                                          .formID ==
+                                                                      "95dda0f0-b73d-11eb-bd67-8f40fbcbf0d9"
+                                                                  ? SizedBox(
+                                                                      height:
+                                                                          30,
+                                                                    )
+                                                                  : Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                          horizontal:
+                                                                              50,
+                                                                          vertical:
+                                                                              30),
+                                                                      child:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.bottomRight,
+                                                                        child: IconButton(
+                                                                            hoverColor: Colors.purple,
+                                                                            tooltip: "Delete Rubric",
+                                                                            icon: Icon(
+                                                                              Icons.delete,
+                                                                              color: Colors.grey[600],
+                                                                              size: 38,
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              listofrubric = snapshot.data.listOfRubric;
+                                                                              listofrubric.removeAt(index);
+                                                                              provider.deleteRubricfromForm(snapshot.data, listofrubric);
+                                                                            }),
                                                                       ),
-                                                                      onPressed: () {
-                                                                        listofrubric = snapshot
-                                                                            .data
-                                                                            .listOfRubric;
-                                                                        listofrubric
-                                                                            .removeAt(index);
-                                                                        provider.deleteRubricfromForm(
-                                                                            snapshot.data,
-                                                                            listofrubric);
-                                                                      }),
-                                                                ),
-                                                              ),
+                                                                    ),
                                                             ],
                                                           ),
                                                         ],

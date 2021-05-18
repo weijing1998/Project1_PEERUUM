@@ -27,6 +27,7 @@ class CoursesPageState extends State<CoursesPage> {
 
   @override
   void initState() {
+  
     super.initState();
   }
 
@@ -94,7 +95,9 @@ class CoursesPageState extends State<CoursesPage> {
                                         ChangeNotifierProvider(
                                           create: (context) =>
                                               ProjectProvider(),
-                                          child: AddCourseDialog(),
+                                          child: AddCourseDialog(
+                                            user: widget.user,
+                                          ),
                                         ));
                               },
                               shape: RoundedRectangleBorder(
@@ -139,6 +142,7 @@ class CoursesPageState extends State<CoursesPage> {
                                           create: (context) =>
                                               ProjectProvider(),
                                           child: DeleteCourseDialog(
+                                            user: widget.user,
                                             data: snapshot.data,
                                           ),
                                         ),
@@ -202,224 +206,227 @@ class CoursesPageState extends State<CoursesPage> {
                                 : ListView.builder(
                                     itemCount: snapshot.data.length,
                                     itemBuilder: (context, index) {
-                                      return Card(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Container(
-                                            height: 200,
-                                            width: 200,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  color: Colors.blue[300],
-                                                  height: 50,
-                                                  width: double.infinity,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 20),
-                                                      child: Text(
-                                                        " COURSE NAME : " +
-                                                            snapshot.data[index]
-                                                                .courseName
-                                                                .toUpperCase(),
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 20),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 150,
-                                                  width: double.infinity,
-                                                  color: Colors.blueGrey[50],
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                      return snapshot.data[index].ownerid ==
+                                              widget.user.userid
+                                          ? Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Container(
+                                                  height: 200,
+                                                  width: 200,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Container(
-                                                        width: size.width / 1.9,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                        color: Colors.blue[300],
+                                                        height: 50,
+                                                        width: double.infinity,
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        20),
+                                                            child: Text(
+                                                              " COURSE NAME : " +
+                                                                  snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .courseName
+                                                                      .toUpperCase(),
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontSize: 20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 150,
+                                                        width: double.infinity,
+                                                        color:
+                                                            Colors.blueGrey[50],
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            //Course ID
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      10.0),
-                                                              child: Row(
+                                                            Container(
+                                                              width:
+                                                                  size.width /
+                                                                      1.9,
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .article,
-                                                                    size: 25,
+                                                                  //Course ID
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .article,
+                                                                          size:
+                                                                              25,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              20,
+                                                                        ),
+                                                                        Text(
+                                                                          "COURSE CODE : " +
+                                                                              snapshot.data[index].courseCode,
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        )
+                                                                      ],
+                                                                    ),
                                                                   ),
-                                                                  SizedBox(
-                                                                    width: 20,
+                                                                  //Course Group
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .group,
+                                                                          size:
+                                                                              25,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              20,
+                                                                        ),
+                                                                        Text(
+                                                                          "COURSE GROUP : " +
+                                                                              snapshot.data[index].courseGroup,
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        )
+                                                                      ],
+                                                                    ),
                                                                   ),
-                                                                  Text(
-                                                                    "COURSE CODE : " +
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .courseCode,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  )
+                                                                  // Course Batch
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .calendar_today,
+                                                                          size:
+                                                                              25,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              20,
+                                                                        ),
+                                                                        Text(
+                                                                          "COURSE BATCH : " +
+                                                                              snapshot.data[index].courseBatch,
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
                                                                 ],
                                                               ),
                                                             ),
-                                                            //Course Group
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      10.0),
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons.group,
-                                                                    size: 25,
+                                                            Container(
+                                                              height: 40.0,
+                                                              margin: EdgeInsets
+                                                                  .all(15),
+                                                              child:
+                                                                  MaterialButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await provider
+                                                                      .setCoursesId(snapshot
+                                                                          .data[
+                                                                              index]
+                                                                          .courseID);
+                                                                  widget
+                                                                      .toggleViewCourse(
+                                                                          true);
+                                                                },
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            80.0)),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            0.0),
+                                                                child: Ink(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                          gradient:
+                                                                              LinearGradient(
+                                                                            colors: [
+                                                                              Colors.blue[400],
+                                                                              Colors.blue[800]
+                                                                            ],
+                                                                            begin:
+                                                                                Alignment.centerLeft,
+                                                                            end:
+                                                                                Alignment.centerRight,
+                                                                          ),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30.0)),
+                                                                  child:
+                                                                      Container(
+                                                                    constraints: BoxConstraints(
+                                                                        maxWidth:
+                                                                            150.0,
+                                                                        minHeight:
+                                                                            40.0),
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child: Text(
+                                                                      "View Course",
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
                                                                   ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                    "COURSE GROUP : " +
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .courseGroup,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            // Course Batch
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      10.0),
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .calendar_today,
-                                                                    size: 25,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                    "COURSE BATCH : " +
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .courseBatch,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  )
-                                                                ],
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      Container(
-                                                        height: 40.0,
-                                                        margin:
-                                                            EdgeInsets.all(15),
-                                                        child: MaterialButton(
-                                                          onPressed: () async {
-                                                            await provider
-                                                                .setCoursesId(
-                                                                    snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .courseID);
-                                                            widget
-                                                                .toggleViewCourse(
-                                                                    true);
-                                                          },
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          80.0)),
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  0.0),
-                                                          child: Ink(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    gradient:
-                                                                        LinearGradient(
-                                                                      colors: [
-                                                                        Colors.blue[
-                                                                            400],
-                                                                        Colors.blue[
-                                                                            800]
-                                                                      ],
-                                                                      begin: Alignment
-                                                                          .centerLeft,
-                                                                      end: Alignment
-                                                                          .centerRight,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            30.0)),
-                                                            child: Container(
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                      maxWidth:
-                                                                          150.0,
-                                                                      minHeight:
-                                                                          40.0),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(
-                                                                "View Course",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
+                                              ),
+                                            )
+                                          : SizedBox();
                                     });
                           } else {
                             return Center(
