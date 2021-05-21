@@ -60,7 +60,7 @@ class ScorePageState extends State<ScorePage> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Image.network(
-                              "images/score.png",
+                              "assets/images/score.png",
                               scale: 9,
                             ),
                           ),

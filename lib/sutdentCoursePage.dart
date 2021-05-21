@@ -63,7 +63,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                       child: Row(
                         children: [
                           Image.network(
-                            "images/courses.png",
+                            "assets/images/courses.png",
                             scale: 9,
                           ),
                           Align(

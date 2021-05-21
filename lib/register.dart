@@ -17,6 +17,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   double width;
   double height;
+  double total;
   bool submitting = false;
   String typeOfUser = "Student";
   TextEditingController nameController = TextEditingController();
@@ -45,6 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    total = (width + height) / 2 / 100;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -66,8 +68,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             child: Center(
               child: Container(
-                width: width - 500,
-                height: height - 160,
+                width: width * 0.7,
+                height: height * 0.85,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [kItemCardShadow],
@@ -105,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Text(
                               'Sign Up',
                               style: TextStyle(
-                                fontSize: 32,
+                                fontSize: total * 2,
                                 fontWeight: FontWeight.w900,
                               ),
                               textAlign: TextAlign.center,
@@ -113,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(height: 32),
+                                SizedBox(height: height / 100 * 2),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -122,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       tooltip: "Lecturer",
                                       highlightColor: highlightcolor,
                                       icon: Image.asset('images/lecturer.png'),
-                                      iconSize: 140,
+                                      iconSize: total * 10,
                                       onPressed: () {
                                         setState(() {
                                           typeOfUser = "Lecturer";
@@ -132,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     IconButton(
                                       tooltip: "Student",
                                       icon: Image.asset('images/student.png'),
-                                      iconSize: 140,
+                                      iconSize: total * 10,
                                       onPressed: () {
                                         setState(() {
                                           typeOfUser = "Student";
@@ -141,170 +143,245 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 32),
+                                SizedBox(height: height * 0.02),
                                 Form(
                                   key: _formKey,
                                   child: typeOfUser == "Student"
                                       ? Column(
                                           children: [
-                                            TextFormField(
-                                              controller: nameController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Full Name',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller: nameController,
+                                                  decoration: InputDecoration(
+                                                      hintText: 'Full Name',
+                                                      hintStyle: TextStyle()),
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Name';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Name';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                             SizedBox(height: 4),
-                                            TextFormField(
-                                              controller: emailController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Email Address',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller: emailController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Email Address',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Email';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Email';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                             SizedBox(height: 4),
-                                            TextFormField(
-                                              controller: matricController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Matric Number',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller: matricController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Matric Number',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Empty Matric';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Empty Matric';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                             SizedBox(height: 4),
-                                            TextFormField(
-                                              controller: passwordController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Password',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller:
+                                                      passwordController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Password',
+                                                  ),
+                                                  obscureText: true,
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Password';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              obscureText: true,
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Password';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
-                                            TextFormField(
-                                              controller:
-                                                  confirmPasswordController,
-                                              obscureText: true,
-                                              decoration: InputDecoration(
-                                                hintText: 'Confirm Password',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller:
+                                                      confirmPasswordController,
+                                                  obscureText: true,
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Confirm Password',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value !=
+                                                            passwordController
+                                                                .text ||
+                                                        value.isEmpty) {
+                                                      return 'Incorrect Password';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value !=
-                                                        passwordController
-                                                            .text ||
-                                                    value.isEmpty) {
-                                                  return 'Incorrect Password';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                           ],
                                         )
                                       : Column(
                                           children: [
-                                            TextFormField(
-                                              controller: nameController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Full Name',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller: nameController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Full Name',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Name';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Name';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                             SizedBox(height: 4),
-                                            TextFormField(
-                                              controller: emailController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Email Address',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller: emailController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Email Address',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Email';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Email';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                             SizedBox(height: 4),
-                                            TextFormField(
-                                              controller: passwordController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Password',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller:
+                                                      passwordController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Password',
+                                                  ),
+                                                  obscureText: true,
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Invalid Password';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              obscureText: true,
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Invalid Password';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
-                                            TextFormField(
-                                              controller:
-                                                  confirmPasswordController,
-                                              obscureText: true,
-                                              decoration: InputDecoration(
-                                                hintText: 'Confirm Password',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller:
+                                                      confirmPasswordController,
+                                                  obscureText: true,
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Confirm Password',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value !=
+                                                            passwordController
+                                                                .text ||
+                                                        value.isEmpty) {
+                                                      return 'Incorrect Password';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value !=
-                                                        passwordController
-                                                            .text ||
-                                                    value.isEmpty) {
-                                                  return 'Incorrect Password';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
-                                            TextFormField(
-                                              controller: typeOfUserController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Refer Key',
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(1.0),
+                                              child: Container(
+                                                height: height * 0.045,
+                                                child: TextFormField(
+                                                  controller:
+                                                      typeOfUserController,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Refer Key',
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value.isEmpty ||
+                                                        value != "Lecturer") {
+                                                      return 'Need Refer Key';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
                                               ),
-                                              validator: (value) {
-                                                if (value.isEmpty ||
-                                                    value != "Lecturer") {
-                                                  return 'Need Refer Key';
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
                                             ),
                                           ],
                                         ),
                                 ),
-                                SizedBox(height: 92),
+                                SizedBox(height: height * 0.045),
                                 Container(
-                                  height: 48,
+                                  height: height * 0.055,
                                   width: width / 5,
                                   decoration: BoxDecoration(
                                     color: Colors.grey[600],
@@ -324,7 +401,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         Text(
                                           submitting ? 'Submitting' : 'Sign Up',
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: total * 1.2,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -335,7 +412,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 FontAwesomeIcons
                                                     .solidArrowAltCircleRight,
                                                 color: Colors.white,
-                                                size: 24,
+                                                size: total * 1.7,
                                               ),
                                       ],
                                     ),
@@ -360,16 +437,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                   alignment: Alignment.bottomLeft,
                                   child: Row(
                                     children: [
-                                      SizedBox(
-                                        width: 30,
-                                      ),
                                       Text(
                                         "Already have an account?",
+                                        style: TextStyle(fontSize: total * 1),
                                         textAlign: TextAlign.center,
                                       ),
                                       Container(
-                                        height: 20,
-                                        width: 70,
+                                        height: height * 0.02,
+                                        width: width * 0.04,
                                         child: MaterialButton(
                                             hoverColor: Colors.transparent,
                                             onPressed: () {
@@ -382,8 +457,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                             },
                                             child: Text(
                                               "Log In",
-                                              style:
-                                                  TextStyle(color: Colors.blue),
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: total * 1),
                                             )),
                                       ),
                                     ],
@@ -411,7 +487,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: FaIcon(
                     FontAwesomeIcons.arrowAltCircleLeft,
                     color: kGrey4,
-                    size: 32,
+                    size: total * 2.4,
                   ),
                   onTap: () {
                     Navigator.pushReplacement(
@@ -424,7 +500,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Main Page",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: total * 1.7,
+                        fontWeight: FontWeight.w600),
                   ),
                 )
               ],
@@ -447,7 +526,7 @@ class _RegisterPageState extends State<RegisterPage> {
           typeOfUser: typeOfUser,
           userName: nameController.text,
           userid: firebaseAuth.currentUser.uid);
-          
+
       await crud.setUser(datas);
 
       await userCredential.user.sendEmailVerification();

@@ -62,7 +62,7 @@ class _StudentPageState extends State<StudentPage> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: Image.network(
-                              'images/logowhite.png',
+                              'assets/images/logowhite.png',
                               scale: 2.2,
                             ),
                           ),
@@ -72,7 +72,7 @@ class _StudentPageState extends State<StudentPage> {
                     ),
                     SizedBox(height: 20),
                     CircleAvatar(
-                      backgroundImage: NetworkImage('images/header.jpg'),
+                      backgroundImage: NetworkImage('assets/images/header.jpg'),
                       radius: 70,
                     ),
                     SizedBox(

@@ -36,7 +36,7 @@ class _UserPageState extends State<UserPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage('images/userwall.jpg'),
+                          image: NetworkImage('assets/images/userwall.jpg'),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -48,7 +48,7 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage('images/header.jpg'),
+                          backgroundImage: NetworkImage('assets/images/header.jpg'),
                           radius: 80,
                         ),
                         Padding(

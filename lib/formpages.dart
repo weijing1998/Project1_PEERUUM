@@ -49,7 +49,7 @@ class _FormPageState extends State<FormPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 10, 0),
                           child: Image.network(
-                            "images/formspic.png",
+                            "assets/images/formspic.png",
                             scale: 9,
                           ),
                         ),

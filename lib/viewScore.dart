@@ -459,7 +459,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: CircleAvatar(
                                   backgroundImage:
-                                      NetworkImage('images/header.jpg'),
+                                      NetworkImage('assets/images/header.jpg'),
                                   radius: 45,
                                 ),
                               ),
@@ -784,7 +784,7 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage('images/header.jpg'),
+                            backgroundImage: NetworkImage('assets/images/header.jpg'),
                             radius: 45,
                           ),
                         ),

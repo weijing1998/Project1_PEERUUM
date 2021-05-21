@@ -635,7 +635,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         child:
                                                                             CircleAvatar(
                                                                           backgroundImage:
-                                                                              NetworkImage('images/header.jpg'),
+                                                                              NetworkImage('assets/images/header.jpg'),
                                                                           radius:
                                                                               52,
                                                                         ),

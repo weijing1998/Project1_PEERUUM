@@ -72,7 +72,7 @@ class _SidebarState extends State<Sidebar> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: Image.network(
-                              'images/logowhite.png',
+                              'assets/images/logowhite.png',
                               scale: 2.5,
                             ),
                           ),
@@ -81,7 +81,7 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     SizedBox(height: 15),
                     CircleAvatar(
-                      backgroundImage: NetworkImage('images/header.jpg'),
+                      backgroundImage: NetworkImage('assets/images/header.jpg'),
                       radius: 60,
                     ),
                     SizedBox(

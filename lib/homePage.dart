@@ -55,6 +55,9 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
 
     return Column(
       children: [
@@ -62,7 +65,7 @@ class Body extends StatelessWidget {
           decoration: BoxDecoration(
               image: DecorationImage(
             fit: BoxFit.fill,
-            image: NetworkImage("images/lecturerhall.jpg"),
+            image: NetworkImage("assets/images/lecturerhall.jpg"),
           )),
           height: 1000,
           child: Column(
@@ -78,8 +81,13 @@ class Body extends StatelessWidget {
                     FractionallySizedBox(
                       alignment: Alignment.centerRight,
                       widthFactor: 0.5,
-                      child: Image.network("assets/images/logowhite.png",
-                          scale: .6),
+                      child: Container(
+                        height: height * 7,
+                        width: width * 3,
+                        child: Image.network(
+                          "assets/images/logowhite.png",
+                        ),
+                      ),
                     ),
                     FractionallySizedBox(
                       alignment: Alignment.centerLeft,
@@ -160,13 +168,18 @@ class Body extends StatelessWidget {
                     child: Text(
                       "WHAT IS PEERUUM?",
                       style: TextStyle(
-                          fontSize: 50,
+                          fontSize: total * 4,
                           fontWeight: FontWeight.w100,
                           color: Colors.grey),
                     ),
                   ),
-                  Image(
-                    image: NetworkImage("assets/images/peeruum.PNG", scale: 2),
+                  Container(
+                    height: height * 0.5,
+                    child: Image(
+                      image: NetworkImage(
+                        "assets/images/peeruum.PNG",
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: Padding(
@@ -176,7 +189,7 @@ class Body extends StatelessWidget {
                           "PEERUUM web-based system is a platform for lecturers and teachers to customize the rubric and scales in the peer evaluation form on PEERUUM. Students can directly access to the website to evaluate their peer and submit the score to lecturers through the website. Lecturers no longer need to manually add the score because this system will save the score according to the class and group in database.",
                           textAlign: TextAlign.justify,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: total * 1.5,
                             height: 1.5,
                           ),
                         ),
@@ -197,162 +210,169 @@ class Body extends StatelessWidget {
             children: [
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 40),
+                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 20),
                   child: Text(
                     "SERVICES",
                     style: TextStyle(
-                        fontSize: 50,
+                        fontSize: total * 4,
                         fontWeight: FontWeight.w100,
                         color: Colors.grey),
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //Course Service
-                  Container(
-                    height: size.height / 1.8,
-                    width: size.width / 4,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(40.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: size.height / 6.5,
-                            width: size.width / 6.5,
-                            child: Image(
-                              image: NetworkImage("assets/images/courses.png"),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text("MANAGE COURSES",
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //Course Service
+                    Container(
+                      height: size.height / 1.8,
+                      width: size.width / 4,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
                             child: Container(
-                              child: Text(
-                                  "PEERUUM allow you to create a course according to your subject and classes that you are currently teaching. This features let you easy to manage the peer evaluation form for your students.",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    height: 1.3,
-                                  )),
+                              alignment: Alignment.center,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              height: height * 0.13,
+                              width: width * 0.13,
+                              child: Image(
+                                image:
+                                    NetworkImage("assets/images/courses.png"),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: Text("MANAGE COURSES",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontSize: total * 2.3,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Container(
+                                child: Text(
+                                    "PEERUUM allow you to create a course according to your subject and classes that you are currently teaching. This features let you easy to manage the peer evaluation form for your students.",
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: total * 1.4,
+                                      height: 1.3,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  //CUSTOMIZE peer evaluation form
-                  Container(
-                    height: size.height / 1.8,
-                    width: size.width / 4,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(40.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: size.height / 6.5,
-                            width: size.width / 6.5,
-                            child: Image(
-                              image: NetworkImage("assets/images/form.png",
-                                  scale: 4),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text("CUSTOMIZE PEER EVALUATION FROM",
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                    //CUSTOMIZE peer evaluation form
+                    Container(
+                      height: size.height / 1.8,
+                      width: size.width / 4,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
                             child: Container(
-                              child: Text(
-                                  "PEERUUM provide you a customized peer evaluation features to customized the evaluation form and receive peer evaluation score from the student. This allow you to change the rubric from the form easily and more flexible compare to static form. ",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    height: 1.3,
-                                  )),
+                              height: height * 0.13,
+                              width: width * 0.13,
+                              alignment: Alignment.center,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image(
+                                image: NetworkImage(
+                                  "assets/images/form.png",
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: Text("CUSTOMIZE PEER EVALUATION FROM",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontSize: total * 2,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Container(
+                                child: Text(
+                                    "PEERUUM provide you a customized peer evaluation features to customized the evaluation form and receive peer evaluation score from the student. This allow you to change the rubric from the form easily and more flexible compare to static form. ",
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: total * 1.4,
+                                      height: 1.2,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  //Score panel
-                  Container(
-                    height: size.height / 1.8,
-                    width: size.width / 4,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(40.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: size.height / 6.5,
-                            width: size.width / 6.5,
-                            child: Image(
-                                image: NetworkImage("assets/images/score.png",
-                                    scale: 4)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text("SCORE PANEL",
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                    //Score panel
+                    Container(
+                      height: size.height / 1.8,
+                      width: size.width / 4,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
                             child: Container(
-                              child: Text(
-                                  "PEERUUM provide you a formular to calculate all the student score after the student finish their peer evaluation by using the peer evaluation form that you have created.",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    height: 1.3,
-                                  )),
+                              alignment: Alignment.center,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              height: height * 0.13,
+                              width: width * 0.13,
+                              child: Image(
+                                  image: NetworkImage(
+                                "assets/images/score.png",
+                              )),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: Text("SCORE PANEL",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontSize: total * 2.3,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Container(
+                                child: Text(
+                                    "PEERUUM provide you a formular to calculate all the student score after the student finish their peer evaluation by using the peer evaluation form that you have created.",
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: total * 1.4,
+                                      height: 1.2,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -375,7 +395,7 @@ class Body extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
                   "DEVELOPER OF PEER UUM",
-                  style: TextStyle(color: Colors.grey, fontSize: 50),
+                  style: TextStyle(color: Colors.grey, fontSize: total * 4),
                 ),
               ),
               Row(
@@ -390,17 +410,18 @@ class Body extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage('images/weijing.png'),
-                            radius: 125,
+                            backgroundImage:
+                                NetworkImage('assets/images/weijing.png'),
+                            radius: total * 7,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(3.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             "Yong Wei Jing",
                             style: TextStyle(
                                 color: Colors.grey[900],
-                                fontSize: 20,
+                                fontSize: total * 1.8,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -410,7 +431,7 @@ class Body extends StatelessWidget {
                             "weijing980924@gmail.com",
                             style: TextStyle(
                                 color: Colors.grey[600],
-                                fontSize: 15,
+                                fontSize: total * 1.5,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -420,7 +441,7 @@ class Body extends StatelessWidget {
                             "Developer of PEER UUM",
                             style: TextStyle(
                                 color: Colors.grey[600],
-                                fontSize: 15,
+                                fontSize: total * 1.5,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -430,38 +451,31 @@ class Body extends StatelessWidget {
                             "Undergraduate Student In UUM",
                             style: TextStyle(
                                 color: Colors.grey[600],
-                                fontSize: 15,
+                                fontSize: total * 1.5,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: FaIcon(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                FaIcon(
                                   FontAwesomeIcons.github,
-                                  size: 35,
+                                  size: total * 2.3,
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: FaIcon(
+                                FaIcon(
                                   FontAwesomeIcons.facebook,
-                                  size: 35,
+                                  size: total * 2.3,
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: FaIcon(
+                                FaIcon(
                                   FontAwesomeIcons.instagram,
-                                  size: 35,
+                                  size: total * 2.3,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -481,30 +495,34 @@ class Body extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      "PEER UUM",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        "PEER UUM",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: total * 1.3,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(220, 4, 4, 4),
-                    child: Text(
-                      "Copyright © 2021, PEERUUM. All rights reserved.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                      child: Text(
+                        "Copyright © 2021, PEERUUM. All rights reserved.",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: total * 1.3,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 4, 130, 4),
@@ -536,7 +554,9 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 45, vertical: 20),
       child: Row(
@@ -547,14 +567,14 @@ class _NavBarState extends State<NavBar> {
               Text(
                 "PEER UUM",
                 style: TextStyle(
-                    fontSize: 40,
+                    fontSize: total * 3,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               )
             ],
           ),
           Container(
-            width: size.width / 2,
+            width: width / 2,
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -570,7 +590,7 @@ class _NavBarState extends State<NavBar> {
                   child: Text(
                     "HOME",
                     style: TextStyle(
-                        fontSize: 23,
+                        fontSize: total * 2,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
@@ -592,7 +612,7 @@ class _NavBarState extends State<NavBar> {
                   child: Text(
                     "ABOUT",
                     style: TextStyle(
-                        fontSize: 23,
+                        fontSize: total * 2,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
@@ -613,7 +633,7 @@ class _NavBarState extends State<NavBar> {
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(
-                        fontSize: 23,
+                        fontSize: total * 2,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
@@ -625,8 +645,8 @@ class _NavBarState extends State<NavBar> {
                   },
                 ),
                 MaterialButton(
-                  height: 50,
-                  minWidth: 130,
+                  height: height * 0.06,
+                  minWidth: width * 0.09,
                   color: Colors.blue[900],
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
