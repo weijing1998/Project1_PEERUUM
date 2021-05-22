@@ -25,6 +25,9 @@ class _ViewFormPageState extends State<ViewFormPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Forms>(
         stream: provider.form,
@@ -48,7 +51,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                               child: Text(
                                 "FORM DETAIL",
                                 style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
+                                    fontSize: total * 2,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
 
@@ -89,13 +93,15 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                           BorderRadius.circular(30.0)),
                                   child: Container(
                                     constraints: BoxConstraints(
-                                        maxWidth: 130.0, minHeight: 40.0),
+                                        maxWidth: width * 0.09,
+                                        minHeight: height * 0.05),
                                     alignment: Alignment.center,
                                     child: Text(
                                       "Edit Form",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 12),
+                                          color: Colors.white,
+                                          fontSize: total * 1.1),
                                     ),
                                   ),
                                 ),
@@ -125,7 +131,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                 child: Text(
                                   "FORM NAME : " + snapshot.data.formName,
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.3,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -134,7 +140,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                 child: Text(
                                   "FORM CODE : " + snapshot.data.formCode,
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.3,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -145,7 +151,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                       snapshot.data.listOfRubric.length
                                           .toString(),
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.3,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -168,7 +174,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                 child: Text(
                                   "EVALUATION RUBRICS",
                                   style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: total * 2,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -223,15 +229,15 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                             30.0)),
                                                 child: Container(
                                                   constraints: BoxConstraints(
-                                                      maxWidth: 130.0,
-                                                      minHeight: 40.0),
+                                                      maxWidth: width * 0.09,
+                                                      minHeight: height * 0.05),
                                                   alignment: Alignment.center,
                                                   child: Text(
                                                     "Add Rubric",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 12),
+                                                        fontSize: total * 1.1),
                                                   ),
                                                 ),
                                               ),
@@ -292,7 +298,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         height:
                                                                             1.3,
                                                                         fontSize:
-                                                                            20,
+                                                                            total *
+                                                                                1.1,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -307,7 +314,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         height:
                                                                             1.3,
                                                                         fontSize:
-                                                                            20,
+                                                                            total *
+                                                                                1.1,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -339,7 +347,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         ['bad'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            total *
+                                                                                1.2,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -366,7 +375,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         'good'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            total *
+                                                                                1.2,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -456,8 +466,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         style: TextStyle(
                                                                             height:
                                                                                 1.3,
-                                                                            fontSize:
-                                                                                20,
+                                                                            fontSize: total *
+                                                                                1.1,
                                                                             fontWeight:
                                                                                 FontWeight.w400),
                                                                       ),
@@ -476,8 +486,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         style: TextStyle(
                                                                             height:
                                                                                 1.3,
-                                                                            fontSize:
-                                                                                20,
+                                                                            fontSize: total *
+                                                                                1.1,
                                                                             fontWeight:
                                                                                 FontWeight.w400),
                                                                       ),
@@ -605,8 +615,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         style: TextStyle(
                                                                             height:
                                                                                 1.3,
-                                                                            fontSize:
-                                                                                20,
+                                                                            fontSize: total *
+                                                                                1.1,
                                                                             fontWeight:
                                                                                 FontWeight.w400),
                                                                       ),
@@ -619,8 +629,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                         style: TextStyle(
                                                                             height:
                                                                                 1.3,
-                                                                            fontSize:
-                                                                                20,
+                                                                            fontSize: total *
+                                                                                1.1,
                                                                             fontWeight:
                                                                                 FontWeight.w400),
                                                                       ),
@@ -728,6 +738,9 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: scale
@@ -735,7 +748,7 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 20,
+                      height: total * 1.2,
                       width: size.width / 25,
                       child: Transform.scale(
                         scale: 0.8,
@@ -782,6 +795,9 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+       double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: multi
@@ -791,7 +807,7 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: 20,
+                        height: total * 1.2,
                         width: size.width / 25,
                         child: Transform.scale(
                           scale: 0.8,

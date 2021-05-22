@@ -271,22 +271,22 @@ class _LoginPageState extends State<LoginPage> {
                                               setState(() {
                                                 submitting = true;
                                               });
-                                              // Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         Sidebar(
-                                              //       users: PeerUser(
-                                              //           userName: 'asd',
-                                              //           email: "asd",
-                                              //           typeOfUser: "Student",
-                                              //           matric: '261505'),
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Sidebar(
+                                                    users: PeerUser(
+                                                        userName: 'asd',
+                                                        email: "asd",
+                                                        typeOfUser: "Student",
+                                                        matric: '261505'),
+                                                  ),
+                                                ),
+                                              );
 
-                                              await signIn(emailController.text,
-                                                  passwordController.text);
+                                              // await signIn(emailController.text,
+                                              //     passwordController.text);
                                             },
                                           ),
                                         ),

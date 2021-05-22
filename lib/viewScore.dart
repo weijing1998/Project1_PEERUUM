@@ -19,6 +19,9 @@ class _ViewScoreState extends State<ViewScore> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Courses>(
         stream: provider.streamCourse,
@@ -41,7 +44,8 @@ class _ViewScoreState extends State<ViewScore> {
                           child: Text(
                             "COURSE DETAIL",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: total * 2,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
 
@@ -69,7 +73,8 @@ class _ViewScoreState extends State<ViewScore> {
                             child: Text(
                               "COURSE NAME : " + snapshotCourse.data.courseName,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.3,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -77,7 +82,8 @@ class _ViewScoreState extends State<ViewScore> {
                             child: Text(
                               "COURSE CODE : " + snapshotCourse.data.courseCode,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.3,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -86,7 +92,8 @@ class _ViewScoreState extends State<ViewScore> {
                               "COURSE GROUP : " +
                                   snapshotCourse.data.courseGroup,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.3,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -95,7 +102,8 @@ class _ViewScoreState extends State<ViewScore> {
                               "COURSE BATCH : " +
                                   snapshotCourse.data.courseBatch,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.3,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -105,7 +113,7 @@ class _ViewScoreState extends State<ViewScore> {
                                 Text(
                                   "FORM STATUS : ",
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.3,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 snapshotCourse.data.listOfForm.length == 0
@@ -125,14 +133,14 @@ class _ViewScoreState extends State<ViewScore> {
                                               ],
                                             ),
                                             border: Border.all(
-                                                width: 3,
+                                                width: 1,
                                                 color: Colors.grey[600])),
                                         child: Align(
                                           child: Text(
                                             "No Form Apply",
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 12,
+                                                fontSize: total * 1.1,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                         ),
@@ -183,7 +191,8 @@ class _ViewScoreState extends State<ViewScore> {
                                                             index]["formname"],
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 12,
+                                                            fontSize:
+                                                                total * 1.1,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w200),
@@ -210,7 +219,7 @@ class _ViewScoreState extends State<ViewScore> {
                         child: Text(
                           "STUDENT PERFORMANCE & COMMENTS",
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                              fontSize: total * 2, fontWeight: FontWeight.bold),
                         ),
                         alignment: Alignment.centerLeft,
                       ),
@@ -261,7 +270,7 @@ class _ViewScoreState extends State<ViewScore> {
                                                               .listOfForm[index]
                                                           ["formname"],
                                                   style: TextStyle(
-                                                      fontSize: 23,
+                                                      fontSize: total * 1.1,
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       color: Colors.white),
@@ -294,7 +303,7 @@ class _ViewScoreState extends State<ViewScore> {
                                       child: Text(
                                         "No Form Applied or No Student Submit Any Evaluation",
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: total * 1.1,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ))),
@@ -310,7 +319,7 @@ class _ViewScoreState extends State<ViewScore> {
                         child: Text(
                           "STUDENT TOTAL SCORE",
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                              fontSize: total * 2, fontWeight: FontWeight.bold),
                         ),
                         alignment: Alignment.centerLeft,
                       ),
@@ -360,7 +369,7 @@ class _ViewScoreState extends State<ViewScore> {
                                                               .listOfForm[index]
                                                           ["formname"],
                                                   style: TextStyle(
-                                                      fontSize: 23,
+                                                      fontSize: total * 1.1,
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       color: Colors.white),
@@ -393,7 +402,7 @@ class _ViewScoreState extends State<ViewScore> {
                                       child: Text(
                                         "No Form Applied or No Student Submit Any Evaluation",
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: total * 1.1,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ))),
@@ -452,72 +461,21 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         width: size.width / 25,
                       ),
                       Container(
-                          width: size.width / 2.2,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage('assets/images/header.jpg'),
-                                  radius: 45,
-                                ),
+                        width: size.width / 2.2,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage('assets/images/header.jpg'),
+                                radius: 45,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 10),
-                                child: Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "Name :" +
-                                              widget.listofscore[index]
-                                                  ["evaluateusername"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "Email :" +
-                                              widget.listofscore[index]
-                                                  ["evaluateuseremail"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "Matric No :" +
-                                              widget.listofscore[index]
-                                                  ["evaluateusermatric"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "Group :" +
-                                              widget.listofscore[index]
-                                                  ["groupname"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                              child: Container(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -525,10 +483,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                     Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        "Student point :" +
+                                        "Name :" +
                                             widget.listofscore[index]
-                                                    ["studentpoint"]
-                                                .toStringAsFixed(2),
+                                                ["evaluateusername"],
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -536,10 +493,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                     Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        "Total point :" +
+                                        "Email :" +
                                             widget.listofscore[index]
-                                                    ["totalpoint"]
-                                                .toStringAsFixed(2),
+                                                ["evaluateuseremail"],
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -547,22 +503,73 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                     Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        "Rate By :" +
+                                        "Matric No :" +
                                             widget.listofscore[index]
-                                                ["currentuser"],
+                                                ["evaluateusermatric"],
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500),
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: false,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "Group :" +
+                                            widget.listofscore[index]
+                                                ["groupname"],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      "Student point :" +
+                                          widget.listofscore[index]
+                                                  ["studentpoint"]
+                                              .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      "Total point :" +
+                                          widget.listofscore[index]
+                                                  ["totalpoint"]
+                                              .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      "Rate By :" +
+                                          widget.listofscore[index]
+                                              ["currentuser"],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      
+                      ),
                       Row(
                         children: [
                           Padding(
@@ -784,7 +791,8 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage('assets/images/header.jpg'),
+                            backgroundImage:
+                                NetworkImage('assets/images/header.jpg'),
                             radius: 45,
                           ),
                         ),

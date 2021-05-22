@@ -29,6 +29,9 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<List<Forms>>(
         stream: provider.formList,
@@ -48,15 +51,18 @@ class _FormPageState extends State<FormPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 10, 0),
-                          child: Image.network(
-                            "assets/images/formspic.png",
-                            scale: 9,
+                          child: Container(
+                            height: height * 0.08,
+                            width: width * 0.04,
+                            child: Image.network(
+                              "assets/images/formspic.png",
+                            ),
                           ),
                         ),
                         Text(
                           'FORM PAGE',
                           style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
+                              fontSize: total * 2, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -65,7 +71,6 @@ class _FormPageState extends State<FormPage> {
                       child: Row(
                         children: [
                           Container(
-                            height: 40.0,
                             margin: EdgeInsets.all(15),
                             child: MaterialButton(
                               onPressed: () {
@@ -97,7 +102,8 @@ class _FormPageState extends State<FormPage> {
                                     borderRadius: BorderRadius.circular(30.0)),
                                 child: Container(
                                   constraints: BoxConstraints(
-                                      maxWidth: 150.0, minHeight: 40.0),
+                                      maxWidth: width * 0.09,
+                                      minHeight: height * 0.05),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Add Form",
@@ -110,7 +116,6 @@ class _FormPageState extends State<FormPage> {
                             ),
                           ),
                           Container(
-                            height: 40.0,
                             margin: EdgeInsets.all(15),
                             child: MaterialButton(
                               onPressed: snapshot.hasData
@@ -148,7 +153,8 @@ class _FormPageState extends State<FormPage> {
                                     borderRadius: BorderRadius.circular(30.0)),
                                 child: Container(
                                   constraints: BoxConstraints(
-                                      maxWidth: 150.0, minHeight: 40.0),
+                                      maxWidth: width * 0.09,
+                                      minHeight: height * 0.05),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Delete Form",
@@ -280,7 +286,7 @@ class _FormPageState extends State<FormPage> {
                                                       children: [
                                                         Container(
                                                           width:
-                                                              size.width / 1.9,
+                                                              size.width / 2.3,
                                                           child: Row(
                                                             children: [
                                                               Column(
@@ -347,7 +353,6 @@ class _FormPageState extends State<FormPage> {
                                                           ),
                                                         ),
                                                         Container(
-                                                          height: 40.0,
                                                           margin:
                                                               EdgeInsets.all(
                                                                   15),
@@ -390,12 +395,13 @@ class _FormPageState extends State<FormPage> {
                                                                           BorderRadius.circular(
                                                                               30.0)),
                                                               child: Container(
-                                                                constraints:
-                                                                    BoxConstraints(
-                                                                        maxWidth:
-                                                                            150.0,
-                                                                        minHeight:
-                                                                            40.0),
+                                                                constraints: BoxConstraints(
+                                                                    maxWidth:
+                                                                        width *
+                                                                            0.09,
+                                                                    maxHeight:
+                                                                        height *
+                                                                            0.05),
                                                                 alignment:
                                                                     Alignment
                                                                         .center,
@@ -423,8 +429,6 @@ class _FormPageState extends State<FormPage> {
                                                               return snapshotcourses
                                                                       .hasData
                                                                   ? Container(
-                                                                      height:
-                                                                          40.0,
                                                                       margin: EdgeInsets
                                                                           .all(
                                                                               15),
@@ -466,7 +470,7 @@ class _FormPageState extends State<FormPage> {
                                                                           child:
                                                                               Container(
                                                                             constraints:
-                                                                                BoxConstraints(maxWidth: 150.0, minHeight: 40.0),
+                                                                                BoxConstraints(maxWidth: width * 0.09, maxHeight: height * 0.05),
                                                                             alignment:
                                                                                 Alignment.center,
                                                                             child:

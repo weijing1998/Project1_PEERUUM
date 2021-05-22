@@ -21,7 +21,9 @@ class Sidebar extends StatefulWidget {
   @override
   _SidebarState createState() => _SidebarState();
 }
- final firebaseAuth = FirebaseAuth.instance;
+
+final firebaseAuth = FirebaseAuth.instance;
+
 class _SidebarState extends State<Sidebar> {
   bool atCoursePage = true;
   bool atFormPage = false;
@@ -43,6 +45,9 @@ class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Scaffold(
       body: Container(
         child: Row(
@@ -71,18 +76,21 @@ class _SidebarState extends State<Sidebar> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
-                            child: Image.network(
-                              'assets/images/logowhite.png',
-                              scale: 2.5,
+                            child: Container(
+                              height: height*0.09,
+                              width: width*0.09,
+                              child: Image.network(
+                                'assets/images/logowhite.png',
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: height*0.01),
                     CircleAvatar(
                       backgroundImage: NetworkImage('assets/images/header.jpg'),
-                      radius: 60,
+                      radius: total *4.5,
                     ),
                     SizedBox(
                       height: size.height / 25,
@@ -90,11 +98,11 @@ class _SidebarState extends State<Sidebar> {
                     Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8),
                           child: Text(
                             widget.users.userName,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white,fontSize: total *1.2),
                           ),
                         ),
                         Padding(
@@ -102,14 +110,14 @@ class _SidebarState extends State<Sidebar> {
                           child: Text(
                             widget.users.email,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white, fontSize:  total * 1.2),
                           ),
                         ),
                       ],
                     ),
 
                     SizedBox(
-                      height: size.height / 25,
+                      height: size.height / 40  ,
                     ),
                     //Dashboard
                     Padding(
@@ -130,20 +138,20 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               Icons.dashboard,
-                              size: 30,
+                              size: total * 2.2,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 26),
+                            SizedBox(width: width * 0.02),
                             Text(
                               'Courses',
                               style:
-                                  TextStyle(fontSize: 17, color: Colors.white),
+                                  TextStyle(fontSize: total *1.6, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: height * 0.015),
                     //Form Page
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -163,20 +171,20 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               FontAwesomeIcons.dochub,
-                              size: 30,
+                              size: total * 2.2,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 26),
+                            SizedBox(width: width * 0.02),
                             Text(
                               'Form',
                               style:
-                                  TextStyle(fontSize: 17, color: Colors.white),
+                                  TextStyle(fontSize: total * 1.6, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: height * 0.015),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextButton(
@@ -195,20 +203,20 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               FontAwesomeIcons.sortNumericUpAlt,
-                              size: 30,
+                              size: total * 2.2,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 26),
+                            SizedBox(width: width * 0.02),
                             Text(
                               'Score',
                               style:
-                                  TextStyle(fontSize: 17, color: Colors.white),
+                                  TextStyle(fontSize: total * 1.6, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: height * 0.015),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextButton(
@@ -228,14 +236,14 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               FontAwesomeIcons.user,
-                              size: 30,
+                              size: total * 2.2,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 26),
+                            SizedBox(width: width * 0.015),
                             Text(
                               'User',
                               style:
-                                  TextStyle(fontSize: 17, color: Colors.white),
+                                  TextStyle(fontSize: total * 1.6, color: Colors.white),
                             ),
                           ],
                         ),
@@ -257,14 +265,14 @@ class _SidebarState extends State<Sidebar> {
                           children: [
                             Icon(
                               Icons.exit_to_app,
-                              size: 30,
+                              size: total * 2.2,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 26),
+                            SizedBox(width: width * 0.02),
                             Text(
                               'Sign out',
                               style:
-                                  TextStyle(fontSize: 17, color: Colors.white),
+                                  TextStyle(fontSize: total * 1.6, color: Colors.white),
                             ),
                           ],
                         ),
@@ -288,7 +296,10 @@ class _SidebarState extends State<Sidebar> {
         user: widget.users,
       );
     } else if (atFormPage == true) {
-      return FormPage(toggleFormpage: toggleViewFormpage,user: widget.users,);
+      return FormPage(
+        toggleFormpage: toggleViewFormpage,
+        user: widget.users,
+      );
     } else if (atScorePage == true) {
       return ScorePage(
         toggleViewScore: toggleViewScorepage,

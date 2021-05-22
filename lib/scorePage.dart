@@ -30,6 +30,9 @@ class ScorePageState extends State<ScorePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<List<Courses>>(
         stream: provider.courselist,
@@ -42,7 +45,7 @@ class ScorePageState extends State<ScorePage> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -54,14 +57,17 @@ class ScorePageState extends State<ScorePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(55, 0, 0, 0),
                       child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Image.network(
-                              "assets/images/score.png",
-                              scale: 9,
+                            child: Container(
+                              height: height * 0.08,
+                              width: width * 0.04,
+                              child: Image.network(
+                                "assets/images/score.png",
+                              ),
                             ),
                           ),
                           Align(
@@ -69,7 +75,8 @@ class ScorePageState extends State<ScorePage> {
                             child: Text(
                               "SCORE PAGE",
                               style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.w700),
+                                  fontSize: total * 2,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ),
                         ],
@@ -292,9 +299,11 @@ class ScorePageState extends State<ScorePage> {
                                                                       Container(
                                                                     constraints: BoxConstraints(
                                                                         maxWidth:
-                                                                            150.0,
-                                                                        minHeight:
-                                                                            40.0),
+                                                                            width *
+                                                                                0.09,
+                                                                        maxHeight:
+                                                                            height *
+                                                                                0.05),
                                                                     alignment:
                                                                         Alignment
                                                                             .center,

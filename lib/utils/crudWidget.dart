@@ -30,6 +30,9 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -65,7 +68,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                     "ADD COURSE",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -74,19 +77,20 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                   ),
                   //Add course name
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "COURSE NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               controller: courseName,
@@ -130,13 +134,14 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                           child: Text(
                             "COURSE CODE : ",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -177,12 +182,13 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                         Text(
                           "COURSE GROUP : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -224,12 +230,13 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                         Text(
                           "COURSE BATCH : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -270,15 +277,15 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
                               "Cancel",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: total,
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () {
@@ -290,15 +297,15 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
                               "Submit",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: total,
                                   fontWeight: FontWeight.w700),
                             ),
                             onPressed: () async {
@@ -349,8 +356,11 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
-
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     Size size = MediaQuery.of(context).size;
+
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -386,7 +396,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                     "DELETE COURSE",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -409,13 +419,14 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                               Text(
                                 "SELECTED COURSE : ",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: total * 1.4,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Container(
-                                  height: 50,
+                                  height: height * 0.05,
                                   width: size.width / 5,
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10.0),
@@ -444,7 +455,7 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                                                 child: new Text(
                                                   course.courseName,
                                                   style:
-                                                      TextStyle(fontSize: 12),
+                                                      TextStyle(fontSize:  total * 0.9),
                                                 ),
                                                 value: course.courseID,
                                               );
@@ -465,8 +476,8 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -485,8 +496,8 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -542,6 +553,9 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -577,7 +591,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                     "EDIT COURSE",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -593,12 +607,13 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         Text(
                           "COURSE NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) => projectProvider
@@ -642,13 +657,14 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                           child: Text(
                             "COURSE CODE : ",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) => projectProvider
@@ -690,12 +706,13 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         Text(
                           "COURSE GROUP : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) => projectProvider
@@ -737,12 +754,13 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                         Text(
                           "COURSE BATCH : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) => projectProvider
@@ -783,8 +801,8 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -803,8 +821,8 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -859,6 +877,9 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -894,7 +915,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                     "ADD GROUP",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -910,12 +931,13 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                         Text(
                           "GROUP NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -956,8 +978,8 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -976,8 +998,8 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -1038,6 +1060,9 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return AlertDialog(
       content: Stack(
@@ -1063,7 +1088,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
           ),
           Container(
             height: size.height / 2.5,
-            width: size.width / 3,
+            width: size.width / 1.9,
             child: Form(
               key: _formskey,
               child: Column(
@@ -1074,7 +1099,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                     "DELETE GROUP",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1097,14 +1122,15 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                               Text(
                                 "SELECTED GROUP : ",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: total * 1.1,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Container(
-                                  height: 50,
-                                  width: size.width / 14,
+                                  height: height * 0.05,
+                                  width: size.width / 4,
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10.0),
                                   decoration: BoxDecoration(
@@ -1119,7 +1145,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: 15),
+                                          color: Colors.blue, fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           group = newValue;
@@ -1148,8 +1174,8 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -1168,8 +1194,8 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -1236,6 +1262,9 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -1270,7 +1299,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                     "EDIT GROUP",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1288,21 +1317,22 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                           items: [],
                         )
                       : Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(4),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "SELECTED GROUP : ",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: total * 1.1,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Container(
-                                  height: 50,
-                                  width: size.width / 14,
+                                  height: height * 0.05,
+                                  width: size.width / 4,
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10.0),
                                   decoration: BoxDecoration(
@@ -1317,7 +1347,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: 15),
+                                          color: Colors.blue, fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           group = newValue;
@@ -1326,7 +1356,11 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                       items: widget.course.listOfGroup
                                           .map((groups) {
                                         return DropdownMenuItem(
-                                          child: new Text(groups["groupname"]),
+                                          child: new Text(
+                                            groups["groupname"],
+                                            style: TextStyle(
+                                                fontSize: total * 0.9),
+                                          ),
                                           value: groups,
                                         );
                                       }).toList(),
@@ -1340,19 +1374,21 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
 
                   //Edit course name
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "GROUP NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(width: width * 0.012,),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               controller: groupnameController,
@@ -1391,8 +1427,8 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -1411,8 +1447,8 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -1470,6 +1506,9 @@ class _AddFormDialogState extends State<AddFormDialog> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -1506,7 +1545,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                     "ADD FORM",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1522,12 +1561,13 @@ class _AddFormDialogState extends State<AddFormDialog> {
                         Text(
                           "FORM NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -1571,13 +1611,14 @@ class _AddFormDialogState extends State<AddFormDialog> {
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (value) =>
@@ -1618,8 +1659,8 @@ class _AddFormDialogState extends State<AddFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -1638,8 +1679,8 @@ class _AddFormDialogState extends State<AddFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
@@ -1689,6 +1730,9 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -1725,7 +1769,7 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                     "COPY FORM",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1741,12 +1785,13 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                         Text(
                           "FORM NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (String value) =>
@@ -1790,13 +1835,14 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (value) =>
@@ -1837,8 +1883,8 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -1857,8 +1903,8 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
@@ -1922,6 +1968,9 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -1957,7 +2006,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                     "DELETE FORM",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1980,13 +2029,14 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                               Text(
                                 "SELECTED FORM : ",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: total * 1.4,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Container(
-                                  height: 50,
+                                  height: height * 0.05,
                                   width: size.width / 5,
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10.0),
@@ -2002,7 +2052,7 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: 15),
+                                          color: Colors.blue, fontSize:  total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           value = newValue;
@@ -2032,8 +2082,8 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -2052,8 +2102,8 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -2129,6 +2179,9 @@ class _EditFormDialogState extends State<EditFormDialog> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
@@ -2165,7 +2218,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                     "EDIT FORM",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -2181,12 +2234,13 @@ class _EditFormDialogState extends State<EditFormDialog> {
                         Text(
                           "FORM NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) =>
@@ -2230,13 +2284,14 @@ class _EditFormDialogState extends State<EditFormDialog> {
                           child: Text(
                             "FORM CODE : ",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (string) =>
@@ -2277,8 +2332,8 @@ class _EditFormDialogState extends State<EditFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -2297,8 +2352,8 @@ class _EditFormDialogState extends State<EditFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
@@ -2375,7 +2430,9 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
-
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -2410,7 +2467,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                     "ADD RUBRIC",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 40,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -2426,12 +2483,13 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                         Text(
                           "Rubric Question : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               onChanged: (value) =>
@@ -2467,18 +2525,20 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
 
                   //Rubric Style
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(27, 10, 0, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 0, 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Rubric Style : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Container(
+                            height: height * 0.05,
                             width: size.width / 4,
                             padding:
                                 const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -2493,7 +2553,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 iconSize: 32,
                                 elevation: 16,
                                 style: TextStyle(
-                                    color: Colors.purple, fontSize: 15),
+                                    color: Colors.purple, fontSize:  total * 0.9),
                                 onChanged: (newValue) {
                                   setState(() {
                                     rubricStyle = newValue;
@@ -2531,18 +2591,16 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 child: Text(
                                   "Example of Rubric : ",
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: total *1.4,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Container(
-                                  
                                   height: size.height / 4,
                                   width: size.width / 2,
                                   decoration: BoxDecoration(
-                                    
                                       color: Colors.transparent,
                                       border: Border.all(
                                           color: Colors.purple, width: 1)),
@@ -2555,7 +2613,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                         child: Text(
                                           "Question*",
                                           style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: total * 1.1,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -2579,17 +2637,19 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                   Text(
                                                     "Number of Scale : ",
                                                     style: TextStyle(
-                                                        fontSize: 15,
+                                                        fontSize: total * 1.1,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
                                                   Container(
+                                                    height: height * 0.04,
                                                     width: size.width / 10,
                                                     child: Padding(
                                                       padding: const EdgeInsets
                                                               .symmetric(
                                                           horizontal: 15),
                                                       child: Container(
+                                                        height: height * 0.05,
                                                         width: size.width / 4,
                                                         padding:
                                                             const EdgeInsets
@@ -2614,12 +2674,12 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                                 selectedScaleNumber,
                                                             icon: Icon(Icons
                                                                 .arrow_drop_down),
-                                                            iconSize: 32,
+                                                            iconSize: total * 2.3,
                                                             elevation: 16,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .purple,
-                                                                fontSize: 15),
+                                                                fontSize:  total * 0.9),
                                                             onChanged:
                                                                 (newValue) {
                                                               setState(() {
@@ -2666,7 +2726,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                 Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Container(
-                                                    width: size.width / 12,
+                                                    height: height * 0.04,
+                                                    width: size.width / 10,
                                                     child: TextFormField(
                                                       onChanged: (value) =>
                                                           provider.changeScaleLowLable =
@@ -2712,7 +2773,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                 Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Container(
-                                                    width: size.width / 12,
+                                                    height: height * 0.04,
+                                                    width: size.width / 10,
                                                     child: TextFormField(
                                                       onChanged: (value) =>
                                                           provider.changeScaleHighLable =
@@ -2849,8 +2911,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -2869,8 +2931,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
@@ -2919,6 +2981,9 @@ class DynamicWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Container(
       height: size.height / 12,
       width: size.width / 14,
@@ -2930,7 +2995,7 @@ class DynamicWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Container(
-                height: 50,
+                height: height * 0.05,
                 width: size.width / 4,
                 child: TextFormField(
                   controller: option,
@@ -2956,7 +3021,7 @@ class DynamicWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Container(
-                height: 50,
+                height: height * 0.05,
                 width: size.width / 10,
                 child: TextFormField(
                   controller: value,
@@ -3013,7 +3078,9 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
-
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none,
@@ -3050,7 +3117,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                     "APPLY FORM",
                     style: TextStyle(
                       color: Colors.purple[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -3073,13 +3140,14 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                               Text(
                                 "Apply " + widget.forms.formName + " to : ",
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: total * 1.4,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Container(
-                                  height: 50,
+                                  height: height * 0.05,
                                   width: size.width / 5,
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10.0),
@@ -3096,7 +3164,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                       elevation: 16,
                                       style: TextStyle(
                                           color: Colors.purple[800],
-                                          fontSize: 15),
+                                          fontSize:  total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           course = newValue;
@@ -3108,7 +3176,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                         return DropdownMenuItem<Courses>(
                                           child: new Text(
                                             snapcourse.courseName,
-                                            style: TextStyle(fontSize: 12),
+                                            style: TextStyle(fontSize:  total * 0.9),
                                           ),
                                           value: snapcourse,
                                         );
@@ -3128,8 +3196,8 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -3149,8 +3217,8 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.purple[800],
                             child: Text(
@@ -3255,6 +3323,9 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return AlertDialog(
         content: Stack(clipBehavior: Clip.none, children: <Widget>[
       Positioned(
@@ -3309,12 +3380,13 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                         Text(
                           "SELECTED FORM : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.4,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 5,
                             padding:
                                 const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -3329,7 +3401,7 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                                 iconSize: 32,
                                 elevation: 16,
                                 style:
-                                    TextStyle(color: Colors.blue, fontSize: 15),
+                                    TextStyle(color: Colors.blue, fontSize:  total * 0.9),
                                 onChanged: (newValue) {
                                   setState(() {
                                     value = newValue;
@@ -3339,7 +3411,7 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                                   return DropdownMenuItem(
                                     child: new Text(
                                       form["formname"],
-                                      style: TextStyle(fontSize: 12),
+                                      style: TextStyle(fontSize:  total * 0.9),
                                     ),
                                     value: form['formid'],
                                   );
@@ -3359,8 +3431,8 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                 Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: Container(
-                    height: 40,
-                    width: 150,
+                    height: height * 0.045,
+                    width: width * 0.065,
                     child: MaterialButton(
                       color: Colors.red[800],
                       child: Text(
@@ -3379,8 +3451,8 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                 Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: Container(
-                    height: 40,
-                    width: 150,
+                    height: height * 0.045,
+                    width: width * 0.065,
                     child: MaterialButton(
                       color: Colors.blue[800],
                       child: Text(
@@ -3436,7 +3508,9 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     bool disableDropdown = false;
 
     return AlertDialog(
@@ -3497,14 +3571,14 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                 Text(
                                   "SELECTED FORM : ",
                                   style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: total * 1.4,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
                                   child: Container(
-                                    height: 50,
+                                    height: height * 0.05,
                                     width: size.width / 5,
                                     padding: const EdgeInsets.only(
                                         left: 10.0, right: 10.0),
@@ -3521,7 +3595,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                         iconSize: 32,
                                         elevation: 16,
                                         style: TextStyle(
-                                            color: Colors.blue, fontSize: 15),
+                                            color: Colors.blue, fontSize:  total * 0.9),
                                         onChanged: (newValue) {
                                           setState(() {
                                             value = newValue;
@@ -3532,7 +3606,7 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                           return DropdownMenuItem(
                                             child: new Text(
                                               form["formname"],
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize:  total * 0.9),
                                             ),
                                             value: form,
                                           );
@@ -3553,8 +3627,8 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                     Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Container(
-                        height: 40,
-                        width: 150,
+                        height: height * 0.045,
+                        width: width * 0.065,
                         child: MaterialButton(
                           color: Colors.red[800],
                           child: Text(
@@ -3574,8 +3648,8 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                     Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Container(
-                        height: 40,
-                        width: 150,
+                        height: height * 0.045,
+                        width: width * 0.065,
                         child: MaterialButton(
                           color: Colors.blue[800],
                           child: Text(
@@ -3636,6 +3710,9 @@ class _EditUserNameState extends State<EditUserName> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -3671,7 +3748,7 @@ class _EditUserNameState extends State<EditUserName> {
                     "EDIT NAME",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -3687,12 +3764,13 @@ class _EditUserNameState extends State<EditUserName> {
                         Text(
                           "USER NAME : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               controller: userName,
@@ -3733,8 +3811,8 @@ class _EditUserNameState extends State<EditUserName> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -3753,8 +3831,8 @@ class _EditUserNameState extends State<EditUserName> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -3823,6 +3901,9 @@ class _EditUserMatricState extends State<EditUserMatric> {
   Widget build(BuildContext context) {
     final projectProvider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -3858,7 +3939,7 @@ class _EditUserMatricState extends State<EditUserMatric> {
                     "EDIT MATRIC",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -3874,12 +3955,13 @@ class _EditUserMatricState extends State<EditUserMatric> {
                         Text(
                           "USER MATRIC : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               controller: userMatric,
@@ -3920,8 +4002,8 @@ class _EditUserMatricState extends State<EditUserMatric> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -3940,8 +4022,8 @@ class _EditUserMatricState extends State<EditUserMatric> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(
@@ -4010,6 +4092,9 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var _formskey = GlobalKey<FormState>();
     return AlertDialog(
       content: Stack(
@@ -4045,7 +4130,7 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                     "EDIT PASSWORD",
                     style: TextStyle(
                       color: Colors.blue[800],
-                      fontSize: 50,
+                      fontSize: total * 2.3,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -4061,12 +4146,13 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                         Text(
                           "USER EMAIL : ",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: total * 1.1,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
-                            height: 50,
+                            height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
                               controller: userMatric,
@@ -4101,8 +4187,8 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.red[800],
                             child: Text(
@@ -4121,8 +4207,8 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: height * 0.045,
+                          width: width * 0.065,
                           child: MaterialButton(
                             color: Colors.blue[800],
                             child: Text(

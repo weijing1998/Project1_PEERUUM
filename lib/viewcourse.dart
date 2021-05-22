@@ -17,6 +17,9 @@ class _ViewCourseState extends State<ViewCourse> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Courses>(
         stream: provider.streamCourse,
@@ -39,7 +42,8 @@ class _ViewCourseState extends State<ViewCourse> {
                           child: Text(
                             "COURSE DETAIL",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: total * 2,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -85,7 +89,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                             BorderRadius.circular(30.0)),
                                     child: Container(
                                       constraints: BoxConstraints(
-                                          maxWidth: 130.0, minHeight: 40.0),
+                                          maxWidth: width * 0.09,
+                                          maxHeight: height * 0.05),
                                       alignment: Alignment.center,
                                       child: Text(
                                         "Edit Course",
@@ -180,7 +185,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                 "COURSE NAME : " +
                                     snapshotCourse.data.courseName,
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
+                                    fontSize: total * 1.5,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             Padding(
@@ -189,7 +195,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                 "COURSE CODE : " +
                                     snapshotCourse.data.courseCode,
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
+                                    fontSize: total * 1.5,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             Padding(
@@ -198,7 +205,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                 "COURSE GROUP : " +
                                     snapshotCourse.data.courseGroup,
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
+                                    fontSize: total * 1.5,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             Padding(
@@ -207,7 +215,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                 "COURSE BATCH : " +
                                     snapshotCourse.data.courseBatch,
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
+                                    fontSize: total * 1.5,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             Padding(
@@ -217,7 +226,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                   Text(
                                     "FORM STATUS : ",
                                     style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: total * 1.5,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   snapshotCourse.data.listOfForm.length == 0
@@ -337,12 +346,12 @@ class _ViewCourseState extends State<ViewCourse> {
                               child: Text(
                                 "GROUP DETAIL",
                                 style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
+                                    fontSize: total * 2, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: size.width / 3.2,
+                            width: size.width / 4.3,
                           ),
                           Container(
                             child: Row(
@@ -382,7 +391,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                               BorderRadius.circular(30.0)),
                                       child: Container(
                                         constraints: BoxConstraints(
-                                            maxWidth: 130.0, minHeight: 40.0),
+                                            maxWidth: width * 0.09,
+                                            maxHeight: height * 0.05),
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Add Group",
@@ -436,7 +446,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                               BorderRadius.circular(30.0)),
                                       child: Container(
                                         constraints: BoxConstraints(
-                                            maxWidth: 130.0, minHeight: 40.0),
+                                            maxWidth: width * 0.09,
+                                            maxHeight: height * 0.05),
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Edit Group",
@@ -489,7 +500,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                               BorderRadius.circular(30.0)),
                                       child: Container(
                                         constraints: BoxConstraints(
-                                            maxWidth: 130.0, minHeight: 40.0),
+                                            maxWidth: width * 0.09,
+                                            maxHeight: height * 0.05),
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Delete Group",
@@ -562,7 +574,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                             .toUpperCase(),
                                                     style: TextStyle(
                                                         color: Colors.black,
-                                                        fontSize: 25,
+                                                        fontSize: total *1.6,
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
@@ -582,7 +594,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                         .toUpperCase(),
                                                 style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 20,
+                                                  fontSize: total  * 1.3,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                               ),
