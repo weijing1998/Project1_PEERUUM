@@ -67,13 +67,13 @@ class Body extends StatelessWidget {
             fit: BoxFit.fill,
             image: NetworkImage("assets/images/lecturerhall.jpg"),
           )),
-          height: 1000,
+          height: height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               NavBar(controller: controller),
               SizedBox(
-                height: 800,
+                height: height*0.8,
                 child: Stack(
                   alignment: Alignment.topCenter,
                   fit: StackFit.expand,
@@ -102,12 +102,13 @@ class Body extends StatelessWidget {
                               text: TextSpan(
                                   text: "Welcome To ",
                                   style: TextStyle(
-                                      fontSize: 60, color: Colors.blue[700]),
+                                      fontSize: total * 4,
+                                      color: Colors.blue[700]),
                                   children: [
                                     TextSpan(
                                         text: "PEER UUM",
                                         style: TextStyle(
-                                            fontSize: 60,
+                                            fontSize: total * 4,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.grey[200]))
                                   ]),
@@ -135,14 +136,11 @@ class Body extends StatelessWidget {
                                     "Lets Get Started",
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 15,
+                                        fontSize: total * 0.9,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 40,
                             ),
                           ],
                         ),

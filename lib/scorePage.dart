@@ -101,7 +101,7 @@ class ScorePageState extends State<ScorePage> {
                                     child: Text(
                                       "No Course Created",
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: total * 1.3,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )
@@ -115,8 +115,8 @@ class ScorePageState extends State<ScorePage> {
                                                 padding:
                                                     const EdgeInsets.all(10.0),
                                                 child: Container(
-                                                  height: 200,
-                                                  width: 200,
+                                                  height: height * 0.25,
+                                                  width: double.infinity,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -124,7 +124,7 @@ class ScorePageState extends State<ScorePage> {
                                                     children: [
                                                       Container(
                                                         color: Colors.teal[400],
-                                                        height: 50,
+                                                        height: height * 0.05,
                                                         width: double.infinity,
                                                         child: Align(
                                                           alignment: Alignment
@@ -146,13 +146,15 @@ class ScorePageState extends State<ScorePage> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
-                                                                  fontSize: 20),
+                                                                  fontSize:
+                                                                      total *
+                                                                          1.4),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                       Container(
-                                                        height: 150,
+                                                        height: height * 0.2,
                                                         width: double.infinity,
                                                         color:
                                                             Colors.blueGrey[50],
@@ -166,6 +168,7 @@ class ScorePageState extends State<ScorePage> {
                                                                   size.width /
                                                                       1.9,
                                                               child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
@@ -180,8 +183,8 @@ class ScorePageState extends State<ScorePage> {
                                                                         Icon(
                                                                           Icons
                                                                               .article,
-                                                                          size:
-                                                                              25,
+                                                                          size: total *
+                                                                              1.3,
                                                                         ),
                                                                         SizedBox(
                                                                           width:
@@ -191,7 +194,7 @@ class ScorePageState extends State<ScorePage> {
                                                                           "COURSE CODE : " +
                                                                               snapshot.data[index].courseCode,
                                                                           style: TextStyle(
-                                                                              fontSize: 15,
+                                                                              fontSize: total * 1.1,
                                                                               fontWeight: FontWeight.w500),
                                                                         )
                                                                       ],
@@ -207,8 +210,8 @@ class ScorePageState extends State<ScorePage> {
                                                                         Icon(
                                                                           Icons
                                                                               .group,
-                                                                          size:
-                                                                              25,
+                                                                          size: total *
+                                                                              1.3,
                                                                         ),
                                                                         SizedBox(
                                                                           width:
@@ -218,7 +221,7 @@ class ScorePageState extends State<ScorePage> {
                                                                           "COURSE GROUP : " +
                                                                               snapshot.data[index].courseGroup,
                                                                           style: TextStyle(
-                                                                              fontSize: 15,
+                                                                              fontSize: total * 1.1,
                                                                               fontWeight: FontWeight.w500),
                                                                         )
                                                                       ],
@@ -234,8 +237,8 @@ class ScorePageState extends State<ScorePage> {
                                                                         Icon(
                                                                           Icons
                                                                               .calendar_today,
-                                                                          size:
-                                                                              25,
+                                                                          size: total *
+                                                                              1.3,
                                                                         ),
                                                                         SizedBox(
                                                                           width:
@@ -245,7 +248,7 @@ class ScorePageState extends State<ScorePage> {
                                                                           "COURSE BATCH : " +
                                                                               snapshot.data[index].courseBatch,
                                                                           style: TextStyle(
-                                                                              fontSize: 15,
+                                                                              fontSize: total * 1.1,
                                                                               fontWeight: FontWeight.w500),
                                                                         )
                                                                       ],
@@ -316,7 +319,7 @@ class ScorePageState extends State<ScorePage> {
                                                                           color: Colors
                                                                               .white,
                                                                           fontSize:
-                                                                              12),
+                                                                              total * 1.1),
                                                                     ),
                                                                   ),
                                                                 ),

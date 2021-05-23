@@ -410,7 +410,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                           color:
                                                                               Colors.grey[600],
                                                                           size:
-                                                                              38,
+                                                                              total * 2.3,
                                                                         ),
                                                                         onPressed: () {
                                                                           listofrubric = snapshot
@@ -566,7 +566,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             icon: Icon(
                                                                               Icons.delete,
                                                                               color: Colors.grey[600],
-                                                                              size: 38,
+                                                                              size:  total * 2.3,
                                                                             ),
                                                                             onPressed: () {
                                                                               listofrubric = snapshot.data.listOfRubric;
@@ -663,8 +663,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             .delete,
                                                                         color: Colors
                                                                             .grey[600],
-                                                                        size:
-                                                                            38,
+                                                                        size:  total * 2.3,
                                                                       ),
                                                                       onPressed: () {
                                                                         listofrubric = snapshot
@@ -748,10 +747,9 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: total * 1.2,
                       width: size.width / 25,
                       child: Transform.scale(
-                        scale: 0.8,
+                        scale: total * 0.06,
                         child: Radio(
                           value: e["index"],
                           groupValue: groupvalue,
@@ -763,7 +761,10 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                         ),
                       ),
                     ),
-                    Text(e["index"].toString()),
+                    Text(
+                      e["index"].toString(),
+                      style: TextStyle(fontSize: total * 1.1),
+                    ),
                   ],
                 ))
             .toList());
@@ -795,7 +796,7 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-       double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double total = (width + height) / 2 / 100;
     return Column(
@@ -807,10 +808,9 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: total * 1.2,
                         width: size.width / 25,
                         child: Transform.scale(
-                          scale: 0.8,
+                          scale: total * 0.06,
                           child: Radio(
                             value: e['value'],
                             groupValue: groupvalue,
@@ -825,6 +825,7 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                       Flexible(
                         child: Text(
                           e["option"].toString(),
+                          style: TextStyle(fontSize: total * 1.1),
                         ),
                       ),
                     ],

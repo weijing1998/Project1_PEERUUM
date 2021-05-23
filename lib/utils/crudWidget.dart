@@ -99,6 +99,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   projectProvider.changeCourseName = courseName,
                               decoration: new InputDecoration(
                                 labelText: "Course Name",
+                                labelStyle: TextStyle(fontSize:  total * 1.1),
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),

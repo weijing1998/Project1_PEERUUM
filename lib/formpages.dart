@@ -199,8 +199,8 @@ class _FormPageState extends State<FormPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Container(
-                                              height: 200,
-                                              width: 200,
+                                              height: height * 0.25,
+                                              width: double.infinity,
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -209,7 +209,7 @@ class _FormPageState extends State<FormPage> {
                                                   Container(
                                                     color: Colors.purple[300],
                                                     width: double.infinity,
-                                                    height: 50,
+                                                    height: height * 0.05,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -231,7 +231,7 @@ class _FormPageState extends State<FormPage> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontSize: 20),
+                                                                fontSize: total * 1.4),
                                                           ),
                                                         ),
                                                         Padding(
@@ -270,13 +270,14 @@ class _FormPageState extends State<FormPage> {
                                                                 Icons.copy,
                                                                 color: Colors
                                                                     .black,
+                                                                    size: total * 1.5,
                                                               ),
                                                             )),
                                                       ],
                                                     ),
                                                   ),
                                                   Container(
-                                                    height: 150,
+                                                    height: height * 0.2,
                                                     width: double.infinity,
                                                     color: Colors.blueGrey[50],
                                                     child: Row(
@@ -305,7 +306,7 @@ class _FormPageState extends State<FormPage> {
                                                                           Icons
                                                                               .article,
                                                                           size:
-                                                                              25,
+                                                                              total * 1.3,
                                                                         ),
                                                                         SizedBox(
                                                                           width:
@@ -315,7 +316,7 @@ class _FormPageState extends State<FormPage> {
                                                                           "FORM CODE : " +
                                                                               snapshot.data[index].formCode.toUpperCase(),
                                                                           style: TextStyle(
-                                                                              fontSize: 15,
+                                                                              fontSize: total * 1.1,
                                                                               fontWeight: FontWeight.w500),
                                                                         )
                                                                       ],
@@ -331,7 +332,7 @@ class _FormPageState extends State<FormPage> {
                                                                           Icons
                                                                               .article,
                                                                           size:
-                                                                              25,
+                                                                              total * 1.3,
                                                                         ),
                                                                         SizedBox(
                                                                           width:
@@ -341,7 +342,7 @@ class _FormPageState extends State<FormPage> {
                                                                           "NUMBER OF QUESTION: " +
                                                                               snapshot.data[index].listOfRubric.length.toString(),
                                                                           style: TextStyle(
-                                                                              fontSize: 15,
+                                                                              fontSize: total * 1.1,
                                                                               fontWeight: FontWeight.w500),
                                                                         )
                                                                       ],

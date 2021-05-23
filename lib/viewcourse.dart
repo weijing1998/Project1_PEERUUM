@@ -253,7 +253,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                               "No Form Apply",
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 12,
+                                                  fontSize: total * 1.1,
                                                   fontWeight: FontWeight.w200),
                                             ),
                                           ),
@@ -306,7 +306,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.white,
-                                                              fontSize: 12,
+                                                              fontSize:
+                                                                  total * 1.1,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w200),
@@ -346,7 +347,8 @@ class _ViewCourseState extends State<ViewCourse> {
                               child: Text(
                                 "GROUP DETAIL",
                                 style: TextStyle(
-                                    fontSize: total * 2, fontWeight: FontWeight.bold),
+                                    fontSize: total * 2,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -548,7 +550,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                             end: Alignment.topRight,
                                           ),
                                         ),
-                                        height: 600,
+                                        height: height * 0.6,
                                         width: double.infinity,
                                         child: Column(
                                           crossAxisAlignment:
@@ -560,7 +562,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                       horizontal: 18,
                                                       vertical: 8),
                                               child: Container(
-                                                height: 60,
+                                                height: height * 0.05,
                                                 width: double.infinity,
                                                 child: Align(
                                                   alignment:
@@ -574,7 +576,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                             .toUpperCase(),
                                                     style: TextStyle(
                                                         color: Colors.black,
-                                                        fontSize: total *1.6,
+                                                        fontSize: total * 1.6,
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
@@ -594,7 +596,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                         .toUpperCase(),
                                                 style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: total  * 1.3,
+                                                  fontSize: total * 1.3,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                               ),
@@ -662,7 +664,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                 ),
                                                                 height: double
                                                                     .infinity,
-                                                                width: 330,
+                                                                width: width *
+                                                                    0.17,
                                                                 child: Column(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
@@ -677,7 +680,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                         backgroundImage:
                                                                             NetworkImage('images/header.jpg'),
                                                                         radius:
-                                                                            52,
+                                                                            total *
+                                                                                3.5,
                                                                       ),
                                                                     ),
                                                                     Text(
@@ -685,24 +689,31 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                           snapshotCourse
                                                                               .data
                                                                               .listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              total * 1.1),
                                                                     ),
                                                                     Text(
-                                                                      "Matric : " +
-                                                                          snapshotCourse
-                                                                              .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["matric"],
-                                                                    ),
+                                                                        "Matric : " +
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent][
+                                                                                "matric"],
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                total * 1.1)),
                                                                     Text(
-                                                                      "Email : " +
-                                                                          snapshotCourse
-                                                                              .data
-                                                                              .listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
-                                                                    ),
+                                                                        "Email : " +
+                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent][
+                                                                                "email"],
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                total * 1.1)),
                                                                     Text(
-                                                                      snapshotCourse
-                                                                          .data
-                                                                          .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
-                                                                    ),
+                                                                        snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]
+                                                                            [
+                                                                            "typeOfUser"],
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                total * 1.1)),
                                                                   ],
                                                                 ),
                                                               ),

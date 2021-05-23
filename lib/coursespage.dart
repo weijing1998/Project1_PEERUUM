@@ -131,7 +131,7 @@ class CoursesPageState extends State<CoursesPage> {
                                         child: Container(
                                           constraints: BoxConstraints(
                                               maxWidth: width * 0.09,
-                                              minHeight: height * 0.05),
+                                              maxHeight: height * 0.05),
                                           alignment: Alignment.center,
                                           child: Text(
                                             "Add Course",
@@ -221,7 +221,7 @@ class CoursesPageState extends State<CoursesPage> {
                                       child: Text(
                                         "No Course Created",
                                         style: TextStyle(
-                                            fontSize: 25,
+                                            fontSize: total * 1.2,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     )
@@ -235,9 +235,10 @@ class CoursesPageState extends State<CoursesPage> {
                                                   padding: const EdgeInsets.all(
                                                       10.0),
                                                   child: Container(
-                                                    height: 200,
-                                                    width: 200,
+                                                    height: height * 0.25,
+                                                    width: double.infinity,
                                                     child: Column(
+                                                      
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
@@ -245,7 +246,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                         Container(
                                                           color:
                                                               Colors.blue[300],
-                                                          height: 50,
+                                                          height: height * 0.05,
                                                           width:
                                                               double.infinity,
                                                           child: Align(
@@ -268,13 +269,13 @@ class CoursesPageState extends State<CoursesPage> {
                                                                         FontWeight
                                                                             .w600,
                                                                     fontSize:
-                                                                        20),
+                                                                        total * 1.4),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
                                                         Container(
-                                                          height: 150,
+                                                          height: height * 0.2,
                                                           width:
                                                               double.infinity,
                                                           color: Colors
@@ -289,6 +290,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                     size.width /
                                                                         1.9,
                                                                 child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
@@ -304,7 +306,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                           Icon(
                                                                             Icons.article,
                                                                             size:
-                                                                                25,
+                                                                                total * 1.3,
                                                                           ),
                                                                           SizedBox(
                                                                             width:
@@ -314,7 +316,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                             "COURSE CODE : " +
                                                                                 snapshot.data[index].courseCode,
                                                                             style:
-                                                                                TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                                                TextStyle(fontSize: total * 1.1, fontWeight: FontWeight.w500),
                                                                           )
                                                                         ],
                                                                       ),
@@ -330,7 +332,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                           Icon(
                                                                             Icons.group,
                                                                             size:
-                                                                                25,
+                                                                                total * 1.3,
                                                                           ),
                                                                           SizedBox(
                                                                             width:
@@ -340,7 +342,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                             "COURSE GROUP : " +
                                                                                 snapshot.data[index].courseGroup,
                                                                             style:
-                                                                                TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                                                TextStyle(fontSize: total * 1.1, fontWeight: FontWeight.w500),
                                                                           )
                                                                         ],
                                                                       ),
@@ -356,7 +358,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                           Icon(
                                                                             Icons.calendar_today,
                                                                             size:
-                                                                                25,
+                                                                                total * 1.3,
                                                                           ),
                                                                           SizedBox(
                                                                             width:
@@ -366,7 +368,7 @@ class CoursesPageState extends State<CoursesPage> {
                                                                             "COURSE BATCH : " +
                                                                                 snapshot.data[index].courseBatch,
                                                                             style:
-                                                                                TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                                                TextStyle(fontSize: total * 1.1, fontWeight: FontWeight.w500),
                                                                           )
                                                                         ],
                                                                       ),

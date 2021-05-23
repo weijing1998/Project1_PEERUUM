@@ -33,6 +33,9 @@ class _StudentPageState extends State<StudentPage> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ProjectProvider>(context);
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Scaffold(
       body: Container(
         child: Row(
@@ -60,23 +63,26 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: Image.network(
-                              'assets/images/logowhite.png',
-                              scale: 2.2,
+                                vertical: 10, horizontal: 10),
+                            child: Container(
+                              height: height * 0.09,
+                              width: width * 0.09,
+                              child: Image.network(
+                                'assets/images/logowhite.png',
+                              ),
                             ),
                           ),
                           SizedBox(width: 2),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: height * 0.009),
                     CircleAvatar(
                       backgroundImage: NetworkImage('assets/images/header.jpg'),
-                      radius: 70,
+                      radius: total * 4.5,
                     ),
                     SizedBox(
-                      height: 20,
+                      height: height * 0.009,
                     ),
                     Column(
                       children: [
@@ -85,7 +91,8 @@ class _StudentPageState extends State<StudentPage> {
                           child: Text(
                             widget.users.userName,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white, fontSize: total * 1.2),
                           ),
                         ),
                         Padding(
@@ -93,7 +100,8 @@ class _StudentPageState extends State<StudentPage> {
                           child: Text(
                             widget.users.matric,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white, fontSize: total * 1.2),
                           ),
                         ),
                         Padding(
@@ -101,14 +109,15 @@ class _StudentPageState extends State<StudentPage> {
                           child: Text(
                             widget.users.email,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white, fontSize: total * 1.2),
                           ),
                         ),
                       ],
                     ),
 
                     SizedBox(
-                      height: size.height / 14,
+                      height: size.height / 20,
                     ),
                     //Dashboard
                     TextButton(
@@ -125,18 +134,19 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             Icons.dashboard,
-                            size: 30,
+                            size: total * 2.2,
                             color: Colors.white,
                           ),
                           SizedBox(width: 26),
                           Text(
                             'Courses',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: total * 1.6, color: Colors.white),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: height * 0.03),
                     //Form Page
                     TextButton(
                       onPressed: () {
@@ -152,18 +162,19 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             FontAwesomeIcons.dochub,
-                            size: 30,
+                            size: total * 2.2,
                             color: Colors.white,
                           ),
                           SizedBox(width: 26),
                           Text(
                             'Added Course',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: total * 1.6, color: Colors.white),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: height * 0.03),
                     TextButton(
                       onPressed: () {
                         setState(() {
@@ -178,13 +189,14 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             FontAwesomeIcons.user,
-                            size: 30,
+                            size: total * 2.2,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 30),
+                          SizedBox(width: 26),
                           Text(
                             'User Page',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: total * 1.6, color: Colors.white),
                           ),
                         ],
                       ),
@@ -202,13 +214,14 @@ class _StudentPageState extends State<StudentPage> {
                         children: [
                           Icon(
                             Icons.exit_to_app,
-                            size: 40,
+                            size: total * 2.2,
                             color: Colors.white,
                           ),
                           SizedBox(width: 26),
                           Text(
                             'Sign out',
-                            style: TextStyle(fontSize: 17, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: total * 1.6, color: Colors.white),
                           ),
                         ],
                       ),
@@ -254,6 +267,7 @@ class _StudentPageState extends State<StudentPage> {
       );
     } else if (atJoinCourse == true) {
       return JoinCourse(
+        leavecourse: toggleLeaveCoursefromAddedCourses,
         user: widget.users,
       );
     } else if (atUserpage == true) {
@@ -275,6 +289,15 @@ class _StudentPageState extends State<StudentPage> {
       atStudentAddedCoursePage = false;
       atJoinCourse = b;
       atStudentCoursePage = false;
+      atUserpage = false;
+    });
+  }
+
+  void toggleLeaveCoursefromAddedCourses(bool b) {
+    setState(() {
+      atStudentAddedCoursePage = false;
+      atJoinCourse = false;
+      atStudentCoursePage = b;
       atUserpage = false;
     });
   }

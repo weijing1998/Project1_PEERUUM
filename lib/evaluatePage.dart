@@ -4,7 +4,6 @@ import 'package:pepelist/objects/course.dart';
 import 'package:pepelist/objects/form.dart';
 import 'package:pepelist/objects/group.dart';
 import 'package:pepelist/objects/peerUser.dart';
-import 'package:pepelist/studentSidebar.dart';
 import 'package:pepelist/utils/projetcProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +38,9 @@ class _EvaluatePageState extends State<EvaluatePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return Scaffold(
       body: Container(
@@ -56,10 +58,10 @@ class _EvaluatePageState extends State<EvaluatePage> {
           ],
         )),
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(40),
+          padding: EdgeInsets.all(10),
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(15.0),
               child: Container(
                   child: Row(
                 children: [
@@ -71,26 +73,19 @@ class _EvaluatePageState extends State<EvaluatePage> {
                     child: FaIcon(
                       FontAwesomeIcons.arrowAltCircleLeft,
                       color: Colors.black,
-                      size: 32,
+                      size: total * 1.8,
                     ),
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              ChangeNotifierProvider(
-                            create: (context) => ProjectProvider(),
-                            builder: (context, child) =>
-                                StudentPage(users: widget.evaluateUser),
-                          ),
-                        ),
-                      );
+                      Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.of(context, rootNavigator: true).pop();
                     },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       "Home Page",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style:
+                          TextStyle(color: Colors.black, fontSize: total * 1.4),
                     ),
                   )
                 ],
@@ -111,64 +106,78 @@ class _EvaluatePageState extends State<EvaluatePage> {
                         child: Text(
                           "Peer Evaluation",
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                              fontSize: total * 2, fontWeight: FontWeight.bold),
                         ),
                       ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           "This form is used to evaluate your team members. Kindly provide your evaluation on each member of your team. Some proportions of the peer evaluation marks will be deducted if you fail to provide the evaluation of each of the member.",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w300),
+                              fontSize: total * 1.4,
+                              fontWeight: FontWeight.w300),
                           textAlign: TextAlign.justify,
                         ),
                       ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           "Form Name : " + widget.forms.formName,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w300),
+                              fontSize: total * 1.2,
+                              fontWeight: FontWeight.w300),
                         ),
                       ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           "Form Code : " + widget.forms.formCode,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w300),
+                              fontSize: total * 1.2,
+                              fontWeight: FontWeight.w300),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(25, 25, 10, 10),
-                            child: Text(
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Text(
                               "Selected Peer : ",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w300),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w300),
                             ),
-                          ),
-                          Container(
-                            height: 30.0,
-                            width: 30.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('images/header.jpg'),
-                                fit: BoxFit.fill,
+                            Container(
+                              height: height * 0.04,
+                              width: width * 0.04,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('images/header.jpg'),
+                                  fit: BoxFit.fill,
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 25, 25, 10),
-                            child: Text(
+                            Text(
                               widget.evaluateUser.userName,
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w300),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w300),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -211,7 +220,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                               index]['question'],
                                                       style: TextStyle(
                                                           height: 1.3,
-                                                          fontSize: 20,
+                                                          fontSize: total * 1.1,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -224,7 +233,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                               index]["type"],
                                                       style: TextStyle(
                                                           height: 1.3,
-                                                          fontSize: 20,
+                                                          fontSize: total * 1.1,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -246,7 +255,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                       widget.forms.listOfRubric[
                                                           index]['bad'],
                                                       style: TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: total * 1.1,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -263,7 +272,7 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                       widget.forms.listOfRubric[
                                                           index]['good'],
                                                       style: TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: total * 1.1,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -310,7 +319,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                                   ['question'],
                                                           style: TextStyle(
                                                               height: 1.3,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  total * 1.1,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400),
@@ -324,7 +334,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                                   index]['type'],
                                                           style: TextStyle(
                                                               height: 1.3,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  total * 1.1,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400),
@@ -407,7 +418,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                                   ['question'],
                                                           style: TextStyle(
                                                               height: 1.3,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  total * 1.1,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400),
@@ -421,7 +433,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                                   index]['type'],
                                                           style: TextStyle(
                                                               height: 1.3,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  total * 1.1,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400),
@@ -467,7 +480,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                     highlightColor: Colors.transparent,
                     child: Text(
                       "Cancel",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style:
+                          TextStyle(fontSize: total * 1, color: Colors.white),
                     ),
                     onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop();
@@ -488,7 +502,8 @@ class _EvaluatePageState extends State<EvaluatePage> {
                     highlightColor: Colors.transparent,
                     child: Text(
                       "Submit",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style:
+                          TextStyle(fontSize: total * 1, color: Colors.white),
                     ),
                     onPressed: () {
                       List<Map<String, dynamic>> questionNanswer = [];
@@ -665,6 +680,9 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: scale
@@ -675,7 +693,7 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                       height: 20,
                       width: size.width / 25,
                       child: Transform.scale(
-                        scale: 0.8,
+                        scale: total * 0.06,
                         child: Radio(
                           value: e["index"],
                           groupValue: groupvalue,
@@ -688,7 +706,10 @@ class _RadioButtonForScaleState extends State<RadioButtonForScale> {
                         ),
                       ),
                     ),
-                    Text(e["index"].toString()),
+                    Text(
+                      e["index"].toString(),
+                      style: TextStyle(fontSize: total * 1.1),
+                    ),
                   ],
                 ))
             .toList());
@@ -722,6 +743,9 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: multi
@@ -734,7 +758,7 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                         height: 20,
                         width: size.width / 25,
                         child: Transform.scale(
-                          scale: 0.8,
+                          scale: total * 0.06,
                           child: Radio(
                             value: e['value'],
                             groupValue: groupvalue,
@@ -747,7 +771,12 @@ class _RadiobuttonForMultipleState extends State<RadiobuttonForMultiple> {
                           ),
                         ),
                       ),
-                      Text(e["option"].toString()),
+                      Expanded(
+                        child: Text(
+                          e["option"].toString(),
+                          style: TextStyle(fontSize: total),
+                        ),
+                      ),
                     ],
                   ),
                 ))

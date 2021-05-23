@@ -20,7 +20,9 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var provider = Provider.of<ProjectProvider>(context);
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return Container(
       height: size.height,
       width: size.width - size.width / 6,
@@ -48,7 +50,8 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage('assets/images/header.jpg'),
+                          backgroundImage:
+                              NetworkImage('assets/images/header.jpg'),
                           radius: 80,
                         ),
                         Padding(
@@ -56,7 +59,8 @@ class _UserPageState extends State<UserPage> {
                           child: Text(
                             widget.user.userName,
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -64,7 +68,8 @@ class _UserPageState extends State<UserPage> {
                           child: Text(
                             widget.user.email,
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                         widget.user.typeOfUser == "Student"
@@ -73,7 +78,7 @@ class _UserPageState extends State<UserPage> {
                                 child: Text(
                                   widget.user.matric,
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.1,
                                       fontWeight: FontWeight.w500),
                                 ),
                               )
@@ -83,7 +88,8 @@ class _UserPageState extends State<UserPage> {
                           child: Text(
                             "Type of User :" + widget.user.typeOfUser,
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
+                                fontSize: total * 1.1,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                       ],
@@ -108,7 +114,7 @@ class _UserPageState extends State<UserPage> {
                         child: Text(
                           "Name : " + widget.user.userName,
                           style: TextStyle(
-                              fontSize: 17,
+                              fontSize: total * 1.1,
                               fontWeight: FontWeight.w500,
                               color: Colors.blue),
                         ),
@@ -146,7 +152,7 @@ class _UserPageState extends State<UserPage> {
                               child: Text(
                                 "Edit",
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: total * 1.1,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.blue),
                               ),
@@ -175,7 +181,7 @@ class _UserPageState extends State<UserPage> {
                         child: Text(
                           "Password",
                           style: TextStyle(
-                              fontSize: 17,
+                              fontSize: total * 1.1,
                               fontWeight: FontWeight.w500,
                               color: Colors.blue),
                         ),
@@ -205,7 +211,7 @@ class _UserPageState extends State<UserPage> {
                               child: Text(
                                 "Edit",
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: total * 1.1,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.blue),
                               ),
@@ -236,7 +242,7 @@ class _UserPageState extends State<UserPage> {
                               child: Text(
                                 "Matric No : " + widget.user.matric,
                                 style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: total * 1.1,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.blue),
                               ),
@@ -275,7 +281,7 @@ class _UserPageState extends State<UserPage> {
                                     child: Text(
                                       "Edit",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: total * 1.1,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.blue),
                                     ),

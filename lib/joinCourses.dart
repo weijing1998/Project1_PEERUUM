@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 class JoinCourse extends StatefulWidget {
   final PeerUser user;
+  final Function leavecourse;
   JoinCourse({
     Key key,
     @required this.user,
+    @required this.leavecourse,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,9 @@ class _JoinCourseState extends State<JoinCourse> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<Courses>(
         stream: provider.streamCourse,
@@ -44,7 +49,8 @@ class _JoinCourseState extends State<JoinCourse> {
                           child: Text(
                             "COURSE DETAIL",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: total * 2,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
 
@@ -56,7 +62,8 @@ class _JoinCourseState extends State<JoinCourse> {
                               setState(() {
                                 provider.leaveCourses(
                                     snapshotCourse.data, widget.user);
-                                successLeaveCourseAlert(context);
+                                    widget.leavecourse(true);
+                           
                               });
                             },
                             shape: RoundedRectangleBorder(
@@ -75,7 +82,8 @@ class _JoinCourseState extends State<JoinCourse> {
                                   borderRadius: BorderRadius.circular(30.0)),
                               child: Container(
                                 constraints: BoxConstraints(
-                                    maxWidth: 130.0, minHeight: 40.0),
+                                    maxWidth: width * 0.09,
+                                    maxHeight: height * 0.05),
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Leave Course",
@@ -112,7 +120,8 @@ class _JoinCourseState extends State<JoinCourse> {
                             child: Text(
                               "COURSE NAME : " + snapshotCourse.data.courseName,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -120,7 +129,8 @@ class _JoinCourseState extends State<JoinCourse> {
                             child: Text(
                               "COURSE CODE : " + snapshotCourse.data.courseCode,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -129,7 +139,8 @@ class _JoinCourseState extends State<JoinCourse> {
                               "COURSE GROUP : " +
                                   snapshotCourse.data.courseGroup,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -138,7 +149,8 @@ class _JoinCourseState extends State<JoinCourse> {
                               "COURSE BATCH : " +
                                   snapshotCourse.data.courseBatch,
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  fontSize: total * 1.2,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Padding(
@@ -148,7 +160,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                 Text(
                                   "FORM STATUS : ",
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: total * 1.2,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 snapshotCourse.data.listOfForm.length == 0
@@ -158,14 +170,14 @@ class _JoinCourseState extends State<JoinCourse> {
                                         decoration: BoxDecoration(
                                             color: Colors.red[700],
                                             border: Border.all(
-                                                width: 3,
-                                                color: Colors.grey[600])),
+                                                width: 1,
+                                                color: Colors.grey[300])),
                                         child: Align(
                                           child: Text(
                                             "No Form Apply",
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 12,
+                                                fontSize: total * 0.9,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                         ),
@@ -189,7 +201,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                         color:
                                                             Colors.green[400],
                                                         border: Border.all(
-                                                            width: 3,
+                                                            width: 1,
                                                             color: Colors
                                                                 .grey[600])),
                                                     child: Align(
@@ -199,7 +211,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                             index]["formname"],
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 12,
+                                                            fontSize: total * 0.9,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w200),
@@ -235,7 +247,8 @@ class _JoinCourseState extends State<JoinCourse> {
                             child: Text(
                               "GROUP DETAIL",
                               style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                                  fontSize: total * 2,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -257,7 +270,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                     child: Padding(
                                       padding: EdgeInsets.all(4.0),
                                       child: Container(
-                                        height: 600,
+                                        height: height * 0.6,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -274,7 +287,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              height: 60,
+                                              height: height * 0.06,
                                               width: double.infinity,
                                               //important
                                               color:
@@ -294,7 +307,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                             .toUpperCase(),
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 25,
+                                                        fontSize: total * 1.5,
                                                         fontWeight:
                                                             FontWeight.w700),
                                                   ),
@@ -322,7 +335,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                               .toUpperCase(),
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 20,
+                                                        fontSize: total * 1.25,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                       ),
@@ -401,12 +414,13 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         BorderRadius.circular(
                                                                             30.0)),
                                                             child: Container(
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                      maxWidth:
-                                                                          130.0,
-                                                                      minHeight:
-                                                                          40.0),
+                                                              constraints: BoxConstraints(
+                                                                  maxWidth:
+                                                                      width *
+                                                                          0.09,
+                                                                  maxHeight:
+                                                                      height *
+                                                                          0.05),
                                                               alignment:
                                                                   Alignment
                                                                       .center,
@@ -487,12 +501,13 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                         BorderRadius.circular(
                                                                             30.0)),
                                                             child: Container(
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                      maxWidth:
-                                                                          130.0,
-                                                                      minHeight:
-                                                                          40.0),
+                                                              constraints: BoxConstraints(
+                                                                  maxWidth:
+                                                                      width *
+                                                                          0.09,
+                                                                  maxHeight:
+                                                                      height *
+                                                                          0.05),
                                                               alignment:
                                                                   Alignment
                                                                       .center,
@@ -623,7 +638,8 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                     Container(
                                                                   height: double
                                                                       .infinity,
-                                                                  width: 330,
+                                                                  width: width *
+                                                                      0.18,
                                                                   child: Column(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -637,26 +653,34 @@ class _JoinCourseState extends State<JoinCourse> {
                                                                           backgroundImage:
                                                                               NetworkImage('assets/images/header.jpg'),
                                                                           radius:
-                                                                              52,
+                                                                              total * 3,
                                                                         ),
                                                                       ),
                                                                       Text(
                                                                         "Name : " +
                                                                             snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['name'],
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                total * 1),
                                                                       ),
                                                                       Text(
-                                                                        "Matric : " +
-                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]['matric'],
-                                                                      ),
+                                                                          "Matric : " +
+                                                                              snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent][
+                                                                                  'matric'],
+                                                                          style:
+                                                                              TextStyle(fontSize: total * 1)),
                                                                       Text(
-                                                                        "Email : " +
-                                                                            snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]["email"],
-                                                                      ),
+                                                                          "Email : " +
+                                                                              snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent][
+                                                                                  "email"],
+                                                                          style:
+                                                                              TextStyle(fontSize: total * 1)),
                                                                       Text(
-                                                                        snapshotCourse
-                                                                            .data
-                                                                            .listOfGroup[index]["listofstudent"][indexOfStudent]["typeOfUser"],
-                                                                      ),
+                                                                          snapshotCourse.data.listOfGroup[index]["listofstudent"][indexOfStudent]
+                                                                              [
+                                                                              "typeOfUser"],
+                                                                          style:
+                                                                              TextStyle(fontSize: total * 1)),
                                                                     ],
                                                                   ),
                                                                 ),
@@ -665,7 +689,11 @@ class _JoinCourseState extends State<JoinCourse> {
                                                           })
                                                       : Center(
                                                           child: Text(
-                                                              "No Students"),
+                                                              "No Students",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      total *
+                                                                          1)),
                                                         ),
                                                 ),
                                               ),
@@ -688,7 +716,7 @@ class _JoinCourseState extends State<JoinCourse> {
                                                         child: Icon(
                                                           FontAwesomeIcons
                                                               .arrowCircleLeft,
-                                                          size: 18,
+                                                          size: total * 0.8,
                                                         ),
                                                       ),
                                                       Padding(
@@ -696,7 +724,11 @@ class _JoinCourseState extends State<JoinCourse> {
                                                             const EdgeInsets
                                                                 .all(8.0),
                                                         child: Text(
-                                                            "Swipe left to see more"),
+                                                            "Swipe left to see more",
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    total *
+                                                                        0.8)),
                                                       ),
                                                     ],
                                                   )
@@ -738,7 +770,10 @@ class _JoinCourseState extends State<JoinCourse> {
         MaterialButton(
           child: Text('Ok'),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
+            setState(() {
+              
+              Navigator.of(context).pop();
+            });
           },
         )
       ],

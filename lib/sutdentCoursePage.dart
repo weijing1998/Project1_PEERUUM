@@ -32,6 +32,9 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     var provider = Provider.of<ProjectProvider>(context);
     return StreamBuilder<List<Courses>>(
         stream: provider.courselist,
@@ -50,7 +53,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                     children: [
                       Text("WELCOME, " + widget.user.userName.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold)),
+                              fontSize: total * 2,
+                              fontWeight: FontWeight.bold)),
                       // TODO : REPLACE WITH SEARC BAR
                     ],
                   ),
@@ -59,19 +63,23 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                       child: Row(
                         children: [
-                          Image.network(
-                            "assets/images/courses.png",
-                            scale: 9,
+                          Container(
+                            height: height * 0.06,
+                            width: width * 0.06,
+                            child: Image.network(
+                              "assets/images/courses.png",
+                            ),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "COURSES PAGE",
                               style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.w700),
+                                  fontSize: total * 1.8,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ),
                         ],
@@ -96,7 +104,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                     child: Text(
                                       "No Course Created",
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: total * 1.8,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )
@@ -107,15 +115,15 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: Container(
-                                            height: 200,
-                                            width: 200,
+                                            height: height * 0.25,
+                                            width: double.infinity,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   color: Colors.blue[300],
-                                                  height: 50,
+                                                  height: height * 0.05,
                                                   width: double.infinity,
                                                   child: Align(
                                                     alignment:
@@ -132,13 +140,14 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: 20),
+                                                            fontSize:
+                                                                total * 1.4),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                                 Container(
-                                                  height: 150,
+                                                  height: height * 0.2,
                                                   width: double.infinity,
                                                   color: Colors.blueGrey[50],
                                                   child: Row(
@@ -164,7 +173,9 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   Icon(
                                                                     Icons
                                                                         .article,
-                                                                    size: 25,
+                                                                    size:
+                                                                        total *
+                                                                            1.3,
                                                                   ),
                                                                   SizedBox(
                                                                     width: 20,
@@ -176,7 +187,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                             .courseCode,
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            total *
+                                                                                1.2,
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   )
@@ -193,7 +205,9 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                 children: [
                                                                   Icon(
                                                                     Icons.group,
-                                                                    size: 25,
+                                                                    size:
+                                                                        total *
+                                                                            1.3,
                                                                   ),
                                                                   SizedBox(
                                                                     width: 20,
@@ -205,7 +219,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                             .courseGroup,
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            total *
+                                                                                1.2,
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   )
@@ -223,7 +238,9 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                   Icon(
                                                                     Icons
                                                                         .calendar_today,
-                                                                    size: 25,
+                                                                    size:
+                                                                        total *
+                                                                            1.3,
                                                                   ),
                                                                   SizedBox(
                                                                     width: 20,
@@ -235,7 +252,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                             .courseBatch,
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            total *
+                                                                                1.2,
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   )
@@ -251,7 +269,6 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                     .symmetric(
                                                                 horizontal: 25),
                                                         child: Container(
-                                                          height: 40,
                                                           width:
                                                               size.width / 12,
                                                           child: snapshot
@@ -272,7 +289,8 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                         color: Colors
                                                                             .blue,
                                                                         fontSize:
-                                                                            12,
+                                                                            total *
+                                                                                0.8,
                                                                         fontWeight:
                                                                             FontWeight.w600),
                                                                   ),
@@ -337,10 +355,10 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                     child:
                                                                         Container(
                                                                       constraints: BoxConstraints(
-                                                                          maxWidth:
-                                                                              130.0,
-                                                                          minHeight:
-                                                                              40.0),
+                                                                          maxWidth: width *
+                                                                              0.09,
+                                                                          maxHeight:
+                                                                              height * 0.05),
                                                                       alignment:
                                                                           Alignment
                                                                               .center,
@@ -352,7 +370,7 @@ class StudentCoursesPageState extends State<StudentCoursesPage> {
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
-                                                                            fontSize: 12),
+                                                                            fontSize: total * 0.8),
                                                                       ),
                                                                     ),
                                                                   ),
