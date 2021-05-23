@@ -191,6 +191,9 @@ class _LoginPageState extends State<LoginPage> {
                                               Container(
                                                 height: height * 0.05,
                                                 child: TextFormField(
+                                                  style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: emailController,
                                                   decoration: InputDecoration(
                                                     hintText: 'Email Address',
@@ -208,6 +211,9 @@ class _LoginPageState extends State<LoginPage> {
                                               Container(
                                                 height: height * 0.05,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       passwordController,
                                                   decoration: InputDecoration(
@@ -271,24 +277,24 @@ class _LoginPageState extends State<LoginPage> {
                                               setState(() {
                                                 submitting = true;
                                               });
-                                              // Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         Sidebar(
-                                              //       users: PeerUser(
-                                              //           userName: 'weijing1998  ',
-                                              //           email: "weijing980924@gmail.com",
-                                              //           typeOfUser: "Lecturer",
-                                              //           matric: '261505',
-                                              //           userid: '3sbAefhfEcRQ9IRq9a70bIN8lSS2'
-                                              //           ),
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Sidebar(
+                                                    users: PeerUser(
+                                                        userName: 'student 1',
+                                                        email: "weijing980924@gmail.comss",
+                                                        typeOfUser: "Student",
+                                                        matric: '261505',
+                                                        userid: '3sbAefhfEcRQ9IRq9a70bIN8lSS2'
+                                                        ),
+                                                  ),
+                                                ),
+                                              );
 
-                                              await signIn(emailController.text,
-                                                  passwordController.text);
+                                              // await signIn(emailController.text,
+                                              //     passwordController.text);
                                             },
                                           ),
                                         ),
@@ -305,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
                                                       "Don't have an account?",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              total * 1.2),
+                                                              total * 1),
                                                     ),
                                                   ),
                                                   Container(
@@ -330,7 +336,7 @@ class _LoginPageState extends State<LoginPage> {
                                                               color:
                                                                   Colors.blue,
                                                               fontSize:
-                                                                  total * 1.2),
+                                                                  total * 0.95),
                                                         )),
                                                   ),
                                                 ],
@@ -365,7 +371,7 @@ class _LoginPageState extends State<LoginPage> {
                                                                     Colors.blue,
                                                                 fontSize:
                                                                     total *
-                                                                        1.2),
+                                                                        0.95),
                                                           ),
                                                         )),
                                                   ),

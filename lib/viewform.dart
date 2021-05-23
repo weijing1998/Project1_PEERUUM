@@ -99,7 +99,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                         child: Container(
                                           constraints: BoxConstraints(
                                               maxWidth: width * 0.09,
-                                              minHeight: height * 0.05),
+                                              maxHeight: height * 0.05),
                                           alignment: Alignment.center,
                                           child: Text(
                                             "Edit Form",
@@ -235,7 +235,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                 child: Container(
                                                   constraints: BoxConstraints(
                                                       maxWidth: width * 0.09,
-                                                      minHeight: height * 0.05),
+                                                      maxHeight: height * 0.05),
                                                   alignment: Alignment.center,
                                                   child: Text(
                                                     "Add Rubric",
@@ -519,6 +519,9 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             4,
                                                                     child:
                                                                         TextFormField(
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              total * 1.1),
                                                                       maxLength:
                                                                           400,
                                                                       maxLines:

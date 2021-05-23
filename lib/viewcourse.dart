@@ -141,8 +141,8 @@ class _ViewCourseState extends State<ViewCourse> {
                                                   BorderRadius.circular(30.0)),
                                           child: Container(
                                             constraints: BoxConstraints(
-                                                maxWidth: 130.0,
-                                                minHeight: 40.0),
+                                                maxWidth: width * 0.09,
+                                          maxHeight: height * 0.05),
                                             alignment: Alignment.center,
                                             child: Text(
                                               "Delete Form",
@@ -678,7 +678,7 @@ class _ViewCourseState extends State<ViewCourse> {
                                                                       child:
                                                                           CircleAvatar(
                                                                         backgroundImage:
-                                                                            NetworkImage('images/header.jpg'),
+                                                                            NetworkImage('assets/images/header.jpg'),
                                                                         radius:
                                                                             total *
                                                                                 3.5,

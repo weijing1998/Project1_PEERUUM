@@ -93,6 +93,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               controller: courseName,
                               initialValue: initcn,
                               onChanged: (courseName) =>
@@ -145,6 +146,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   projectProvider.changeCourseCode = value,
                               controller: courseCode,
@@ -192,6 +194,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   projectProvider.changeCourseGroup = value,
                               controller: courseGroup,
@@ -240,6 +243,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   projectProvider.changeCourseBatch = value,
                               controller: courseBatch,
@@ -617,6 +621,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) => projectProvider
                                   .changeCourseName = courseName.text,
                               controller: courseName,
@@ -668,6 +673,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) => projectProvider
                                   .changeCourseCode = courseCode.text,
                               controller: courseCode,
@@ -716,6 +722,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) => projectProvider
                                   .changeCourseGroup = courseGroup.text,
                               controller: courseGroup,
@@ -764,6 +771,7 @@ class _EditCourseDialogState extends State<EditCourseDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) => projectProvider
                                   .changeCourseBatch = courseBatch.text,
                               controller: courseBatch,
@@ -941,6 +949,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   provider.changeGroupName = value,
                               controller: groupName,
@@ -1396,6 +1405,7 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               controller: groupnameController,
                               decoration: new InputDecoration(
                                 labelText: "Group Name",
@@ -1575,6 +1585,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   projectProvider.changeFormName = value,
                               controller: formName,
@@ -1626,6 +1637,7 @@ class _AddFormDialogState extends State<AddFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (value) =>
                                   projectProvider.changeFormCode = value,
                               controller: formID,
@@ -1799,6 +1811,7 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (String value) =>
                                   projectProvider.changeFormName = value,
                               controller: formName,
@@ -1850,6 +1863,7 @@ class _CopyFormDialogState extends State<CopyFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (value) =>
                                   projectProvider.changeFormCode = value,
                               controller: formID,
@@ -2249,6 +2263,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) =>
                                   provider.changeFormName = formName.text,
                               controller: formName,
@@ -2300,6 +2315,7 @@ class _EditFormDialogState extends State<EditFormDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (string) =>
                                   provider.changeFormCode = formCode.text,
                               controller: formCode,
@@ -2498,6 +2514,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               onChanged: (value) =>
                                   provider.changeQuestion = value,
                               controller: rubricQuestion,
@@ -2739,6 +2756,9 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                     height: height * 0.04,
                                                     width: size.width / 10,
                                                     child: TextFormField(
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              total * 1.1),
                                                       onChanged: (value) =>
                                                           provider.changeScaleLowLable =
                                                               value,
@@ -2786,6 +2806,9 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                     height: height * 0.04,
                                                     width: size.width / 10,
                                                     child: TextFormField(
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              total * 1.1),
                                                       onChanged: (value) =>
                                                           provider.changeScaleHighLable =
                                                               value,
@@ -3008,6 +3031,7 @@ class DynamicWidget extends StatelessWidget {
                 height: height * 0.05,
                 width: size.width / 4,
                 child: TextFormField(
+                  style: TextStyle(fontSize: total * 1.1),
                   controller: option,
                   decoration: new InputDecoration(
                     labelText: "Option",
@@ -3034,6 +3058,7 @@ class DynamicWidget extends StatelessWidget {
                 height: height * 0.05,
                 width: size.width / 10,
                 child: TextFormField(
+                  style: TextStyle(fontSize: total * 1.1),
                   controller: value,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
@@ -3786,6 +3811,7 @@ class _EditUserNameState extends State<EditUserName> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               controller: userName,
                               initialValue: initcn,
                               onChanged: (userName) => initcn = userName,
@@ -3977,6 +4003,7 @@ class _EditUserMatricState extends State<EditUserMatric> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               controller: userMatric,
                               initialValue: initcn,
                               onChanged: (userMatric) => initcn = userMatric,
@@ -4168,6 +4195,7 @@ class _ChangeUserPasswordState extends State<ChangeUserPassword> {
                             height: height * 0.05,
                             width: size.width / 4,
                             child: TextFormField(
+                              style: TextStyle(fontSize: total * 1.1),
                               controller: userMatric,
                               initialValue: initcn,
                               onChanged: (userMatric) => initcn = userMatric,

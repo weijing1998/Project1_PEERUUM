@@ -155,6 +155,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                     
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: nameController,
                                                   decoration: InputDecoration(
                                                       hintText: 'Full Name',
@@ -176,6 +180,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: emailController,
                                                   decoration: InputDecoration(
                                                     hintText: 'Email Address',
@@ -197,6 +204,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: matricController,
                                                   decoration: InputDecoration(
                                                     hintText: 'Matric Number',
@@ -218,6 +228,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       passwordController,
                                                   decoration: InputDecoration(
@@ -240,6 +253,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       confirmPasswordController,
                                                   obscureText: true,
@@ -270,6 +286,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: nameController,
                                                   decoration: InputDecoration(
                                                     hintText: 'Full Name',
@@ -291,6 +310,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller: emailController,
                                                   decoration: InputDecoration(
                                                     hintText: 'Email Address',
@@ -312,6 +334,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       passwordController,
                                                   decoration: InputDecoration(
@@ -334,6 +359,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       confirmPasswordController,
                                                   obscureText: true,
@@ -360,6 +388,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               child: Container(
                                                 height: height * 0.045,
                                                 child: TextFormField(
+                                                   style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                   controller:
                                                       typeOfUserController,
                                                   decoration: InputDecoration(

@@ -355,6 +355,9 @@ class _EvaluatePageState extends State<EvaluatePage> {
                                                       height: size.height / 4,
                                                       width: size.width / 4,
                                                       child: TextFormField(
+                                                         style: TextStyle(
+                                                    fontSize: total * 1.1
+                                                  ),
                                                         onChanged: (value) {
                                                           answer[index] = value;
                                                         },

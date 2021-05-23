@@ -103,7 +103,7 @@ class _FormPageState extends State<FormPage> {
                                 child: Container(
                                   constraints: BoxConstraints(
                                       maxWidth: width * 0.09,
-                                      minHeight: height * 0.05),
+                                      maxHeight: height * 0.05),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Add Form",
@@ -154,7 +154,7 @@ class _FormPageState extends State<FormPage> {
                                 child: Container(
                                   constraints: BoxConstraints(
                                       maxWidth: width * 0.09,
-                                      minHeight: height * 0.05),
+                                      maxHeight: height * 0.05),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Delete Form",

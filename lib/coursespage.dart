@@ -183,7 +183,7 @@ class CoursesPageState extends State<CoursesPage> {
                                         child: Container(
                                           constraints: BoxConstraints(
                                               maxWidth: width * 0.09,
-                                              minHeight: height * 0.05),
+                                              maxHeight: height * 0.05),
                                           alignment: Alignment.center,
                                           child: Text(
                                             "Delete Course",
