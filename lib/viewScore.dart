@@ -181,7 +181,7 @@ class _ViewScoreState extends State<ViewScore> {
                                                           ],
                                                         ),
                                                         border: Border.all(
-                                                            width: 3,
+                                                            width: 1,
                                                             color: Colors
                                                                 .grey[600])),
                                                     child: Align(
@@ -442,6 +442,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return ListView.builder(
       itemCount: widget.listofscore.length,
       itemBuilder: (context, index) {
@@ -461,20 +464,20 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         width: size.width / 25,
                       ),
                       Container(
-                        width: size.width / 2.2,
+                        width: size.width / 2.4,
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: CircleAvatar(
                                 backgroundImage:
                                     NetworkImage('assets/images/header.jpg'),
-                                radius: 45,
+                                radius: total * 2.5,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                                  horizontal: 15, vertical: 10),
                               child: Container(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -487,7 +490,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             widget.listofscore[index]
                                                 ["evaluateusername"],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: total * 0.9),
                                       ),
                                     ),
                                     Padding(
@@ -497,7 +501,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             widget.listofscore[index]
                                                 ["evaluateuseremail"],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: total * 0.9),
                                       ),
                                     ),
                                     Padding(
@@ -507,7 +512,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             widget.listofscore[index]
                                                 ["evaluateusermatric"],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: total * 0.9),
                                       ),
                                     ),
                                     Padding(
@@ -517,7 +523,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             widget.listofscore[index]
                                                 ["groupname"],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: total * 0.9),
                                       ),
                                     ),
                                   ],
@@ -538,7 +545,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                   ["studentpoint"]
                                               .toStringAsFixed(2),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: total * 0.9),
                                     ),
                                   ),
                                   Padding(
@@ -549,7 +557,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                   ["totalpoint"]
                                               .toStringAsFixed(2),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: total * 0.9),
                                     ),
                                   ),
                                   Padding(
@@ -559,7 +568,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           widget.listofscore[index]
                                               ["currentuser"],
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: total * 0.9),
                                       overflow: TextOverflow.ellipsis,
                                       softWrap: false,
                                     ),
@@ -584,7 +594,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                         .toStringAsFixed(2) +
                                     "%",
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: total * 1.6,
                                   color: Colors.blue,
                                   fontFamily: "Dela Gothic One",
                                   fontWeight: FontWeight.bold,
@@ -612,14 +622,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                       children: [
                                         Icon(
                                           Icons.comment,
-                                          size: 27,
+                                          size: total * 1.4,
                                           color: Colors.blue,
                                         ),
                                         SizedBox(width: 10),
                                         Text(
                                           'Comment',
                                           style: TextStyle(
-                                              fontSize: 18, color: Colors.blue),
+                                              fontSize: total * 1.3,
+                                              color: Colors.blue),
                                         ),
                                       ],
                                     ),
@@ -770,6 +781,9 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double total = (width + height) / 2 / 100;
     return ListView.builder(
       itemCount: totalscore.length,
       itemBuilder: (context, index) {
@@ -793,12 +807,12 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                           child: CircleAvatar(
                             backgroundImage:
                                 NetworkImage('assets/images/header.jpg'),
-                            radius: 45,
+                            radius: total * 2.5,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 10),
+                              horizontal: 20, vertical: 10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -807,28 +821,36 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   "Name :" + totalscore[index]["name"],
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   "Email :" + totalscore[index]["email"],
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   "Matric :" + totalscore[index]["matric"],
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   "Group :" + totalscore[index]["group"],
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                             ],
@@ -846,7 +868,9 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                                   "Total Student point :" +
                                       totalscore[index]["totalstudentpoint"]
                                           .toStringAsFixed(2),
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                               Padding(
@@ -855,7 +879,9 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                                   "Total point :" +
                                       totalscore[index]["totalpoint"]
                                           .toStringAsFixed(2),
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: total * 0.9),
                                 ),
                               ),
                             ],
@@ -874,7 +900,7 @@ class _TotalScoreWidgetState extends State<TotalScoreWidget> {
                                 .toStringAsFixed(2) +
                             "%",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: total * 1.6,
                           color: Colors.blue,
                           fontFamily: "Dela Gothic One",
                           fontWeight: FontWeight.bold,

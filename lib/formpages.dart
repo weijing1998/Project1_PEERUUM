@@ -291,6 +291,7 @@ class _FormPageState extends State<FormPage> {
                                                           child: Row(
                                                             children: [
                                                               Column(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,

@@ -99,7 +99,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
                                   projectProvider.changeCourseName = courseName,
                               decoration: new InputDecoration(
                                 labelText: "Course Name",
-                                labelStyle: TextStyle(fontSize:  total * 1.1),
+                                labelStyle: TextStyle(fontSize: total * 1),
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -455,8 +455,8 @@ class _DeleteCourseDialogState extends State<DeleteCourseDialog> {
                                               return DropdownMenuItem(
                                                 child: new Text(
                                                   course.courseName,
-                                                  style:
-                                                      TextStyle(fontSize:  total * 0.9),
+                                                  style: TextStyle(
+                                                      fontSize: total * 0.9),
                                                 ),
                                                 value: course.courseID,
                                               );
@@ -1146,7 +1146,8 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: total * 0.9),
+                                          color: Colors.blue,
+                                          fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           group = newValue;
@@ -1348,7 +1349,8 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: total * 0.9),
+                                          color: Colors.blue,
+                                          fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           group = newValue;
@@ -1385,7 +1387,9 @@ class _EditGroupDialogState extends State<EditGroupDialog> {
                               fontSize: total * 1.1,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: width * 0.012,),
+                        SizedBox(
+                          width: width * 0.012,
+                        ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
@@ -2053,7 +2057,8 @@ class _DeleteFormDialogState extends State<DeleteFormDialog> {
                                       iconSize: 32,
                                       elevation: 16,
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize:  total * 0.9),
+                                          color: Colors.blue,
+                                          fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           value = newValue;
@@ -2554,7 +2559,8 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 iconSize: 32,
                                 elevation: 16,
                                 style: TextStyle(
-                                    color: Colors.purple, fontSize:  total * 0.9),
+                                    color: Colors.purple,
+                                    fontSize: total * 0.9),
                                 onChanged: (newValue) {
                                   setState(() {
                                     rubricStyle = newValue;
@@ -2592,7 +2598,7 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                 child: Text(
                                   "Example of Rubric : ",
                                   style: TextStyle(
-                                      fontSize: total *1.4,
+                                      fontSize: total * 1.4,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -2675,12 +2681,15 @@ class _AddRubricDialogState extends State<AddRubricDialog> {
                                                                 selectedScaleNumber,
                                                             icon: Icon(Icons
                                                                 .arrow_drop_down),
-                                                            iconSize: total * 2.3,
+                                                            iconSize:
+                                                                total * 2.3,
                                                             elevation: 16,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .purple,
-                                                                fontSize:  total * 0.9),
+                                                                fontSize:
+                                                                    total *
+                                                                        0.9),
                                                             onChanged:
                                                                 (newValue) {
                                                               setState(() {
@@ -3165,7 +3174,7 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                       elevation: 16,
                                       style: TextStyle(
                                           color: Colors.purple[800],
-                                          fontSize:  total * 0.9),
+                                          fontSize: total * 0.9),
                                       onChanged: (newValue) {
                                         setState(() {
                                           course = newValue;
@@ -3177,7 +3186,8 @@ class _ApplyFormDialogState extends State<ApplyFormDialog> {
                                         return DropdownMenuItem<Courses>(
                                           child: new Text(
                                             snapcourse.courseName,
-                                            style: TextStyle(fontSize:  total * 0.9),
+                                            style: TextStyle(
+                                                fontSize: total * 0.9),
                                           ),
                                           value: snapcourse,
                                         );
@@ -3401,8 +3411,8 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                                 icon: Icon(Icons.arrow_drop_down),
                                 iconSize: 32,
                                 elevation: 16,
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize:  total * 0.9),
+                                style: TextStyle(
+                                    color: Colors.blue, fontSize: total * 0.9),
                                 onChanged: (newValue) {
                                   setState(() {
                                     value = newValue;
@@ -3412,7 +3422,7 @@ class _DeleteFormFromCourseState extends State<DeleteFormFromCourse> {
                                   return DropdownMenuItem(
                                     child: new Text(
                                       form["formname"],
-                                      style: TextStyle(fontSize:  total * 0.9),
+                                      style: TextStyle(fontSize: total * 0.9),
                                     ),
                                     value: form['formid'],
                                   );
@@ -3596,7 +3606,8 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                         iconSize: 32,
                                         elevation: 16,
                                         style: TextStyle(
-                                            color: Colors.blue, fontSize:  total * 0.9),
+                                            color: Colors.blue,
+                                            fontSize: total * 0.9),
                                         onChanged: (newValue) {
                                           setState(() {
                                             value = newValue;
@@ -3607,7 +3618,8 @@ class _StudentChooseFormState extends State<StudentChooseForm> {
                                           return DropdownMenuItem(
                                             child: new Text(
                                               form["formname"],
-                                              style: TextStyle(fontSize:  total * 0.9),
+                                              style: TextStyle(
+                                                  fontSize: total * 0.9),
                                             ),
                                             value: form,
                                           );

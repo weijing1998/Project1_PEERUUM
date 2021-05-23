@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                                                       ? 'Logging in'
                                                       : 'Login',
                                                   style: TextStyle(
-                                                    fontSize: total*1.2,
+                                                    fontSize: total * 1.2,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -263,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
                                                         FontAwesomeIcons
                                                             .solidArrowAltCircleRight,
                                                         color: Colors.white,
-                                                        size: total*1.7,
+                                                        size: total * 1.7,
                                                       ),
                                               ],
                                             ),
@@ -271,22 +271,24 @@ class _LoginPageState extends State<LoginPage> {
                                               setState(() {
                                                 submitting = true;
                                               });
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Sidebar(
-                                                    users: PeerUser(
-                                                        userName: 'asd',
-                                                        email: "asd",
-                                                        typeOfUser: "Student",
-                                                        matric: '261505'),
-                                                  ),
-                                                ),
-                                              );
+                                              // Navigator.pushReplacement(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         Sidebar(
+                                              //       users: PeerUser(
+                                              //           userName: 'weijing1998  ',
+                                              //           email: "weijing980924@gmail.com",
+                                              //           typeOfUser: "Lecturer",
+                                              //           matric: '261505',
+                                              //           userid: '3sbAefhfEcRQ9IRq9a70bIN8lSS2'
+                                              //           ),
+                                              //     ),
+                                              //   ),
+                                              // );
 
-                                              // await signIn(emailController.text,
-                                              //     passwordController.text);
+                                              await signIn(emailController.text,
+                                                  passwordController.text);
                                             },
                                           ),
                                         ),
@@ -395,7 +397,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: FaIcon(
                           FontAwesomeIcons.arrowAltCircleLeft,
                           color: kGrey4,
-                          size: total*2.4,
+                          size: total * 2.4,
                         ),
                         onTap: () {
                           Navigator.pushReplacement(
@@ -408,8 +410,10 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           "Main Page",
-                          style:
-                              TextStyle(color: Colors.grey[700], fontSize: total * 1.7 , fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: total * 1.7,
+                              fontWeight: FontWeight.w600),
                         ),
                       )
                     ],

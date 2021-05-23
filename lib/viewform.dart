@@ -58,55 +58,60 @@ class _ViewFormPageState extends State<ViewFormPage> {
 
                             //Edit Form Button
 
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 160),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                        create: (context) => ProjectProvider(),
-                                        child: EditFormDialog(
-                                            forms: snapshot.data),
+                            snapshot.data.formID ==
+                                    "95dda0f0-b73d-11eb-bd67-8f40fbcbf0d9"
+                                ? SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 160),
+                                    child: MaterialButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) =>
+                                                ChangeNotifierProvider(
+                                              create: (context) =>
+                                                  ProjectProvider(),
+                                              child: EditFormDialog(
+                                                  forms: snapshot.data),
+                                            ),
+                                          );
+                                        });
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(80.0)),
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Colors.purple[400],
+                                                Colors.purple[800]
+                                              ],
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(30.0)),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                              maxWidth: width * 0.09,
+                                              minHeight: height * 0.05),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Edit Form",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: total * 1.1),
+                                          ),
+                                        ),
                                       ),
-                                    );
-                                  });
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(80.0)),
-                                padding: EdgeInsets.all(0.0),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.purple[400],
-                                          Colors.purple[800]
-                                        ],
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                        maxWidth: width * 0.09,
-                                        minHeight: height * 0.05),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Edit Form",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: total * 1.1),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         //FORM detail
@@ -170,7 +175,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(160, 0, 0, 0),
+                                    const EdgeInsets.fromLTRB(160, 15, 0, 15),
                                 child: Text(
                                   "EVALUATION RUBRICS",
                                   style: TextStyle(
@@ -409,8 +414,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                               .delete,
                                                                           color:
                                                                               Colors.grey[600],
-                                                                          size:
-                                                                              total * 2.3,
+                                                                          size: total *
+                                                                              2.3,
                                                                         ),
                                                                         onPressed: () {
                                                                           listofrubric = snapshot
@@ -566,7 +571,7 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             icon: Icon(
                                                                               Icons.delete,
                                                                               color: Colors.grey[600],
-                                                                              size:  total * 2.3,
+                                                                              size: total * 2.3,
                                                                             ),
                                                                             onPressed: () {
                                                                               listofrubric = snapshot.data.listOfRubric;
@@ -663,7 +668,8 @@ class _ViewFormPageState extends State<ViewFormPage> {
                                                                             .delete,
                                                                         color: Colors
                                                                             .grey[600],
-                                                                        size:  total * 2.3,
+                                                                        size: total *
+                                                                            2.3,
                                                                       ),
                                                                       onPressed: () {
                                                                         listofrubric = snapshot
